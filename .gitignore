@@ -111,10 +111,17 @@ tokens.txt
 # Ignore all markdown files
 *.md
 
-# Exception: Keep essential project documentation (uncomment if needed)
-# !README.md
-# !CONTRIBUTING.md
-# !LICENSE.md
+# Exception: Keep essential project documentation
+!README.md
+!CONTRIBUTING.md
+!LICENSE.md
+
+# Deployment documentation with sensitive info
+docs/deployment/AZURE_DEPLOYMENT_SUMMARY.md
+docs/deployment/DNS_SETUP_INSTRUCTIONS.md
+docs/deployment/DOMAIN_SETUP_HITME.md
+docs/deployment/GITHUB_SECRETS_SETUP.md
+docs/guides/GO_LIVE_CHECKLIST.txt
 
 # ========================
 # FRONTEND (Next.js)
@@ -154,3 +161,76 @@ frontend/.turbo
 *.orig
 *~
 .*.swp
+
+# ========================
+# SENSITIVE DEPLOYMENT FILES
+# ========================
+
+# Deployment scripts and credentials
+deployment-credentials.local.sh
+*-credentials.local.sh
+*.local.sh
+*-secrets.txt
+*-credentials.txt
+azure-backend-publish-profile.xml
+publish-profile.xml
+
+# Deployment scripts (keep in scripts/ folder, not in root)
+/deploy-azure-live.sh
+/deploy-production.sh
+/add-custom-domains.sh
+/dns-records-to-add.sh
+/configure-dns-automated.sh
+/check-domain.sh
+
+# Local environment files
+.env.local
+.env.production.local
+.env.*.local
+
+
+# Azure deployment outputs
+terraform/outputs.json
+terraform/tfplan
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+
+# Instance database files
+instance/*.db
+instance/*.sqlite
+instance/*.sqlite3
+
+# ========================
+# DEPLOYMENT SCRIPTS
+# ========================
+
+# All deployment scripts (keep in scripts/ for organization)
+scripts/deploy-azure-live.sh
+scripts/deploy-production.sh
+scripts/add-custom-domains.sh
+scripts/dns-records-to-add.sh
+scripts/configure-dns-automated.sh
+scripts/check-domain.sh
+scripts/setup.sh
+scripts/configure-dns-*.sh
+
+# Deployment files in root (if accidentally created there)
+deployment-credentials.local.sh
+startup.txt
+
+# ========================
+# DOCUMENTATION WITH SECRETS
+# ========================
+
+# Deployment guides with potential secrets
+docs/deployment/AZURE_DEPLOYMENT_SUMMARY.md
+docs/deployment/DNS_SETUP_INSTRUCTIONS.md
+docs/deployment/DOMAIN_SETUP_HITME.md
+docs/deployment/GITHUB_SECRETS_SETUP.md
+docs/deployment/HOSTING_DEPLOYMENT.md
+docs/guides/GO_LIVE_CHECKLIST.txt
+docs/guides/SANBUD_PROJECT_SUMMARY.md
+
+# Keep only README in root
+!README.md
