@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import BookingCalendar from '@/components/BookingCalendar';
 
 export default function HomePage() {
   // Business data matching Google Maps
@@ -251,6 +252,22 @@ export default function HomePage() {
               <div className="text-gray-600">Gwarancja</div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ONLINE BOOKING SECTION */}
+      <section id="booking" className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Umów wizytę online
+            </h2>
+            <p className="text-xl text-gray-600">
+              Wybierz dogodny termin z kalendarza - to proste i szybkie!
+            </p>
+          </div>
+          
+          <BookingCalendar />
         </div>
       </section>
 
