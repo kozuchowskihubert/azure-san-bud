@@ -222,7 +222,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             {/* Copyright */}
             <p className="text-gray-400 text-sm">
-              {t('footer.copyright', { year: currentYear })}
+              © {currentYear} {t('common.companyFullName')}. Wszelkie prawa zastrzeżone.
             </p>
 
             {/* Badges */}

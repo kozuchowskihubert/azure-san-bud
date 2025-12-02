@@ -2,7 +2,21 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { Inter, Poppins } from 'next/font/google';
 import '../globals.css';
+
+const inter = Inter({ 
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const poppins = Poppins({ 
+  weight: ['400', '500', '600', '700', '800', '900'],
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-poppins',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'SanBud Hydraulika - Hydraulika naszą pasją',
@@ -27,8 +41,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body>
+    <html lang={locale} className={`${inter.variable} ${poppins.variable}`}>
+      <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
