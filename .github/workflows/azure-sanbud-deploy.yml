@@ -304,7 +304,7 @@ jobs:
         run: |
           APP_URL="https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net"
           
-          echo "Testing backend health: $APP_URL/health"
+          echo "Testing backend health: $APP_URL/api/health"
           
           MAX_ATTEMPTS=5
           ATTEMPT=1
@@ -312,7 +312,7 @@ jobs:
           while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
             echo "Attempt $ATTEMPT of $MAX_ATTEMPTS..."
             
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$APP_URL/health" || echo "000")
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$APP_URL/api/health" || echo "000")
             
             if [ "$HTTP_CODE" = "200" ]; then
               echo "✅ Backend health check passed! (HTTP $HTTP_CODE)"
@@ -380,7 +380,7 @@ jobs:
           echo "- [Backend App](https://app-sanbud-api-prod.azurewebsites.net)" >> $GITHUB_STEP_SUMMARY
           echo "- [Backend API](https://api.sanbud24.pl)" >> $GITHUB_STEP_SUMMARY
           echo "- [Frontend](https://www.sanbud24.pl)" >> $GITHUB_STEP_SUMMARY
-          echo "- [Health Endpoint](https://api.sanbud24.pl/health)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Health Endpoint](https://api.sanbud24.pl/api/health)" >> $GITHUB_STEP_SUMMARY
 
   # ---------------------------------------------------------------------------
   # Stage 6: Notify
