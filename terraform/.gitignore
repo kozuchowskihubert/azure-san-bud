@@ -3,11 +3,14 @@
 *.tfstate
 *.tfstate.*
 *.tfplan
+tfplan
 .terraform.lock.hcl
 
 # Sensitive files
 **/secrets.tfvars
 **/*.auto.tfvars
+outputs.json
+*.backup
 
 # Crash log files
 crash.log
@@ -18,6 +21,16 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+# Old backup files
+*.old
+main.tf.old
+variables.tf.old
+outputs.tf.old
+
+# Azure publish profiles
+*.publishsettings
+publish-profile.xml
 
 # CLI configuration files
 .terraformrc

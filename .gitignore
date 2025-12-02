@@ -35,12 +35,18 @@ ENV/
 
 # Environment variables
 .env
+.env.*
+!.env.example
 .env.local
+.env.development
+.env.production
+.env.test
 
 # Database
 *.db
 *.sqlite
 *.sqlite3
+instance/
 
 # Logs
 *.log
@@ -60,3 +66,91 @@ htmlcov/
 
 # Migrations (uncomment if you want to ignore)
 # migrations/versions/
+
+# ========================
+# SENSITIVE FILES
+# ========================
+
+# Azure credentials and secrets
+publish-profile.xml
+*.publishsettings
+*.azurePubxml
+
+# Terraform sensitive files
+terraform/environments/*/secrets.tfvars
+terraform/environments/*/*.tfstate
+terraform/environments/*/*.tfstate.backup
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/tfplan
+terraform/outputs.json
+terraform/*.auto.tfvars
+
+# SSH keys and certificates
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+
+# API keys and tokens
+secrets.txt
+api-keys.txt
+tokens.txt
+
+# ========================
+# DOCUMENTATION (MARKDOWN)
+# ========================
+
+# Ignore all markdown files
+*.md
+
+# Exception: Keep essential project documentation (uncomment if needed)
+# !README.md
+# !CONTRIBUTING.md
+# !LICENSE.md
+
+# ========================
+# FRONTEND (Next.js)
+# ========================
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/dist/
+
+# Node modules
+frontend/node_modules/
+node_modules/
+
+# npm/yarn
+frontend/package-lock.json
+frontend/yarn.lock
+frontend/.pnp
+frontend/.pnp.js
+
+# Testing
+frontend/coverage/
+
+# Misc
+frontend/.DS_Store
+frontend/*.log
+frontend/.turbo
+
+# ========================
+# BACKUP FILES
+# ========================
+
+*.bak
+*.backup
+*.old
+*.orig
+*~
+.*.swp

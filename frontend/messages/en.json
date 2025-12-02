@@ -1,0 +1,253 @@
+{
+  "common": {
+    "companyName": "SanBud",
+    "companyFullName": "SanBud Plumbing",
+    "tagline": "Plumbing is our passion",
+    "slogan": "Expertise • Reliability • Punctuality",
+    "established": "Established 2018",
+    "phone": "+48 XXX XXX XXX",
+    "email": "contact@sanbud.com",
+    "address": "Your location",
+    "emergencyBadge": "24/7 Emergency",
+    "languageSwitcher": {
+      "polish": "Polski",
+      "english": "English"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "realizations": "Projects",
+    "contact": "Contact",
+    "bookAppointment": "Book Appointment",
+    "forHome": "For Home",
+    "forBusiness": "For Business"
+  },
+  "hero": {
+    "title": "Professional Plumbing Services",
+    "subtitle": "Your trusted partner in sanitary installations",
+    "description": "We specialize in comprehensive plumbing and sanitary solutions. Available 24/7 for emergencies!",
+    "cta": {
+      "primary": "Book Appointment",
+      "secondary": "View Services"
+    }
+  },
+  "benefits": {
+    "title": "Why Choose Us?",
+    "subtitle": "Professional approach to every project",
+    "items": [
+      {
+        "title": "24/7 Availability",
+        "description": "We're available around the clock for emergencies and scheduled appointments. Your plumbing emergency is our priority."
+      },
+      {
+        "title": "Licensed Professionals",
+        "description": "All our technicians are fully licensed, insured, and have years of experience."
+      },
+      {
+        "title": "Competitive Pricing",
+        "description": "Fair and transparent pricing with no hidden fees. Quality service at affordable prices."
+      },
+      {
+        "title": "Quality Guaranteed",
+        "description": "We stand behind our work with a satisfaction guarantee. Your peace of mind is our commitment."
+      },
+      {
+        "title": "Fast Response",
+        "description": "Quick response times for all service calls. We understand time is critical with plumbing issues."
+      },
+      {
+        "title": "Modern Equipment",
+        "description": "We use the latest tools and technology to diagnose and fix problems efficiently."
+      }
+    ]
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive plumbing and sanitary solutions for all your needs",
+    "searchPlaceholder": "Search services...",
+    "sortBy": "Sort by",
+    "sortOptions": {
+      "name": "Name",
+      "priceLow": "Price: Low to High",
+      "priceHigh": "Price: High to Low",
+      "duration": "Duration"
+    },
+    "viewAll": "View All Services",
+    "bookService": "Book Service",
+    "duration": "Duration",
+    "price": "Price",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "noServices": "No services found",
+    "noServicesDesc": "Try adjusting your search or filters",
+    "loadingError": "Unable to load services",
+    "loadingErrorDesc": "There was a problem loading our services. Please refresh the page or try again later.",
+    "refresh": "Refresh Page"
+  },
+  "process": {
+    "title": "Cooperation Process",
+    "subtitle": "Professional service at your fingertips!",
+    "description": "We'll guide you through the entire process. With our help, it's child's play.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Contact",
+        "description": "Contact us by phone or form. We'll discuss your needs and make an initial diagnosis."
+      },
+      {
+        "number": "02",
+        "title": "Quote",
+        "description": "We'll prepare a free quote with a completion date. All costs are transparent with no hidden fees."
+      },
+      {
+        "number": "03",
+        "title": "Agreement",
+        "description": "After accepting the quote, we sign an agreement and set the service date."
+      },
+      {
+        "number": "04",
+        "title": "Implementation",
+        "description": "Our specialists perform the service according to the highest standards and on schedule."
+      },
+      {
+        "number": "05",
+        "title": "Acceptance",
+        "description": "Together we check the completed work. We issue documentation with a warranty."
+      },
+      {
+        "number": "06",
+        "title": "Support",
+        "description": "We're at your disposal even after the work is completed. We provide full technical support."
+      }
+    ]
+  },
+  "booking": {
+    "title": "Book an Appointment",
+    "subtitle": "Schedule your service with our licensed professionals",
+    "emergencyNotice": "Need immediate assistance? Call: +48 555 123 456",
+    "personalInfo": {
+      "title": "Personal Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "address": "Address",
+      "city": "City",
+      "postalCode": "Postal Code"
+    },
+    "appointmentDetails": {
+      "title": "Appointment Details",
+      "selectService": "Select Service",
+      "selectServicePlaceholder": "-- Select a service --",
+      "preferredDate": "Preferred Date",
+      "preferredTime": "Preferred Time",
+      "businessHours": "Business hours: 8:00 AM - 6:00 PM (24/7 for emergencies)",
+      "additionalNotes": "Additional Notes",
+      "notesPlaceholder": "Please provide any special requirements, access instructions, or details about the issue..."
+    },
+    "validation": {
+      "required": "This field is required",
+      "minLength": "Minimum {{count}} characters",
+      "invalidEmail": "Please enter a valid email address",
+      "invalidPhone": "Please enter a valid phone number",
+      "selectService": "Please select a service",
+      "selectDate": "Please select a date (must be at least tomorrow)",
+      "selectTime": "Please select a time",
+      "fillRequired": "Please fill in all required fields correctly"
+    },
+    "submit": "Book Appointment",
+    "submitting": "Booking...",
+    "cancel": "Cancel",
+    "success": "Appointment booked successfully!",
+    "error": "Failed to book appointment. Please try again.",
+    "emergencyCard": {
+      "title": "Need Immediate Assistance?",
+      "description": "For emergencies or urgent service requests, call us directly:",
+      "callNow": "Call Now",
+      "availability": "Available 24/7 for plumbing emergencies"
+    }
+  },
+  "stats": {
+    "title": "We're Across Poland",
+    "subtitle": "Our work contributes to improving the quality of plumbing services",
+    "items": [
+      {
+        "value": "5000+",
+        "label": "Happy Customers"
+      },
+      {
+        "value": "10000+",
+        "label": "Jobs Completed"
+      },
+      {
+        "value": "20+",
+        "label": "Years Experience"
+      },
+      {
+        "value": "24/7",
+        "label": "Emergency Service"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Need a service? Book your appointment today!",
+    "description": "Our licensed professionals are ready to help. Available 24/7 for emergencies.",
+    "button": "Book Appointment"
+  },
+  "contact": {
+    "title": "Start saving time and money!",
+    "subtitle": "Leave your contact, we'll call back",
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "service": "Select service",
+      "preferredContact": "Preferred contact method",
+      "contactMethods": {
+        "all": "All",
+        "email": "Email",
+        "phone": "Phone"
+      },
+      "message": "Message",
+      "consent": "I consent to the processing of my personal data by HAOS Plumbing for marketing purposes.",
+      "privacyPolicy": "Privacy Policy",
+      "submit": "Send",
+      "sending": "Sending..."
+    }
+  },
+  "footer": {
+    "companyInfo": {
+      "title": "About Company",
+      "description": "Professional plumbing and sanitary services with over 20 years of experience. A trusted partner for homes and businesses across Poland."
+    },
+    "quickLinks": {
+      "title": "Menu",
+      "home": "Home",
+      "services": "Services",
+      "about": "About",
+      "realizations": "Projects",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Business Hours",
+      "hoursValue": "Mon-Fri: 8:00 AM-6:00 PM"
+    },
+    "social": {
+      "title": "Social Media",
+      "description": "Visit our social media profiles!"
+    },
+    "copyright": "© HAOS Plumbing {{year}}. All rights reserved.",
+    "madeBy": "Design"
+  },
+  "loading": "Loading...",
+  "error": "Error",
+  "tryAgain": "Try Again"
+}

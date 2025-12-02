@@ -1,0 +1,261 @@
+{
+  "common": {
+    "companyName": "SanBud",
+    "companyFullName": "SanBud Hydraulika",
+    "tagline": "Hydraulika naszą pasją",
+    "slogan": "Fachowość • Rzetelność • Terminowość",
+    "established": "Założona 2018",
+    "phone": "+48 XXX XXX XXX",
+    "email": "kontakt@sanbud.pl",
+    "address": "Twoja lokalizacja",
+    "emergencyBadge": "Awarie 24/7",
+    "languageSwitcher": {
+      "polish": "Polski",
+      "english": "English"
+    }
+  },
+  "navigation": {
+    "home": "Strona główna",
+    "services": "Usługi",
+    "about": "O nas",
+    "realizations": "Realizacje",
+    "contact": "Kontakt",
+    "bookAppointment": "Umów wizytę",
+    "forHome": "Dla domu",
+    "forBusiness": "Dla firmy"
+  },
+  "hero": {
+    "title": "Kompleksowe usługi hydrauliczne",
+    "subtitle": "Fachowe rozwiązania sanitarne dla Twojego domu i firmy",
+    "description": "Od montażu po naprawy - zajmiemy się wszystkim. Wieloletnie doświadczenie i gwarancja jakości.",
+    "cta": {
+      "primary": "Bezpłatna wycena",
+      "secondary": "Nasze usługi"
+    },
+    "features": [
+      "Doświadczony zespół",
+      "Konkurencyjne ceny",
+      "Gwarancja na usługi",
+      "Serwis awaryjny"
+    ]
+  },
+  "benefits": {
+    "title": "Dlaczego warto?",
+    "subtitle": "Profesjonalne podejście do każdego zlecenia",
+    "items": [
+      {
+        "title": "Dostępność 24/7",
+        "description": "Jesteśmy dostępni przez całą dobę w przypadku awarii i planowanych wizyt. Twoja awaria to nasz priorytet."
+      },
+      {
+        "title": "Licencjonowani fachowcy",
+        "description": "Wszyscy nasi technicy posiadają pełne uprawnienia, są ubezpieczeni i mają wieloletnie doświadczenie."
+      },
+      {
+        "title": "Konkurencyjne ceny",
+        "description": "Uczciwe i przejrzyste ceny bez ukrytych opłat. Jakościowa usługa w przystępnych cenach."
+      },
+      {
+        "title": "Gwarancja jakości",
+        "description": "Stoimy za naszą pracą z gwarancją satysfakcji. Twój spokój to nasze zobowiązanie."
+      },
+      {
+        "title": "Szybka reakcja",
+        "description": "Szybki czas reakcji na wszystkie zgłoszenia serwisowe. Rozumiemy, że czas jest kluczowy przy awariach hydraulicznych."
+      },
+      {
+        "title": "Nowoczesny sprzęt",
+        "description": "Używamy najnowszych narzędzi i technologii do diagnozowania i naprawy problemów efektywnie."
+      }
+    ]
+  },
+  "services": {
+    "title": "Nasze usługi",
+    "subtitle": "Kompleksowe rozwiązania hydrauliczne i sanitarne dla wszystkich Twoich potrzeb",
+    "searchPlaceholder": "Szukaj usług...",
+    "sortBy": "Sortuj według",
+    "sortOptions": {
+      "name": "Nazwy",
+      "priceLow": "Cena: od najniższej",
+      "priceHigh": "Cena: od najwyższej",
+      "duration": "Czasu trwania"
+    },
+    "viewAll": "Zobacz wszystkie usługi",
+    "bookService": "Zarezerwuj usługę",
+    "duration": "Czas trwania",
+    "price": "Cena",
+    "available": "Dostępne",
+    "unavailable": "Niedostępne",
+    "noServices": "Nie znaleziono usług",
+    "noServicesDesc": "Spróbuj dostosować wyszukiwanie lub filtry",
+    "loadingError": "Nie można załadować usług",
+    "loadingErrorDesc": "Wystąpił problem z ładowaniem naszych usług. Odśwież stronę lub spróbuj ponownie później.",
+    "refresh": "Odśwież stronę"
+  },
+  "process": {
+    "title": "Proces współpracy",
+    "subtitle": "Profesjonalna usługa na wyciągnięcie ręki!",
+    "description": "Przeprowadzimy Cię przez cały proces realizacji. Z naszą pomocą jest to dziecinnie proste.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Kontakt",
+        "description": "Skontaktuj się z nami telefonicznie lub przez formularz. Omówimy Twoje potrzeby i ustalimy wstępną diagnozę."
+      },
+      {
+        "number": "02",
+        "title": "Wycena",
+        "description": "Przygotujemy darmową wycenę wraz z terminem realizacji. Wszystkie koszty są przejrzyste i bez ukrytych opłat."
+      },
+      {
+        "number": "03",
+        "title": "Umowa",
+        "description": "Po akceptacji wyceny podpisujemy umowę i ustalamy termin wykonania usługi."
+      },
+      {
+        "number": "04",
+        "title": "Realizacja",
+        "description": "Nasi specjaliści wykonują usługę zgodnie z najwyższymi standardami i w ustalonym terminie."
+      },
+      {
+        "number": "05",
+        "title": "Odbiór",
+        "description": "Wspólnie sprawdzamy wykonaną pracę. Wydajemy dokumentację wraz z gwarancją."
+      },
+      {
+        "number": "06",
+        "title": "Wsparcie",
+        "description": "Jesteśmy do Twojej dyspozycji również po zakończeniu prac. Udzielamy pełnego wsparcia technicznego."
+      }
+    ]
+  },
+  "booking": {
+    "title": "Umów wizytę",
+    "subtitle": "Zaplanuj usługę z naszymi licencjonowanymi specjalistami",
+    "emergencyNotice": "Potrzebujesz natychmiastowej pomocy? Zadzwoń: +48 555 123 456",
+    "personalInfo": {
+      "title": "Dane osobowe",
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
+      "email": "Adres e-mail",
+      "phone": "Numer telefonu",
+      "address": "Adres",
+      "city": "Miasto",
+      "postalCode": "Kod pocztowy"
+    },
+    "appointmentDetails": {
+      "title": "Szczegóły wizyty",
+      "selectService": "Wybierz usługę",
+      "selectServicePlaceholder": "-- Wybierz usługę --",
+      "preferredDate": "Preferowana data",
+      "preferredTime": "Preferowany czas",
+      "businessHours": "Godziny pracy: 8:00 - 18:00 (24/7 w nagłych wypadkach)",
+      "additionalNotes": "Dodatkowe uwagi",
+      "notesPlaceholder": "Podaj wszelkie dodatkowe wymagania, instrukcje dojazdu lub szczegóły problemu..."
+    },
+    "validation": {
+      "required": "To pole jest wymagane",
+      "minLength": "Minimum {{count}} znaków",
+      "invalidEmail": "Proszę wprowadzić poprawny adres e-mail",
+      "invalidPhone": "Proszę wprowadzić poprawny numer telefonu",
+      "selectService": "Proszę wybrać usługę",
+      "selectDate": "Proszę wybrać datę (co najmniej jutro)",
+      "selectTime": "Proszę wybrać godzinę",
+      "fillRequired": "Proszę poprawnie wypełnić wszystkie wymagane pola"
+    },
+    "submit": "Zarezerwuj wizytę",
+    "submitting": "Rezerwowanie...",
+    "cancel": "Anuluj",
+    "success": "Wizyta zarezerwowana pomyślnie!",
+    "error": "Nie udało się zarezerwować wizyty. Spróbuj ponownie.",
+    "emergencyCard": {
+      "title": "Potrzebujesz natychmiastowej pomocy?",
+      "description": "W przypadku awarii lub pilnych zgłoszeń serwisowych, zadzwoń do nas bezpośrednio:",
+      "callNow": "Zadzwoń teraz",
+      "availability": "Dostępni 24/7 w przypadku awarii hydraulicznych"
+    }
+  },
+  "stats": {
+    "title": "Jesteśmy w całej Polsce",
+    "subtitle": "Swoją działalnością wpływamy na poprawę jakości usług hydraulicznych",
+    "items": [
+      {
+        "value": "5000+",
+        "label": "Zadowolonych klientów"
+      },
+      {
+        "value": "10000+",
+        "label": "Zrealizowanych zleceń"
+      },
+      {
+        "value": "20+",
+        "label": "Lat doświadczenia"
+      },
+      {
+        "value": "24/7",
+        "label": "Serwis awaryjny"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Potrzebujesz usługi? Umów się już dziś!",
+    "description": "Nasi licencjonowani specjaliści są gotowi do pomocy. Dostępni 24/7 w nagłych wypadkach.",
+    "button": "Umów wizytę"
+  },
+  "contact": {
+    "title": "Zacznij oszczędzać czas i pieniądze!",
+    "subtitle": "Zostaw kontakt, oddzwonimy",
+    "form": {
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
+      "email": "E-mail",
+      "phone": "Telefon",
+      "service": "Wybierz usługę",
+      "preferredContact": "Preferowana metoda kontaktu",
+      "contactMethods": {
+        "all": "Wszystko",
+        "email": "E-mail",
+        "phone": "Telefon"
+      },
+      "message": "Wiadomość",
+      "consent": "Wyrażam zgodę na przetwarzanie moich danych osobowych przez HAOS Hydraulika w celu marketingowym.",
+      "privacyPolicy": "Polityka prywatności",
+      "submit": "Wyślij",
+      "sending": "Wysyłanie..."
+    }
+  },
+  "footer": {
+    "companyInfo": {
+      "title": "O firmie",
+      "description": "Profesjonalne usługi hydrauliczne i sanitarne z ponad 20-letnim doświadczeniem. Zaufany partner dla domów i firm w całej Polsce."
+    },
+    "quickLinks": {
+      "title": "Menu",
+      "home": "Strona główna",
+      "services": "Usługi",
+      "about": "O nas",
+      "realizations": "Realizacje",
+      "blog": "Blog",
+      "contact": "Kontakt"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "address": "Adres",
+      "phone": "Telefon",
+      "email": "E-mail",
+      "hours": "Godziny pracy",
+      "hoursValue": "Pn-Pt: 8:00-18:00"
+    },
+    "social": {
+      "title": "Media społecznościowe",
+      "description": "Odwiedź nasze profile w mediach społecznościowych!"
+    },
+    "copyright": "© SanBud Hydraulika {{year}}. Wszelkie prawa zastrzeżone.",
+    "madeBy": "Projektowanie",
+    "nip": "NIP",
+    "regon": "REGON"
+  },
+  "loading": "Ładowanie...",
+  "error": "Błąd",
+  "tryAgain": "Spróbuj ponownie"
+}
