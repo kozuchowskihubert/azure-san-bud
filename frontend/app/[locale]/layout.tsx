@@ -3,6 +3,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Inter, Montserrat, Playfair_Display } from 'next/font/google';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import '../globals.css';
 
 // Modern, clean sans-serif for body text
@@ -56,7 +58,9 @@ export default async function RootLayout({
     <html lang={locale} className={`${inter.variable} ${montserrat.variable} ${playfair.variable}`}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
+          <Navigation />
           {children}
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

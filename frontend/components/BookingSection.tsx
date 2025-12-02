@@ -193,7 +193,7 @@ export default function BookingSection() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
-                  placeholder="+48 123 456 789"
+                  placeholder="+48 503 691 808"
                 />
               </div>
 

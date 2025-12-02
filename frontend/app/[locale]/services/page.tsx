@@ -187,8 +187,8 @@ export default function ServicesPage() {
               <Link href="/pl/contact" className="btn btn-primary">
                 Skontaktuj się
               </Link>
-              <a href="tel:+48123456789" className="btn btn-outline-primary">
-                Zadzwoń: 123 456 789
+              <a href="tel:+48503691808" className="btn btn-outline-primary">
+                Zadzwoń: 503 691 808
               </a>
             </div>
           </div>

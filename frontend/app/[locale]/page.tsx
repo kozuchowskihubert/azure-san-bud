@@ -9,7 +9,7 @@ export default function HomePage() {
     tagline: 'Profesjonalne usługi hydrauliczne',
     established: '2018',
     address: 'Polska',
-    phone: '+48 123 456 789',
+    phone: '+48 503 691 808',
     email: 'kontakt@sanbud.pl',
     googleMaps: 'https://www.google.com/maps/place/San-Bud+Hydraulika+Nasza+pasja/@52.6330895,20.3494125,17z',
     facebook: 'https://www.facebook.com/sanbud',
@@ -68,6 +68,23 @@ export default function HomePage() {
         
         <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
           <div className="max-w-2xl text-white">
+            {/* Logo */}
+            <div className="mb-8 flex items-center gap-4">
+              <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden ring-4 ring-white/30 shadow-2xl">
+                <Image
+                  src="/images/logo.jpg"
+                  alt="SanBud Logo"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div className="hidden md:block">
+                <div className="text-2xl font-black text-white">SAN-BUD</div>
+                <div className="text-sm text-gray-300 italic">Hydraulika • Nasza pasja</div>
+              </div>
+            </div>
+            
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               {businessData.name}
             </h1>

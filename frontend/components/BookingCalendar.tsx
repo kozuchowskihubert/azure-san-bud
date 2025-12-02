@@ -168,7 +168,7 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
       }
     } catch (error) {
       console.error('Booking error:', error);
-      alert(`❌ Nie udało się utworzyć rezerwacji.\n\nProsimy spróbować ponownie lub skontaktować się telefonicznie: +48 123 456 789`);
+      alert(`❌ Nie udało się utworzyć rezerwacji.\n\nProsimy spróbować ponownie lub skontaktować się telefonicznie: +48 503 691 808`);
     }
   };
 
@@ -365,7 +365,7 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="+48 123 456 789"
+                      placeholder="+48 503 691 808"
                     />
                   </div>
                 </div>
@@ -447,7 +447,7 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                   <span className="text-2xl">🚨</span>
                   <div>
                     <p className="font-semibold">Awarie 24/7:</p>
-                    <p className="text-sm">W nagłych przypadkach zadzwoń: +48 123 456 789</p>
+                    <p className="text-sm">W nagłych przypadkach zadzwoń: +48 503 691 808</p>
                   </div>
                 </div>
               </div>

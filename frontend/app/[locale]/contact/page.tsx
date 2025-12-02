@@ -71,8 +71,8 @@ export default function ContactPage() {
                   {
                     icon: '📞',
                     title: 'Telefon',
-                    value: '+48 123 456 789',
-                    link: 'tel:+48123456789',
+                    value: '+48 503 691 808',
+                    link: 'tel:+48503691808',
                     description: 'Pon-Pt: 8:00-18:00, Awarie: 24/7',
                   },
                   {
@@ -212,7 +212,7 @@ export default function ContactPage() {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg bg-[rgb(var(--color-bg-elevated))] border border-[rgb(var(--color-border))] text-[rgb(var(--color-text-primary))] focus:border-[rgb(var(--color-primary))] focus:outline-none transition-colors"
-                      placeholder="+48 123 456 789"
+                      placeholder="+48 503 691 808"
                     />
                   </div>
                 </div>
