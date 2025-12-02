@@ -54,20 +54,20 @@ export default function Services() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16 animate-fade-in">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-3 sm:mb-4 px-2">
             {t('services.title')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
             {t('services.subtitle')}
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
           {services.map((service, index) => (
             <div
               key={service.id}
@@ -75,7 +75,7 @@ export default function Services() {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Service Image */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-40 sm:h-48 overflow-hidden">
                 <Image
                   src={service.image}
                   alt={service.title}

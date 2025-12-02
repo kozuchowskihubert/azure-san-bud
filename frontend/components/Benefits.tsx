@@ -70,32 +70,34 @@ export default function Benefits() {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-12 sm:py-16 md:py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16 animate-fade-in">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-3 sm:mb-4 px-2">
             {t('benefits.title')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
             {t('benefits.subtitle')}
           </p>
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="group relative bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-transparent overflow-hidden animate-slide-up"
+              className="group relative bg-gradient-to-br from-white to-gray-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-transparent overflow-hidden animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Background Gradient on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${benefit.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
               
               {/* Icon */}
-              <div className={`relative inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${benefit.gradient} text-white mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
-                {benefit.icon}
+              <div className={`relative inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-gradient-to-br ${benefit.gradient} text-white mb-4 sm:mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
+                <div className="w-8 h-8 sm:w-12 sm:h-12">
+                  {benefit.icon}
+                </div>
               </div>
 
               {/* Content */}

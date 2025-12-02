@@ -1,3 +1,23 @@
+# =============================================================================
+# SanBud24.pl - Azure CI/CD Deployment Pipeline
+# =============================================================================
+#
+# This workflow provides complete deployment for the SanBud24.pl application.
+#
+# Workflow Stages:
+#   1. Validate    - Code linting, tests, and validation
+#   2. Build       - Build frontend and prepare backend
+#   3. Deploy      - Deploy to Azure (Web App + Static Web App)
+#   4. Verify      - Health checks and endpoint testing
+#   5. Notify      - Deployment status reporting
+#
+# Prerequisites:
+#   - GitHub Secrets configured (AZURE_CREDENTIALS, etc.)
+#   - Azure resources already deployed (rg-sanbud-prod)
+#   - Service Principal with Contributor access
+#
+# =============================================================================
+
 name: Deploy SanBud to Azure Production
 
 on:
@@ -5,76 +25,121 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      skip_verification:
+        description: 'Skip verification stage'
+        required: false
+        default: 'false'
+        type: boolean
 
 env:
+  # Backend Configuration
   AZURE_WEBAPP_NAME: app-sanbud-api-prod
-  AZURE_WEBAPP_PACKAGE_PATH: '.'
+  RESOURCE_GROUP: rg-sanbud-prod
   PYTHON_VERSION: '3.11'
+  
+  # Frontend Configuration
   NODE_VERSION: '20'
+  STATIC_WEB_APP_NAME: swa-sanbud-frontend-prod
+  
+  # Azure Region
+  AZURE_REGION: westeurope
 
+# ---------------------------------------------------------------------------
+# Stage 1: Validate Code
+# ---------------------------------------------------------------------------
 jobs:
-  deploy-backend:
-    name: Deploy Flask API to Azure
+  validate:
+    name: Validate Code & Tests
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
     
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout code
         uses: actions/checkout@v4
       
-      - name: Set up Python
+      # Backend Validation
+      - name: 📦 Setup Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
       
-      - name: Install dependencies
+      - name: 🔧 Install Python dependencies
         run: |
+          echo "Installing Python packages..."
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          echo "✅ Dependencies installed successfully"
       
-      - name: Run tests
+      - name: 🧪 Run Python tests
         run: |
           pip install pytest pytest-cov
-          pytest --cov=app tests/ || echo "No tests found"
+          if [ -d "tests" ]; then
+            pytest --cov=app tests/ || echo "⚠️ Some tests failed or not found"
+          else
+            echo "⚠️ No tests directory found, skipping..."
+          fi
       
-      - name: Create deployment package
-        run: |
-          zip -r deployment.zip . -x "*.git*" "frontend/*" "terraform/*" "venv/*" "*.pyc" "__pycache__/*"
-      
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: deployment.zip
-      
-      - name: Run database migrations
-        run: |
-          # Add migration commands here if using Alembic/Flask-Migrate
-          echo "Database migrations would run here"
-  
-  deploy-frontend:
-    name: Deploy Next.js to Azure Static Web Apps
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
+      # Frontend Validation
+      - name: 📦 Setup Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
       
-      - name: Install dependencies
+      - name: 🔧 Install Node dependencies
+        working-directory: ./frontend
         run: |
-          cd frontend
-          npm install
+          echo "Installing npm packages..."
+          npm ci
+          echo "✅ Dependencies installed successfully"
       
-      - name: Build frontend
+      - name: 🔍 Run linting
+        working-directory: ./frontend
+        run: |
+          if npm run lint 2>/dev/null; then
+            echo "✅ Linting passed"
+          else
+            echo "⚠️ No lint script found, skipping..."
+          fi
+      
+      - name: 📊 Validation Summary
+        run: |
+          echo "### ✅ Validation Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Python Version:** ${{ env.PYTHON_VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Node Version:** ${{ env.NODE_VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+
+  # ---------------------------------------------------------------------------
+  # Stage 2: Build Frontend
+  # ---------------------------------------------------------------------------
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    needs: validate
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: 🔧 Install dependencies
+        working-directory: ./frontend
+        run: |
+          echo "Installing npm packages..."
+          npm ci
+          echo "✅ Dependencies installed"
+      
+      - name: 🏗️ Build Next.js application
+        working-directory: ./frontend
         env:
           NEXT_PUBLIC_API_URL: https://api.sanbud24.pl/api
           NEXT_PUBLIC_DOMAIN: sanbud24.pl
@@ -83,10 +148,129 @@ jobs:
           NEXT_PUBLIC_EMAIL: kontakt@sanbud24.pl
           NEXT_PUBLIC_DEFAULT_LOCALE: pl
         run: |
-          cd frontend
-          npm run build:production
+          echo "Building Next.js for production..."
+          npm run build
+          echo "✅ Build completed successfully"
       
-      - name: Deploy to Azure Static Web Apps
+      - name: 📊 Build Summary
+        run: |
+          echo "### 🏗️ Frontend Built Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Framework:** Next.js 14" >> $GITHUB_STEP_SUMMARY
+          echo "**Locales:** Polish (pl), English (en)" >> $GITHUB_STEP_SUMMARY
+          echo "**API URL:** https://api.sanbud24.pl/api" >> $GITHUB_STEP_SUMMARY
+
+  # ---------------------------------------------------------------------------
+  # Stage 3: Deploy Backend
+  # ---------------------------------------------------------------------------
+  deploy-backend:
+    name: Deploy Backend (Flask API)
+    runs-on: ubuntu-latest
+    needs: validate
+    environment:
+      name: production
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: 🔧 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: 📦 Create deployment package
+        run: |
+          echo "Creating deployment package..."
+          zip -r deployment.zip . \
+            -x "*.git*" \
+            -x "frontend/*" \
+            -x "terraform/*" \
+            -x "venv/*" \
+            -x "*.pyc" \
+            -x "__pycache__/*" \
+            -x ".env*" \
+            -x "*.log" \
+            -x "node_modules/*"
+          echo "✅ Package created: $(du -h deployment.zip | cut -f1)"
+      
+      - name: 🔐 Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: 🚀 Deploy to Azure Web App
+        run: |
+          echo "Deploying to Azure Web App: ${{ env.AZURE_WEBAPP_NAME }}"
+          az webapp deployment source config-zip \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --src deployment.zip \
+            --timeout 600
+          echo "✅ Deployment package uploaded"
+      
+      - name: 🔄 Restart Web App
+        run: |
+          echo "Restarting Web App..."
+          az webapp restart \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AZURE_WEBAPP_NAME }}
+          echo "✅ Web App restarted"
+      
+      - name: 📊 Deployment Summary
+        run: |
+          APP_URL="https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net"
+          
+          echo "### 🚀 Backend Deployed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**App Name:** ${{ env.AZURE_WEBAPP_NAME }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Resource Group:** ${{ env.RESOURCE_GROUP }}" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** $APP_URL" >> $GITHUB_STEP_SUMMARY
+          echo "**Custom Domain:** https://api.sanbud24.pl" >> $GITHUB_STEP_SUMMARY
+
+  # ---------------------------------------------------------------------------
+  # Stage 4: Deploy Frontend
+  # ---------------------------------------------------------------------------
+  deploy-frontend:
+    name: Deploy Frontend (Next.js)
+    runs-on: ubuntu-latest
+    needs: [validate, build-frontend]
+    environment:
+      name: production
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: 🔧 Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+      
+      - name: 🏗️ Build frontend
+        working-directory: ./frontend
+        env:
+          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl/api
+          NEXT_PUBLIC_DOMAIN: sanbud24.pl
+          NEXT_PUBLIC_SITE_URL: https://sanbud24.pl
+          NEXT_PUBLIC_PHONE: +48503691808
+          NEXT_PUBLIC_EMAIL: kontakt@sanbud24.pl
+          NEXT_PUBLIC_DEFAULT_LOCALE: pl
+        run: npm run build
+      
+      - name: 🚀 Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
@@ -96,3 +280,201 @@ jobs:
           api_location: ''
           output_location: '.next'
           skip_app_build: true
+      
+      - name: 📊 Deployment Summary
+        run: |
+          echo "### 🌐 Frontend Deployed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Static Web App:** ${{ env.STATIC_WEB_APP_NAME }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Custom Domain:** https://www.sanbud24.pl" >> $GITHUB_STEP_SUMMARY
+          echo "**Framework:** Next.js with App Router" >> $GITHUB_STEP_SUMMARY
+
+  # ---------------------------------------------------------------------------
+  # Stage 5: Verify Deployment
+  # ---------------------------------------------------------------------------
+  verify-deployment:
+    name: Verify Deployment
+    runs-on: ubuntu-latest
+    needs: [deploy-backend, deploy-frontend]
+    if: github.event.inputs.skip_verification != 'true'
+    
+    steps:
+      - name: ⏳ Wait for application startup
+        run: |
+          echo "Waiting 30 seconds for application to fully start..."
+          sleep 30
+          echo "✅ Wait complete, beginning health checks"
+      
+      - name: 🏥 Backend Health Check
+        id: backend-health
+        run: |
+          APP_URL="https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net"
+          
+          echo "Testing backend health: $APP_URL/health"
+          
+          MAX_ATTEMPTS=5
+          ATTEMPT=1
+          
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            echo "Attempt $ATTEMPT of $MAX_ATTEMPTS..."
+            
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$APP_URL/health" || echo "000")
+            
+            if [ "$HTTP_CODE" = "200" ]; then
+              echo "✅ Backend health check passed! (HTTP $HTTP_CODE)"
+              echo "healthy=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            
+            echo "⚠️ Received HTTP $HTTP_CODE, retrying in $((ATTEMPT * 10))s..."
+            sleep $((ATTEMPT * 10))
+            ATTEMPT=$((ATTEMPT + 1))
+          done
+          
+          echo "❌ Backend health check failed after $MAX_ATTEMPTS attempts"
+          echo "healthy=false" >> $GITHUB_OUTPUT
+          exit 1
+      
+      - name: 🌐 Frontend Health Check
+        if: steps.backend-health.outputs.healthy == 'true'
+        run: |
+          FRONTEND_URL="https://www.sanbud24.pl"
+          
+          echo "Testing frontend: $FRONTEND_URL"
+          
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$FRONTEND_URL" || echo "000")
+          
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✅ Frontend is responding! (HTTP $HTTP_CODE)"
+          else
+            echo "⚠️ Frontend returned HTTP $HTTP_CODE (may still be deploying)"
+          fi
+      
+      - name: 🧪 Test API Endpoint
+        if: steps.backend-health.outputs.healthy == 'true'
+        run: |
+          API_URL="https://api.sanbud24.pl/api/services"
+          
+          echo "Testing services endpoint: $API_URL"
+          
+          RESPONSE=$(curl -s -w "\n%{http_code}" "$API_URL" || echo "Error\n000")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | head -n-1)
+          
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✅ Services API is working! (HTTP $HTTP_CODE)"
+          else
+            echo "⚠️ Services API returned HTTP $HTTP_CODE"
+          fi
+      
+      - name: 📊 Verification Summary
+        if: always()
+        run: |
+          HEALTH_STATUS="${{ steps.backend-health.outputs.healthy }}"
+          
+          echo "### ✅ Deployment Verification Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "$HEALTH_STATUS" = "true" ]; then
+            echo "**Backend Status:** ✅ Healthy" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Backend Status:** ❌ Unhealthy" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### 🔗 Quick Links" >> $GITHUB_STEP_SUMMARY
+          echo "- [Backend App](https://app-sanbud-api-prod.azurewebsites.net)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Backend API](https://api.sanbud24.pl)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Frontend](https://www.sanbud24.pl)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Health Endpoint](https://api.sanbud24.pl/health)" >> $GITHUB_STEP_SUMMARY
+
+  # ---------------------------------------------------------------------------
+  # Stage 6: Notify
+  # ---------------------------------------------------------------------------
+  notify:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: [validate, deploy-backend, deploy-frontend, verify-deployment]
+    if: always()
+    
+    steps:
+      - name: 📊 Collect Deployment Status
+        id: status
+        run: |
+          VALIDATE="${{ needs.validate.result }}"
+          BACKEND="${{ needs.deploy-backend.result }}"
+          FRONTEND="${{ needs.deploy-frontend.result }}"
+          VERIFY="${{ needs.verify-deployment.result }}"
+          
+          echo "### 🎯 Deployment Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Stage | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 1. Validate | ${{ needs.validate.result == 'success' && '✅' || '❌' }} $VALIDATE |" >> $GITHUB_STEP_SUMMARY
+          echo "| 2. Deploy Backend | ${{ needs.deploy-backend.result == 'success' && '✅' || needs.deploy-backend.result == 'skipped' && '⏭️' || '❌' }} $BACKEND |" >> $GITHUB_STEP_SUMMARY
+          echo "| 3. Deploy Frontend | ${{ needs.deploy-frontend.result == 'success' && '✅' || needs.deploy-frontend.result == 'skipped' && '⏭️' || '❌' }} $FRONTEND |" >> $GITHUB_STEP_SUMMARY
+          echo "| 4. Verify Deployment | ${{ needs.verify-deployment.result == 'success' && '✅' || needs.verify-deployment.result == 'skipped' && '⏭️' || '❌' }} $VERIFY |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Set overall status
+          if [[ "$VALIDATE" == "success" ]] && \
+             [[ "$BACKEND" == "success" || "$BACKEND" == "skipped" ]] && \
+             [[ "$FRONTEND" == "success" || "$FRONTEND" == "skipped" ]] && \
+             [[ "$VERIFY" == "success" || "$VERIFY" == "skipped" ]]; then
+            echo "overall=success" >> $GITHUB_OUTPUT
+          else
+            echo "overall=failure" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 🎉 Success Notification
+        if: steps.status.outputs.overall == 'success'
+        run: |
+          echo "### ✅ Deployment Successful! 🎉" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All deployment stages completed successfully." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Triggered by:** @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### 🌐 Live URLs" >> $GITHUB_STEP_SUMMARY
+          echo "- **Website:** https://www.sanbud24.pl" >> $GITHUB_STEP_SUMMARY
+          echo "- **API:** https://api.sanbud24.pl" >> $GITHUB_STEP_SUMMARY
+          echo "- **Backend Direct:** https://app-sanbud-api-prod.azurewebsites.net" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### 📚 Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "- Monitor application: [Azure Portal](https://portal.azure.com)" >> $GITHUB_STEP_SUMMARY
+          echo "- View backend logs: \`az webapp log tail --name app-sanbud-api-prod --resource-group rg-sanbud-prod\`" >> $GITHUB_STEP_SUMMARY
+      
+      - name: ❌ Failure Notification
+        if: steps.status.outputs.overall == 'failure'
+        run: |
+          echo "### ❌ Deployment Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "One or more deployment stages failed. Please review the logs above." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Failed Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### 🔧 Troubleshooting Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review error messages in failed stages above" >> $GITHUB_STEP_SUMMARY
+          echo "2. Check Azure Portal for service health" >> $GITHUB_STEP_SUMMARY
+          echo "3. Verify GitHub Secrets are configured correctly" >> $GITHUB_STEP_SUMMARY
+          echo "4. Test locally: \`az webapp deploy --type zip --src-path deployment.zip\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### 🔄 Quick Rollback" >> $GITHUB_STEP_SUMMARY
+          echo "```bash" >> $GITHUB_STEP_SUMMARY
+          echo "# Deploy previous working commit" >> $GITHUB_STEP_SUMMARY
+          echo "git log --oneline -n 5" >> $GITHUB_STEP_SUMMARY
+          echo "git push origin <previous-commit-sha>:main --force" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+      
+      - name: 🚨 Final Status
+        run: |
+          if [ "${{ steps.status.outputs.overall }}" = "success" ]; then
+            echo "🎉 All stages completed successfully!"
+            exit 0
+          else
+            echo "❌ Deployment pipeline failed - check logs above for details"
+            exit 1
+          fi

@@ -172,6 +172,10 @@
   "stats": {
     "title": "We're Across Poland",
     "subtitle": "Our work contributes to improving the quality of plumbing services",
+    "achievement": {
+      "title": "Thousands of customers trusted us",
+      "subtitle": "Professionalism confirmed by certifications"
+    },
     "items": [
       {
         "value": "5000+",
@@ -221,7 +225,7 @@
   "footer": {
     "companyInfo": {
       "title": "About Company",
-      "description": "Professional plumbing and sanitary services with over 20 years of experience. A trusted partner for homes and businesses across Poland."
+      "description": "Professional plumbing and sanitary services for your home and business. Experience, quality and punctuality are our priorities."
     },
     "quickLinks": {
       "title": "Menu",
@@ -231,6 +235,16 @@
       "realizations": "Projects",
       "blog": "Blog",
       "contact": "Contact"
+    },
+    "services": {
+      "title": "Services",
+      "items": [
+        "Water installation assembly",
+        "Turnkey bathrooms",
+        "Heating installations",
+        "24/7 emergency service",
+        "Repairs and maintenance"
+      ]
     },
     "contact": {
       "title": "Contact",

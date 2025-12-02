@@ -178,6 +178,10 @@
   "stats": {
     "title": "Jesteśmy w całej Polsce",
     "subtitle": "Swoją działalnością wpływamy na poprawę jakości usług hydraulicznych",
+    "achievement": {
+      "title": "Zaufali nam tysiące klientów",
+      "subtitle": "Profesjonalizm potwierdzony certyfikatami"
+    },
     "items": [
       {
         "value": "5000+",
@@ -227,7 +231,7 @@
   "footer": {
     "companyInfo": {
       "title": "O firmie",
-      "description": "Profesjonalne usługi hydrauliczne i sanitarne z ponad 20-letnim doświadczeniem. Zaufany partner dla domów i firm w całej Polsce."
+      "description": "Profesjonalne usługi hydrauliczne i sanitarne dla Twojego domu i firmy. Doświadczenie, jakość i terminowość to nasze priorytety."
     },
     "quickLinks": {
       "title": "Menu",
@@ -237,6 +241,16 @@
       "realizations": "Realizacje",
       "blog": "Blog",
       "contact": "Kontakt"
+    },
+    "services": {
+      "title": "Usługi",
+      "items": [
+        "Montaż instalacji wodnych",
+        "Łazienki pod klucz",
+        "Instalacje grzewcze",
+        "Serwis awaryjny 24/7",
+        "Naprawy i konserwacje"
+      ]
     },
     "contact": {
       "title": "Kontakt",
