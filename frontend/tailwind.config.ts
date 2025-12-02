@@ -10,7 +10,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-poppins)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-montserrat)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['var(--font-playfair)', 'Georgia', 'serif'],
       },
       colors: {
         // SanBud Professional Blue + HAOS Orange Hybrid Theme
@@ -93,10 +94,6 @@ const config: Config = {
           'orange-light': '#FFB380',
           'orange-dark': '#E67A2E',
         },
-      },
-      fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #0A4B6E 0%, #1A6B9E 100%)',

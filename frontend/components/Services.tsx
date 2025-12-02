@@ -49,7 +49,7 @@ export default function Services() {
       icon: '💧',
       title: 'Instalacje sanitarne',
       description: 'Nowoczesne rozwiązania sanitarne dla domu i firmy',
-      image: '/images/hero-bg.jpg',
+      image: '/images/sanbud-google-5.jpg',
     },
   ];
 

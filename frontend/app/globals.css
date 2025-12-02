@@ -24,38 +24,44 @@
     --color-neutral: 248 249 250; /* #F8F9FA */
     --color-neutral-dark: 233 236 239; /* #E9ECEF */
     
-    /* Professional Fonts */
+    /* Professional Premium Fonts */
     --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --font-heading: var(--font-poppins), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-display: var(--font-playfair), Georgia, Cambria, serif;
   }
   
   body {
     @apply bg-neutral-50 text-neutral-900;
     font-family: var(--font-sans);
-    font-feature-settings: 'rlig' 1, 'calt' 1;
+    font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold text-primary-900;
     font-family: var(--font-heading);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    font-optical-sizing: auto;
   }
   
   h1 {
     @apply text-5xl md:text-6xl lg:text-7xl;
-    font-weight: 800;
+    font-weight: 900;
+    letter-spacing: -0.04em;
   }
   
   h2 {
     @apply text-4xl md:text-5xl;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.03em;
   }
   
   h3 {
     @apply text-2xl md:text-3xl;
-    font-weight: 600;
+    font-weight: 700;
   }
 }
 
@@ -378,6 +384,62 @@
   
   .container-wide {
     @apply max-w-7xl mx-auto px-4;
+  }
+  
+  /* Premium Typography Utilities */
+  .text-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-accent to-accent-dark bg-clip-text text-transparent;
+  }
+  
+  /* Interactive Text Effects */
+  .text-interactive {
+    @apply transition-all duration-300 hover:text-accent hover:tracking-wide;
+  }
+  
+  .heading-interactive {
+    @apply transition-all duration-500;
+    text-shadow: 0 0 0 transparent;
+  }
+  
+  .heading-interactive:hover {
+    @apply text-accent;
+    text-shadow: 0 4px 20px rgba(255, 140, 66, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Premium Link Styles */
+  .link-premium {
+    @apply relative inline-block font-semibold text-primary;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .link-premium::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-accent to-accent-dark;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .link-premium:hover::after {
+    @apply w-full;
+  }
+  
+  .link-premium:hover {
+    @apply text-accent;
+    letter-spacing: 0.02em;
   }
 }
 
