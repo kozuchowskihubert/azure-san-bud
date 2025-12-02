@@ -1,25 +1,16 @@
-name: Deploy SanBud to Azure
+name: Deploy SanBud to Azure Production
 
 on:
   push:
     branches:
       - main
-      - develop
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy'
-        required: true
-        default: 'dev'
-        type: choice
-        options:
-          - dev
-          - prod
 
 env:
-  AZURE_WEBAPP_NAME: app-sanbud-api-dev
+  AZURE_WEBAPP_NAME: app-sanbud-api-prod
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   PYTHON_VERSION: '3.11'
+  NODE_VERSION: '20'
 
 jobs:
   deploy-backend:
@@ -85,11 +76,15 @@ jobs:
       
       - name: Build frontend
         env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.API_URL }}
+          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl/api
+          NEXT_PUBLIC_DOMAIN: sanbud24.pl
+          NEXT_PUBLIC_SITE_URL: https://sanbud24.pl
+          NEXT_PUBLIC_PHONE: +48503691808
+          NEXT_PUBLIC_EMAIL: kontakt@sanbud24.pl
           NEXT_PUBLIC_DEFAULT_LOCALE: pl
         run: |
           cd frontend
-          npm run build
+          npm run build:production
       
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
