@@ -1,0 +1,62 @@
+# Production Dockerfile for SanBud Hydraulika
+# Optimized for Azure Container Registry + App Service
+
+FROM python:3.11-slim as builder
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip wheel --no-cache-dir --wheel-dir /app/wheels -r requirements.txt
+
+FROM python:3.11-slim
+
+LABEL maintainer="SanBud Hydraulika"
+LABEL environment="production"
+LABEL version="1.0.0"
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    libpq5 \
+    postgresql-client \
+    curl \
+    && rm -rf /var/lib/apt/lists/* && \
+    useradd -m -u 1000 sanbud
+
+COPY --from=builder /app/wheels /wheels
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir /wheels/* && \
+    rm -rf /wheels
+
+COPY --chown=sanbud:sanbud . .
+
+USER sanbud
+
+EXPOSE 8000
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    FLASK_ENV=production \
+    GUNICORN_WORKERS=4 \
+    GUNICORN_THREADS=2 \
+    GUNICORN_TIMEOUT=120
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8000/ || exit 1
+
+CMD gunicorn \
+    --bind 0.0.0.0:8000 \
+    --workers ${GUNICORN_WORKERS} \
+    --threads ${GUNICORN_THREADS} \
+    --timeout ${GUNICORN_TIMEOUT} \
+    --access-logfile - \
+    --error-logfile - \
+    --log-level info \
+    --preload \
+    run:app

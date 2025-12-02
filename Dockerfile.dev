@@ -1,0 +1,44 @@
+# Development Dockerfile for SanBud Hydraulika
+# Hot-reload enabled, debug mode
+
+FROM python:3.11-slim
+
+LABEL maintainer="SanBud Hydraulika"
+LABEL environment="development"
+
+WORKDIR /app
+
+# Install development dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libpq-dev \
+    postgresql-client \
+    curl \
+    vim \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies including dev tools
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir \
+        pytest \
+        pytest-cov \
+        black \
+        flake8 \
+        ipython \
+        debugpy
+
+# Expose Flask dev server port and debugger port
+EXPOSE 5002 5678
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:5002/ || exit 1
+
+# Run with Flask development server (auto-reload)
+CMD ["python", "run.py"]

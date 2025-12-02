@@ -1,61 +1,78 @@
+# SanBud Hydraulika - Production-like Docker Compose
 version: '3.8'
 
 services:
   # PostgreSQL Database
   db:
     image: postgres:14-alpine
-    container_name: sanitary_postgres
+    container_name: sanbud-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: sanitary_services
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sanbud_dev_db
+      POSTGRES_USER: sanbud_admin
+      POSTGRES_PASSWORD: SanBud2025!Dev
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U sanbud_admin"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - sanbud-network
 
-  # Flask Web Application
-  web:
-    build: .
-    container_name: sanitary_web
+  # Flask API (Backend)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    container_name: sanbud-api
     restart: unless-stopped
     ports:
       - "8000:8000"
     environment:
-      FLASK_ENV: development
-      SECRET_KEY: dev-secret-key-change-in-production
-      DB_HOST: db
-      DB_NAME: sanitary_services
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_PORT: 5432
+      DATABASE_URL: postgresql://sanbud_admin:SanBud2025!Dev@db:5432/sanbud_dev_db
+      FLASK_ENV: production
+      SECRET_KEY: ${SECRET_KEY:-change-this-in-production}
+      GUNICORN_WORKERS: 4
+      GUNICORN_THREADS: 2
+      GUNICORN_TIMEOUT: 120
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - sanbud-network
+
+  # Nginx Reverse Proxy (Optional)
+  nginx:
+    image: nginx:alpine
+    container_name: sanbud-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
     volumes:
-      - .:/app
-    command: >
-      sh -c "
-        echo 'Waiting for database...' &&
-        sleep 5 &&
-        flask db upgrade || echo 'Migration skipped' &&
-        gunicorn --bind 0.0.0.0:8000 --workers 2 --reload --timeout 600 run:app
-      "
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+    networks:
+      - sanbud-network
 
   # pgAdmin (Optional - for database management)
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: sanitary_pgadmin
+    container_name: sanbud-pgadmin
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@sanitaryservices.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: admin@sanbud.pl
+      PGADMIN_DEFAULT_PASSWORD: SanBud2025!Admin
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     ports:
       - "5050:80"
@@ -63,7 +80,15 @@ services:
       - db
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - sanbud-network
+
+networks:
+  sanbud-network:
+    driver: bridge
 
 volumes:
   postgres_data:
+    driver: local
   pgadmin_data:
+    driver: local
