@@ -192,12 +192,14 @@ export default function Footer() {
           <h3 className="text-lg font-bold mb-6 text-center text-white">
             Nasze realizacje
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
               { src: '/images/sanbud-google-1.jpg', alt: 'Realizacja 1' },
               { src: '/images/sanbud-google-2.jpg', alt: 'Realizacja 2 - Łazienka' },
               { src: '/images/sanbud-google-3.jpg', alt: 'Realizacja 3' },
               { src: '/images/sanbud-google-4.jpg', alt: 'Realizacja 4' },
+              { src: '/images/sanbud-google-5.jpg', alt: 'Realizacja 5' },
+              { src: '/images/sanbud-google-6.jpg', alt: 'Realizacja 6' },
             ].map((image, index) => (
               <div
                 key={index}
