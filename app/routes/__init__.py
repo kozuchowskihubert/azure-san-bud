@@ -1,4 +1,4 @@
 """Routes package."""
-from app.routes import main, services, appointments
+from app.routes import main, services, appointments, admin
 
-__all__ = ['main', 'services', 'appointments']
+__all__ = ['main', 'services', 'appointments', 'admin']

@@ -37,10 +37,11 @@ def create_app(config_name='production'):
     migrate.init_app(app, db)
     
     # Register blueprints
-    from app.routes import main, services, appointments
+    from app.routes import main, services, appointments, admin
     app.register_blueprint(main.bp)
     app.register_blueprint(services.bp)
     app.register_blueprint(appointments.bp)
+    app.register_blueprint(admin.admin_bp)
     
     # Create database tables
     with app.app_context():
