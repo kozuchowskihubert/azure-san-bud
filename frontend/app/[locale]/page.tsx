@@ -1,252 +1,135 @@
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function HomePage() {
-  // Dane z Google Maps - San-Bud Hydraulika
+  // Business data matching Google Maps
   const businessData = {
     name: 'San-Bud Hydraulika',
-    tagline: 'Nasza pasja',
+    tagline: 'Profesjonalne usługi hydrauliczne',
     established: '2018',
     address: 'Polska',
     phone: '+48 123 456 789',
     email: 'kontakt@sanbud.pl',
-    googleMaps: 'https://www.google.com/maps/place/San-Bud+Hydraulika+Nasza+pasja/@52.6330895,20.3494125',
+    googleMaps: 'https://www.google.com/maps/place/San-Bud+Hydraulika+Nasza+pasja/@52.6330895,20.3494125,17z',
     facebook: 'https://www.facebook.com/sanbud',
-    hours: {
-      weekdays: 'Poniedziałek - Piątek: 8:00 - 18:00',
-      weekend: 'Sobota: 9:00 - 14:00',
-      emergency: 'Awarie 24/7',
-    },
   };
 
+  const services = [
+    {
+      icon: '💧',
+      title: 'Instalacje wodne',
+      description: 'Kompleksowe instalacje wod-kan w budynkach mieszkalnych i komercyjnych',
+      features: ['Woda', 'Kanalizacja', 'Gaz', 'Centralne ogrzewanie']
+    },
+    {
+      icon: '🛁',
+      title: 'Remonty łazienek',
+      description: 'Profesjonalne remonty od projektu po wykończenie',
+      features: ['Projekt', 'Hydraulika', 'Wykończenia', 'Ceramika']
+    },
+    {
+      icon: '🔧',
+      title: 'Serwis i naprawy',
+      description: 'Szybkie interwencje i naprawy hydrauliczne',
+      features: ['Awarie 24/7', 'Konserwacje', 'Modernizacje', 'Przeglądy']
+    }
+  ];
+
+  const processSteps = [
+    { number: '01', title: 'Kontakt', description: 'Skontaktuj się telefonicznie lub przez formularz' },
+    { number: '02', title: 'Wycena', description: 'Bezpłatny kosztorys i doradztwo techniczne' },
+    { number: '03', title: 'Termin', description: 'Ustalenie terminu realizacji projektu' },
+    { number: '04', title: 'Realizacja', description: 'Profesjonalne wykonanie zgodnie z umową' },
+    { number: '05', title: 'Odbiór', description: 'Kontrola jakości i odbiór techniczny' },
+    { number: '06', title: 'Gwarancja', description: 'Pełna gwarancja na wykonane usługi' }
+  ];
+
+  const benefits = [
+    { icon: '⭐', title: 'Doświadczenie', text: '7 lat na rynku, ponad 500 zrealizowanych projektów' },
+    { icon: '🏆', title: 'Jakość', text: 'Współpraca tylko z renomowanymi producentami' },
+    { icon: '⚡', title: 'Szybkość', text: 'Realizacja zgodnie z ustalonym harmonogramem' },
+    { icon: '💰', title: 'Ceny', text: 'Konkurencyjne ceny bez ukrytych kosztów' }
+  ];
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[rgb(var(--color-bg-primary))] via-[rgb(var(--color-bg-secondary))] to-[rgb(var(--color-bg-tertiary))]">
-      <Navigation />
+    <div className="min-h-screen bg-white">
       
-      {/* Hero Business Card Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-[rgb(var(--color-primary))] rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
-          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-[rgb(var(--color-accent))] rounded-full filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[rgb(var(--color-gradient-mid))] rounded-full filter blur-3xl opacity-10 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'linear-gradient(rgba(52, 152, 219, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(52, 152, 219, 0.3) 1px, transparent 1px)',
-            backgroundSize: '50px 50px',
-          }}></div>
-        </div>
-
-        {/* Main Business Card */}
-        <div className="relative z-10 max-w-6xl w-full">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            
-            {/* Left: Business Info Card */}
-            <div className="card-glass p-12 space-y-8 transform hover:scale-105 transition-all duration-500">
-              {/* Logo & Brand */}
-              <div className="flex items-center gap-6 mb-8">
-                <div className="relative w-24 h-24 rounded-2xl overflow-hidden ring-4 ring-[rgb(var(--color-primary))] shadow-2xl">
-                  <Image
-                    src="/images/logo.jpg"
-                    alt="SanBud Logo"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <h1 className="text-4xl font-black bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(var(--color-gradient-mid))] to-[rgb(var(--color-accent))] bg-clip-text text-transparent mb-2">
-                    {businessData.name}
-                  </h1>
-                  <p className="text-xl text-[rgb(var(--color-text-secondary))] font-display italic">
-                    {businessData.tagline}
-                  </p>
-                  <p className="text-sm text-[rgb(var(--color-text-muted))] mt-1">
-                    Założona w {businessData.established}
-                  </p>
-                </div>
-              </div>
-
-              {/* Quick Contact Buttons */}
-              <div className="grid grid-cols-2 gap-4">
-                <a
-                  href={`tel:${businessData.phone}`}
-                  className="btn btn-primary flex items-center justify-center gap-2 group"
-                >
-                  <span className="text-2xl group-hover:scale-125 transition-transform">📞</span>
-                  <span>Zadzwoń</span>
-                </a>
-                <a
-                  href={businessData.googleMaps}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-accent flex items-center justify-center gap-2 group"
-                >
-                  <span className="text-2xl group-hover:scale-125 transition-transform">🗺️</span>
-                  <span>Mapa</span>
-                </a>
-              </div>
-
-              {/* Contact Details */}
-              <div className="space-y-4 border-t border-[rgb(var(--color-border))] pt-6">
-                <div className="flex items-center gap-4 group cursor-pointer hover:bg-[rgb(var(--color-bg-elevated))] p-3 rounded-lg transition-all">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[rgb(var(--color-primary))] to-[rgb(var(--color-primary-dark))] flex items-center justify-center text-2xl shadow-lg">
-                    📞
-                  </div>
-                  <div>
-                    <p className="text-xs text-[rgb(var(--color-text-muted))] uppercase tracking-wider">Telefon</p>
-                    <a href={`tel:${businessData.phone}`} className="text-lg font-semibold text-[rgb(var(--color-text-primary))] group-hover:text-[rgb(var(--color-accent))] transition-colors">
-                      {businessData.phone}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4 group cursor-pointer hover:bg-[rgb(var(--color-bg-elevated))] p-3 rounded-lg transition-all">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[rgb(var(--color-accent))] to-[rgb(var(--color-accent-dark))] flex items-center justify-center text-2xl shadow-lg">
-                    ✉️
-                  </div>
-                  <div>
-                    <p className="text-xs text-[rgb(var(--color-text-muted))] uppercase tracking-wider">Email</p>
-                    <a href={`mailto:${businessData.email}`} className="text-lg font-semibold text-[rgb(var(--color-text-primary))] group-hover:text-[rgb(var(--color-accent))] transition-colors">
-                      {businessData.email}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4 group cursor-pointer hover:bg-[rgb(var(--color-bg-elevated))] p-3 rounded-lg transition-all">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[rgb(var(--color-gradient-mid))] to-[rgb(var(--color-primary))] flex items-center justify-center text-2xl shadow-lg">
-                    📍
-                  </div>
-                  <div>
-                    <p className="text-xs text-[rgb(var(--color-text-muted))] uppercase tracking-wider">Lokalizacja</p>
-                    <p className="text-lg font-semibold text-[rgb(var(--color-text-primary))]">
-                      {businessData.address}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Hours */}
-              <div className="bg-[rgb(var(--color-bg-elevated))] p-6 rounded-xl border border-[rgb(var(--color-border-light))]">
-                <h3 className="text-sm font-bold text-[rgb(var(--color-text-primary))] mb-4 flex items-center gap-2">
-                  <span className="text-xl">⏰</span> Godziny otwarcia
-                </h3>
-                <div className="space-y-2 text-sm">
-                  <p className="text-[rgb(var(--color-text-secondary))]">{businessData.hours.weekdays}</p>
-                  <p className="text-[rgb(var(--color-text-secondary))]">{businessData.hours.weekend}</p>
-                  <p className="text-[rgb(var(--color-accent))] font-bold flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[rgb(var(--color-accent))] animate-pulse"></span>
-                    {businessData.hours.emergency}
-                  </p>
-                </div>
-              </div>
-
-              {/* Social Links */}
-              <div className="flex gap-3">
-                <a
-                  href={businessData.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 bg-[rgb(var(--color-bg-elevated))] hover:bg-[#1877F2] p-4 rounded-xl flex items-center justify-center gap-2 transition-all transform hover:scale-105 border border-[rgb(var(--color-border))]"
-                >
-                  <span className="text-2xl">📘</span>
-                  <span className="text-sm font-semibold">Facebook</span>
-                </a>
-                <a
-                  href={businessData.googleMaps}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 bg-[rgb(var(--color-bg-elevated))] hover:bg-[#34A853] p-4 rounded-xl flex items-center justify-center gap-2 transition-all transform hover:scale-105 border border-[rgb(var(--color-border))]"
-                >
-                  <span className="text-2xl">🗺️</span>
-                  <span className="text-sm font-semibold">Google Maps</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Right: Featured Project Showcase */}
-            <div className="space-y-6">
-              {/* Main Featured Image */}
-              <div className="relative h-96 rounded-2xl overflow-hidden group">
-                <Image
-                  src="/images/hero-bg.jpg"
-                  alt="Nasza realizacja"
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--color-bg-primary))] via-transparent to-transparent opacity-60"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="inline-block bg-[rgb(var(--color-accent))] text-white px-4 py-2 rounded-full text-sm font-bold mb-3">
-                    Najnowsza realizacja
-                  </div>
-                  <h3 className="text-3xl font-bold text-white mb-2">
-                    Luksusowa łazienka
-                  </h3>
-                  <p className="text-white/90">
-                    Kompleksowa realizacja z wykorzystaniem premium materiałów
-                  </p>
-                </div>
-              </div>
-
-              {/* Service Cards */}
-              <div className="grid grid-cols-3 gap-4">
-                {[
-                  { icon: '💧', label: 'Instalacje', color: 'primary' },
-                  { icon: '🛁', label: 'Łazienki', color: 'accent' },
-                  { icon: '🚨', label: '24/7', color: 'gradient-mid' },
-                ].map((service, idx) => (
-                  <div key={idx} className="card p-6 text-center group hover:scale-105 transition-all">
-                    <div className="text-4xl mb-2 transform group-hover:scale-125 transition-transform">
-                      {service.icon}
-                    </div>
-                    <p className="text-sm font-semibold text-[rgb(var(--color-text-primary))]">
-                      {service.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA Buttons */}
-              <div className="flex gap-4">
-                <Link
-                  href="/pl/services"
-                  className="flex-1 btn btn-gradient flex items-center justify-center gap-2"
-                >
-                  <span>Nasze usługi</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-                <Link
-                  href="/pl/contact"
-                  className="flex-1 btn btn-outline-primary flex items-center justify-center gap-2"
-                >
-                  <span>Kontakt</span>
-                </Link>
-              </div>
+      {/* HERO SECTION - Eko-solutions style */}
+      <section className="relative h-[600px] md:h-[700px] overflow-hidden">
+        <Image
+          src="/images/hero-bg.jpg"
+          alt="San-Bud Hydraulika"
+          fill
+          className="object-cover brightness-50"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+        
+        <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
+          <div className="max-w-2xl text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              {businessData.name}
+            </h1>
+            <p className="text-xl md:text-2xl mb-4 text-gray-200">
+              {businessData.tagline}
+            </p>
+            <p className="text-lg mb-8 text-gray-300">
+              Kompleksowe rozwiązania hydrauliczne dla Twojego domu i firmy
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a 
+                href="#contact" 
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+              >
+                Darmowa wycena
+              </a>
+              <a 
+                href={`tel:${businessData.phone}`}
+                className="px-8 py-4 bg-white/10 backdrop-blur-md border-2 border-white hover:bg-white hover:text-blue-900 text-white font-bold rounded-lg text-lg transition-all duration-300"
+              >
+                📞 {businessData.phone}
+              </a>
             </div>
           </div>
+        </div>
 
-          {/* Stats Bar */}
-          <div className="mt-12 card-glass p-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { number: '500+', label: 'Projektów', icon: '✓' },
-                { number: '7', label: 'Lat doświadczenia', icon: '🎓' },
-                { number: '24/7', label: 'Wsparcie', icon: '🚨' },
-                { number: '100%', label: 'Zadowolenie', icon: '⭐' },
-              ].map((stat, idx) => (
-                <div key={idx} className="text-center group">
-                  <div className="text-sm text-[rgb(var(--color-text-muted))] mb-2">{stat.icon}</div>
-                  <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-[rgb(var(--color-primary))] to-[rgb(var(--color-accent))] bg-clip-text text-transparent mb-1 group-hover:scale-110 transition-transform">
-                    {stat.number}
-                  </div>
-                  <div className="text-sm text-[rgb(var(--color-text-secondary))] font-medium">
-                    {stat.label}
+        {/* Emergency badge */}
+        <div className="absolute bottom-8 right-8 bg-red-600 text-white px-6 py-3 rounded-full font-bold animate-pulse shadow-2xl">
+          🚨 Awarie 24/7
+        </div>
+      </section>
+
+      {/* LEADER SECTION - O firmie */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Lider branży hydraulicznej
+            </h2>
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Doświadczenie w branży hydraulicznej oraz indywidualne podejście do klienta to coś, 
+              co wyróżnia nas na tle innych firm! Specjalnie dla Ciebie zaprojektujemy i wykonamy 
+              wydajną instalację wodną, która zapewni Ci komfort, niezawodność oraz zwiększy 
+              wartość Twojej nieruchomości.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
+              <Image
+                src="/images/sanbud-google-2.jpg"
+                alt="Realizacja San-Bud"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="space-y-6">
+              {benefits.map((benefit, index) => (
+                <div key={index} className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                  <div className="text-4xl flex-shrink-0">{benefit.icon}</div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{benefit.title}</h3>
+                    <p className="text-gray-600">{benefit.text}</p>
                   </div>
                 </div>
               ))}
@@ -255,7 +138,196 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Footer />
-    </main>
+      {/* SERVICES SECTION */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Nasze usługi
+            </h2>
+            <p className="text-xl text-gray-600">
+              Kompleksowe rozwiązania hydrauliczne dostosowane do Twoich potrzeb
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {services.map((service, index) => (
+              <div key={index} className="bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="text-6xl mb-4">{service.icon}</div>
+                <h3 className="text-2xl font-bold mb-3 text-gray-900">{service.title}</h3>
+                <p className="text-gray-600 mb-6">{service.description}</p>
+                <ul className="space-y-2">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center gap-2 text-gray-700">
+                      <span className="text-blue-600">✓</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS SECTION */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Profesjonalizm na wyciągnięcie ręki!
+            </h2>
+            <p className="text-xl text-gray-600">
+              Przeprowadzimy Cię przez cały proces realizacji projektu
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
+            {processSteps.map((step, index) => (
+              <div key={index} className="relative">
+                <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                  <div className="text-5xl font-bold text-blue-600 mb-3">{step.number}</div>
+                  <h3 className="text-lg font-bold mb-2 text-gray-900">{step.title}</h3>
+                  <p className="text-sm text-gray-600">{step.description}</p>
+                </div>
+                {index < processSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-blue-300" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REALIZATIONS MAP SECTION */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Poznaj nasze realizacje
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Swoją działalnością wpływamy na komfort życia klientów w całej Polsce
+            </p>
+            <Link 
+              href="/services"
+              className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-300"
+            >
+              Zobacz wszystkie realizacje
+            </Link>
+          </div>
+
+          {/* Gallery Grid */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mt-12">
+            {[1, 2, 3, 4, 5, 6].map((num) => (
+              <div key={num} className="relative h-64 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
+                <Image
+                  src={`/images/sanbud-google-${num}.jpg`}
+                  alt={`Realizacja ${num}`}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+            ))}
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-16">
+            <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-md">
+              <div className="text-4xl font-bold text-blue-600 mb-2">500+</div>
+              <div className="text-gray-600">Projektów</div>
+            </div>
+            <div className="text-center p-6 bg-gradient-to-br from-green-50 to-white rounded-xl shadow-md">
+              <div className="text-4xl font-bold text-green-600 mb-2">7</div>
+              <div className="text-gray-600">Lat doświadczenia</div>
+            </div>
+            <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-white rounded-xl shadow-md">
+              <div className="text-4xl font-bold text-purple-600 mb-2">24/7</div>
+              <div className="text-gray-600">Serwis</div>
+            </div>
+            <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-md">
+              <div className="text-4xl font-bold text-orange-600 mb-2">100%</div>
+              <div className="text-gray-600">Gwarancja</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT FORM SECTION */}
+      <section id="contact" className="py-20 bg-gradient-to-b from-blue-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Zacznij oszczędzać czas!
+              </h2>
+              <p className="text-xl text-gray-600">
+                Zostaw kontakt, oddzwonimy
+              </p>
+              <p className="text-sm text-gray-500 mt-2">
+                Otrzymasz wycenę w ciągu 24h lub zadzwoń: <a href={`tel:${businessData.phone}`} className="text-blue-600 font-bold hover:underline">{businessData.phone}</a>
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+              <form className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Imię</label>
+                    <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Nazwisko</label>
+                    <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">E-mail</label>
+                  <input type="email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Telefon</label>
+                  <input type="tel" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Rodzaj usługi</label>
+                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option>Instalacje wodne</option>
+                    <option>Remont łazienki</option>
+                    <option>Awaria</option>
+                    <option>Konserwacja</option>
+                    <option>Inne</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Wiadomość</label>
+                  <textarea rows={4} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <input type="checkbox" className="mt-1" id="privacy" />
+                  <label htmlFor="privacy" className="text-sm text-gray-600">
+                    Wyrażam zgodę na przetwarzanie moich danych osobowych w celu kontaktu oraz przesyłania ofert
+                  </label>
+                </div>
+
+                <button 
+                  type="submit"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                >
+                  Wyślij zapytanie
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
   );
 }
