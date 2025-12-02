@@ -125,52 +125,87 @@ azure-san-bud/
 
 ## 🌐 Azure Deployment
 
-### Prerequisites
+### Deployment Methods
 
-- Azure CLI installed and configured
-- Azure subscription
-- GitHub repository
+This project supports two deployment methods:
 
-### Quick Deployment
+1. **Terraform (Recommended)** - Infrastructure as Code
+2. **Manual Azure CLI** - For quick testing
 
-See [AZURE_DEPLOYMENT.md](AZURE_DEPLOYMENT.md) for detailed instructions.
+### Option 1: Terraform Deployment (Recommended)
 
-1. **Create Azure resources**
-   ```bash
-   # Resource Group
-   az group create --name rg-sanitary-services-prod --location eastus
-   
-   # PostgreSQL Server
-   az postgres flexible-server create \
-     --name psql-sanitary-prod \
-     --resource-group rg-sanitary-services-prod \
-     --admin-user adminuser \
-     --admin-password <YourPassword>
-   
-   # Web App
-   az webapp up \
-     --name app-sanitary-prod \
-     --resource-group rg-sanitary-services-prod \
-     --runtime "PYTHON:3.11"
-   ```
+Terraform automates the entire infrastructure deployment. See [terraform/README.md](terraform/README.md) for detailed instructions.
 
-2. **Configure environment variables**
-   ```bash
-   az webapp config appsettings set \
-     --name app-sanitary-prod \
-     --resource-group rg-sanitary-services-prod \
-     --settings \
-       FLASK_ENV=production \
-       SECRET_KEY="<your-secret-key>" \
-       DB_HOST="psql-sanitary-prod.postgres.database.azure.com" \
-       DB_NAME="sanitary_services" \
-       DB_USER="adminuser" \
-       DB_PASSWORD="<YourPassword>"
-   ```
+**Quick Start:**
 
-3. **Deploy using GitHub Actions**
-   - Add `AZURE_WEBAPP_PUBLISH_PROFILE` to GitHub secrets
-   - Push to main branch to trigger deployment
+```bash
+# 1. Setup Terraform backend
+make setup-backend ENV=prod
+
+# 2. Configure secrets
+cp terraform/environments/prod/secrets.tfvars.example terraform/environments/prod/secrets.tfvars
+# Edit with your secrets
+
+# 3. Deploy infrastructure
+make init ENV=prod
+make plan ENV=prod
+make apply ENV=prod
+```
+
+**What gets deployed:**
+- Resource Group
+- PostgreSQL Flexible Server with database
+- App Service Plan + Web App
+- Firewall rules and security settings
+- (Optional) Virtual Network
+- (Optional) Azure Key Vault
+
+**Cost Estimate:**
+- Development: ~$50-100/month
+- Production: ~$100-200/month
+
+### Option 2: Manual Azure CLI Deployment
+
+See [AZURE_DEPLOYMENT.md](AZURE_DEPLOYMENT.md) for manual deployment instructions.
+
+**Quick deployment:**
+
+```bash
+# Deploy using webapp up command
+az webapp up \
+  --name app-sanitary-prod \
+  --resource-group rg-sanitary-services-prod \
+  --runtime "PYTHON:3.11" \
+  --sku B1 \
+  --location eastus
+```
+
+### GitHub Actions CI/CD
+
+Both deployment methods support automated CI/CD:
+
+1. **Terraform Workflow** - `.github/workflows/terraform.yml`
+   - Automatically runs on Terraform file changes
+   - Creates and applies infrastructure changes
+   - Requires Azure service principal secrets
+
+2. **App Deployment Workflow** - `.github/workflows/azure-deploy.yml`
+   - Deploys application code to App Service
+   - Runs on push to main branch
+   - Requires publish profile secret
+
+**Required GitHub Secrets:**
+
+For Terraform:
+- `AZURE_CLIENT_ID`
+- `AZURE_CLIENT_SECRET`
+- `AZURE_SUBSCRIPTION_ID`
+- `AZURE_TENANT_ID`
+- `POSTGRESQL_ADMIN_PASSWORD`
+- `FLASK_SECRET_KEY`
+
+For App Deployment:
+- `AZURE_WEBAPP_PUBLISH_PROFILE`
 
 ## 📊 Database Models
 
