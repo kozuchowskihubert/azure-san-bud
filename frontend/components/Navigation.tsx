@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,6 +12,22 @@ export default function Navigation() {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Dane kontaktowe z Google Maps
+  const contactData = {
+    phone: '+48 123 456 789',
+    googleMaps: 'https://www.google.com/maps/place/San-Bud+Hydraulika+Nasza+pasja/@52.6330895,20.3494125',
+    facebook: 'https://www.facebook.com/sanbud',
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const switchLocale = (newLocale: string) => {
     const currentPath = pathname.replace(`/${locale}`, '');
@@ -19,19 +35,23 @@ export default function Navigation() {
   };
 
   const navItems = [
-    { label: t('navigation.home'), href: `/${locale}` },
-    { label: t('navigation.services'), href: `/${locale}/services` },
-    { label: t('navigation.about'), href: `/${locale}/about` },
-    { label: t('navigation.contact'), href: `/${locale}/contact` },
+    { label: t('navigation.home'), href: `/${locale}`, icon: '🏠' },
+    { label: t('navigation.services'), href: `/${locale}/services`, icon: '💧' },
+    { label: t('navigation.about'), href: `/${locale}/about`, icon: 'ℹ️' },
+    { label: t('navigation.contact'), href: `/${locale}/contact`, icon: '📞' },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-md z-50">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled 
+        ? 'bg-[rgb(var(--color-bg-tertiary))]/95 backdrop-blur-xl shadow-2xl border-b border-[rgb(var(--color-border))]' 
+        : 'bg-transparent'
+    }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href={`/${locale}`} className="flex items-center space-x-3 group">
-            <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-primary transition-transform group-hover:scale-105">
+            <div className="relative w-14 h-14 rounded-xl overflow-hidden ring-2 ring-[rgb(var(--color-primary))] transition-all duration-300 group-hover:scale-110 group-hover:ring-4 shadow-lg">
               <Image
                 src="/images/logo.jpg"
                 alt="SanBud Hydraulika Logo"
@@ -41,98 +61,132 @@ export default function Navigation() {
               />
             </div>
             <div className="hidden md:block">
-              <div className="text-2xl font-bold gradient-text">
-                {t('common.companyName')}
+              <div className="text-xl font-black bg-gradient-to-r from-[rgb(var(--color-primary))] to-[rgb(var(--color-accent))] bg-clip-text text-transparent">
+                SAN-BUD
               </div>
-              <div className="text-xs text-gray-600 italic">
-                {t('common.tagline')}
+              <div className="text-xs text-[rgb(var(--color-text-muted))] font-display italic">
+                Hydraulika • Nasza pasja
               </div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-2">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-gray-700 hover:text-primary font-medium transition-colors relative group"
+                className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
+                  pathname === item.href
+                    ? 'bg-[rgb(var(--color-primary))] text-white shadow-lg'
+                    : 'text-[rgb(var(--color-text-secondary))] hover:bg-[rgb(var(--color-bg-elevated))] hover:text-[rgb(var(--color-primary))]'
+                }`}
               >
-                {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
+                <span className="text-lg">{item.icon}</span>
+                <span>{item.label}</span>
               </Link>
             ))}
           </div>
 
-          {/* CTA and Language Switcher */}
-          <div className="hidden lg:flex items-center space-x-4">
+          {/* Interactive Action Buttons */}
+          <div className="hidden lg:flex items-center space-x-3">
+            {/* Phone Button */}
+            <a
+              href={`tel:${contactData.phone}`}
+              className="group relative px-4 py-2 bg-gradient-to-r from-[rgb(var(--color-success))] to-[rgb(var(--color-primary))] text-white rounded-lg font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              <span className="text-xl group-hover:scale-125 transition-transform">📞</span>
+              <span className="hidden xl:inline">Zadzwoń</span>
+              
+              {/* Tooltip */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                {contactData.phone}
+              </div>
+            </a>
+
+            {/* Google Maps Button */}
+            <a
+              href={contactData.googleMaps}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative px-4 py-2 bg-gradient-to-r from-[rgb(var(--color-accent))] to-[rgb(var(--color-accent-dark))] text-white rounded-lg font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              <span className="text-xl group-hover:scale-125 transition-transform">🗺️</span>
+              <span className="hidden xl:inline">Mapa</span>
+              
+              {/* Tooltip */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                Lokalizacja Google Maps
+              </div>
+            </a>
+
+            {/* Facebook Button */}
+            <a
+              href={contactData.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-2 bg-[rgb(var(--color-bg-elevated))] hover:bg-[#1877F2] text-[rgb(var(--color-text-primary))] hover:text-white rounded-lg transition-all duration-300 hover:scale-110 border border-[rgb(var(--color-border))]"
+            >
+              <span className="text-2xl">📘</span>
+              
+              {/* Tooltip */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                Facebook
+              </div>
+            </a>
+
             {/* Emergency Badge */}
-            <div className="flex items-center space-x-2 px-3 py-1 bg-red-50 rounded-full border border-red-200">
-              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-              <span className="text-sm font-semibold text-red-600">
-                {t('common.emergencyBadge')}
+            <div className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-lg border border-red-500/30 backdrop-blur-sm">
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50"></span>
+              <span className="text-sm font-bold text-red-400">
+                24/7
               </span>
             </div>
 
             {/* Language Switcher */}
-            <div className="flex items-center space-x-2 bg-gray-100 rounded-full p-1">
+            <div className="flex items-center space-x-1 bg-[rgb(var(--color-bg-elevated))] rounded-lg p-1 border border-[rgb(var(--color-border))]">
               <button
                 onClick={() => switchLocale('pl')}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-md font-semibold text-sm transition-all duration-200 ${
                   locale === 'pl'
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'bg-[rgb(var(--color-primary))] text-white shadow-md'
+                    : 'text-[rgb(var(--color-text-secondary))] hover:bg-[rgb(var(--color-bg-tertiary))]'
                 }`}
               >
                 PL
               </button>
               <button
                 onClick={() => switchLocale('en')}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-md font-semibold text-sm transition-all duration-200 ${
                   locale === 'en'
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'bg-[rgb(var(--color-primary))] text-white shadow-md'
+                    : 'text-[rgb(var(--color-text-secondary))] hover:bg-[rgb(var(--color-bg-tertiary))]'
                 }`}
               >
                 EN
               </button>
             </div>
-
-            {/* Book Appointment Button */}
-            <Link
-              href={`/${locale}/contact`}
-              className="btn-primary whitespace-nowrap"
-            >
-              {t('navigation.bookAppointment')}
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="lg:hidden p-2 rounded-lg bg-[rgb(var(--color-bg-elevated))] border border-[rgb(var(--color-border))] text-[rgb(var(--color-text-primary))]"
             aria-label="Toggle menu"
           >
             <svg
               className="w-6 h-6"
               fill="none"
-              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               viewBox="0 0 24 24"
+              stroke="currentColor"
             >
               {mobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <path d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
@@ -140,57 +194,71 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t animate-fade-in">
-            <div className="flex flex-col space-y-3">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors font-medium"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              
-              {/* Mobile Language Switcher */}
-              <div className="flex items-center justify-center space-x-2 px-4 py-2">
-                <button
-                  onClick={() => {
-                    switchLocale('pl');
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
-                    locale === 'pl'
-                      ? 'bg-primary text-white shadow-md'
-                      : 'bg-gray-100 text-gray-600'
-                  }`}
-                >
-                  Polski
-                </button>
-                <button
-                  onClick={() => {
-                    switchLocale('en');
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
-                    locale === 'en'
-                      ? 'bg-primary text-white shadow-md'
-                      : 'bg-gray-100 text-gray-600'
-                  }`}
-                >
-                  English
-                </button>
-              </div>
-
-              {/* Mobile CTA */}
+          <div className="lg:hidden py-4 space-y-2">
+            {navItems.map((item) => (
               <Link
-                href={`/${locale}/contact`}
+                key={item.href}
+                href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="btn-primary mx-4"
+                className={`block px-4 py-3 rounded-lg font-semibold transition-all flex items-center gap-3 ${
+                  pathname === item.href
+                    ? 'bg-[rgb(var(--color-primary))] text-white'
+                    : 'text-[rgb(var(--color-text-secondary))] hover:bg-[rgb(var(--color-bg-elevated))]'
+                }`}
               >
-                {t('navigation.bookAppointment')}
+                <span className="text-xl">{item.icon}</span>
+                <span>{item.label}</span>
               </Link>
+            ))}
+            
+            {/* Mobile Action Buttons */}
+            <div className="pt-4 space-y-2 border-t border-[rgb(var(--color-border))]">
+              <a
+                href={`tel:${contactData.phone}`}
+                className="block px-4 py-3 bg-gradient-to-r from-[rgb(var(--color-success))] to-[rgb(var(--color-primary))] text-white rounded-lg font-semibold text-center"
+              >
+                📞 {contactData.phone}
+              </a>
+              <a
+                href={contactData.googleMaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-4 py-3 bg-gradient-to-r from-[rgb(var(--color-accent))] to-[rgb(var(--color-accent-dark))] text-white rounded-lg font-semibold text-center"
+              >
+                🗺️ Google Maps
+              </a>
+              <a
+                href={contactData.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-4 py-3 bg-[rgb(var(--color-bg-elevated))] text-[rgb(var(--color-text-primary))] rounded-lg font-semibold text-center border border-[rgb(var(--color-border))]"
+              >
+                📘 Facebook
+              </a>
+            </div>
+
+            {/* Mobile Language Switcher */}
+            <div className="flex gap-2 pt-2">
+              <button
+                onClick={() => switchLocale('pl')}
+                className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all ${
+                  locale === 'pl'
+                    ? 'bg-[rgb(var(--color-primary))] text-white'
+                    : 'bg-[rgb(var(--color-bg-elevated))] text-[rgb(var(--color-text-secondary))]'
+                }`}
+              >
+                🇵🇱 Polski
+              </button>
+              <button
+                onClick={() => switchLocale('en')}
+                className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all ${
+                  locale === 'en'
+                    ? 'bg-[rgb(var(--color-primary))] text-white'
+                    : 'bg-[rgb(var(--color-bg-elevated))] text-[rgb(var(--color-text-secondary))]'
+                }`}
+              >
+                🇬🇧 English
+              </button>
             </div>
           </div>
         )}
