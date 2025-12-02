@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import BookingCalendar from '@/components/BookingCalendar';
+import Partners from '@/components/Partners';
 
 export default function HomePage() {
   // Business data matching Google Maps
@@ -271,6 +272,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* PARTNERS SECTION */}
+      <Partners />
 
       {/* ONLINE BOOKING SECTION */}
       <section id="booking" className="py-20 bg-white">

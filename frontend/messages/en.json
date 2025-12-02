@@ -247,6 +247,11 @@
     "copyright": "© HAOS Plumbing {{year}}. All rights reserved.",
     "madeBy": "Design"
   },
+  "partners": {
+    "title": "Trusted Partners",
+    "description": "We collaborate with leading manufacturers of heating and sanitary equipment, guaranteeing the highest quality products and services.",
+    "quality": "We use only proven products from renowned brands to ensure durability and reliability of our installations."
+  },
   "loading": "Loading...",
   "error": "Error",
   "tryAgain": "Try Again"

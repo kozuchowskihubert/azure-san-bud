@@ -255,6 +255,11 @@
     "nip": "NIP",
     "regon": "REGON"
   },
+  "partners": {
+    "title": "Zaufani Partnerzy",
+    "description": "Współpracujemy z wiodącymi producentami urządzeń grzewczych i sanitarnych, gwarantując najwyższą jakość produktów i usług.",
+    "quality": "Używamy wyłącznie sprawdzonych produktów renomowanych marek, aby zapewnić trwałość i niezawodność naszych instalacji."
+  },
   "loading": "Ładowanie...",
   "error": "Błąd",
   "tryAgain": "Spróbuj ponownie"
