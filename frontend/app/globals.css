@@ -2,45 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-/* SanBud + HAOS Professional Hybrid Theme */
-/* Blue for trust and professionalism, Orange for energy and CTAs */
+/* HAOS.fm Professional Platform Theme - Dark Mode Focus */
+/* Sleek black backgrounds with premium gradients and vibrant accents */
 
 @layer base {
   :root {
-    /* SanBud Blue - Primary brand color */
-    --color-primary: 10 75 110; /* #0A4B6E */
-    --color-primary-light: 26 107 158; /* #1A6B9E */
-    --color-primary-dark: 8 58 86; /* #083A56 */
+    /* HAOS Platform - Dark Theme Colors */
+    --color-bg-primary: 0 0 0; /* Pure black #000000 */
+    --color-bg-secondary: 10 10 15; /* Deep dark #0A0A0F */
+    --color-bg-tertiary: 18 18 24; /* Card background #121218 */
+    --color-bg-elevated: 24 24 32; /* Elevated surfaces #181820 */
     
-    /* HAOS Orange - Accent and CTA color */
+    /* SanBud Blue - Primary brand (adjusted for dark theme) */
+    --color-primary: 52 152 219; /* Brighter blue #3498DB */
+    --color-primary-light: 93 173 226; /* Light blue #5DADE2 */
+    --color-primary-dark: 21 101 192; /* Deep blue #1565C0 */
+    
+    /* HAOS Orange - Vibrant accent */
     --color-accent: 255 140 66; /* #FF8C42 */
     --color-accent-light: 255 179 128; /* #FFB380 */
     --color-accent-dark: 230 122 46; /* #E67A2E */
     
-    /* Secondary colors */
-    --color-secondary: 44 135 184; /* #2C87B8 */
+    /* Premium gradient colors */
+    --color-gradient-start: 52 152 219; /* Blue */
+    --color-gradient-mid: 142 68 173; /* Purple #8E44AD */
+    --color-gradient-end: 255 140 66; /* Orange */
     
-    /* Neutral backgrounds */
-    --color-neutral: 248 249 250; /* #F8F9FA */
-    --color-neutral-dark: 233 236 239; /* #E9ECEF */
+    /* Text colors for dark theme */
+    --color-text-primary: 255 255 255; /* White #FFFFFF */
+    --color-text-secondary: 178 186 194; /* Light gray #B2BAC2 */
+    --color-text-muted: 132 140 148; /* Muted gray #848C94 */
+    
+    /* Border and divider colors */
+    --color-border: 38 38 48; /* Subtle border #262630 */
+    --color-border-light: 48 48 58; /* Light border #30303A */
+    
+    /* Status colors */
+    --color-success: 46 213 115; /* Green #2ED573 */
+    --color-warning: 255 159 67; /* Yellow #FF9F43 */
+    --color-error: 235 77 75; /* Red #EB4D4B */
     
     /* Professional Premium Fonts */
-    --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --font-display: var(--font-playfair), Georgia, Cambria, serif;
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: var(--font-playfair), Georgia, Cambria, 'Times New Roman', serif;
+    
+    /* HAOS Platform Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
+    
+    /* Glow effects */
+    --glow-primary: 0 0 20px rgba(52, 152, 219, 0.5);
+    --glow-accent: 0 0 20px rgba(255, 140, 66, 0.5);
   }
   
   body {
     @apply bg-neutral-50 text-neutral-900;
+    background: linear-gradient(180deg, rgb(var(--color-bg-primary)) 0%, rgb(var(--color-bg-secondary)) 100%);
+    color: rgb(var(--color-text-primary));
     font-family: var(--font-sans);
     font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    min-height: 100vh;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-primary-900;
+    @apply font-bold;
+    color: rgb(var(--color-text-primary));
     font-family: var(--font-heading);
     letter-spacing: -0.03em;
     line-height: 1.2;
@@ -63,44 +95,91 @@
     @apply text-2xl md:text-3xl;
     font-weight: 700;
   }
+  
+  p {
+    color: rgb(var(--color-text-secondary));
+    line-height: 1.7;
+  }
+  
+  a {
+    color: rgb(var(--color-primary));
+    transition: all 0.3s ease;
+  }
+  
+  a:hover {
+    color: rgb(var(--color-accent));
+  }
 }
 
 @layer components {
-  /* Professional Button Styles */
+  /* HAOS Platform Button Styles - Dark Theme */
   .btn {
     @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold
            transition-all duration-300 ease-in-out transform hover:scale-105
            focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed;
+    box-shadow: var(--shadow-sm);
   }
   
   .btn-primary {
-    @apply bg-primary text-white shadow-primary hover:bg-primary-dark
-           focus:ring-primary-200;
+    background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-primary-dark)) 100%);
+    color: white;
+    box-shadow: var(--shadow-md), var(--glow-primary);
+  }
+  
+  .btn-primary:hover {
+    box-shadow: var(--shadow-lg), var(--glow-primary);
+    transform: translateY(-2px) scale(1.05);
   }
   
   .btn-accent {
-    @apply bg-accent text-white shadow-accent hover:bg-accent-dark
-           focus:ring-accent-200;
+    background: linear-gradient(135deg, rgb(var(--color-accent)) 0%, rgb(var(--color-accent-dark)) 100%);
+    color: white;
+    box-shadow: var(--shadow-md), var(--glow-accent);
+  }
+  
+  .btn-accent:hover {
+    box-shadow: var(--shadow-lg), var(--glow-accent);
+    transform: translateY(-2px) scale(1.05);
+  }
+  
+  .btn-gradient {
+    background: linear-gradient(135deg, rgb(var(--color-gradient-start)) 0%, rgb(var(--color-gradient-mid)) 50%, rgb(var(--color-gradient-end)) 100%);
+    color: white;
+    box-shadow: var(--shadow-md);
   }
   
   .btn-outline-primary {
-    @apply border-2 border-primary text-primary bg-transparent
-           hover:bg-primary hover:text-white focus:ring-primary-200;
+    border: 2px solid rgb(var(--color-primary));
+    color: rgb(var(--color-primary));
+    background: transparent;
   }
   
-  .btn-outline-accent {
-    @apply border-2 border-accent text-accent bg-transparent
-           hover:bg-accent hover:text-white focus:ring-accent-200;
+  .btn-outline-primary:hover {
+    background: rgb(var(--color-primary));
+    color: white;
   }
   
-  /* Professional Card Styles */
+  /* HAOS Platform Card Styles - Dark Theme */
   .card {
-    @apply bg-white rounded-xl shadow-card transition-all duration-300
-           hover:shadow-card-hover;
+    background: rgb(var(--color-bg-tertiary));
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgb(var(--color-border));
+    transition: all 0.3s ease;
   }
   
-  .card-bordered {
-    @apply card border border-neutral-200;
+  .card:hover {
+    background: rgb(var(--color-bg-elevated));
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    border-color: rgb(var(--color-border-light));
+  }
+  
+  .card-glass {
+    background: rgba(var(--color-bg-tertiary), 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(var(--color-border-light), 0.5);
   }
   
   .card-primary {
@@ -440,6 +519,114 @@
   .link-premium:hover {
     @apply text-accent;
     letter-spacing: 0.02em;
+  }
+}
+
+/* Browser Compatibility & Cross-Browser Support */
+/* Safari, Firefox, Edge, Chrome optimizations */
+
+/* Smooth scrolling for all browsers */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Better font rendering across browsers */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Backdrop blur support */
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .card-glass {
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .card-glass {
+    background: rgba(var(--color-bg-tertiary), 0.95);
+  }
+}
+
+/* Gradient text support */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .text-gradient,
+  .text-gradient-accent {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* CSS Grid fallback */
+@supports not (display: grid) {
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+/* Sticky position fallback for older Safari */
+@supports (position: -webkit-sticky) or (position: sticky) {
+  .sticky-nav {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+/* Transform 3D hardware acceleration */
+.transform-3d {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+/* Smooth transitions for all browsers */
+* {
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  -moz-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  -ms-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  -o-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Input autofill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px rgb(var(--color-bg-elevated)) inset;
+  -webkit-text-fill-color: rgb(var(--color-text-primary));
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+  select {
+    padding-right: 1.5rem;
+  }
+}
+
+/* Edge specific fixes */
+@supports (-ms-ime-align: auto) {
+  input, textarea, select {
+    font-family: var(--font-sans);
+  }
+}
+
+/* Safari specific fixes */
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .btn {
+      -webkit-appearance: none;
+    }
   }
 }
 
