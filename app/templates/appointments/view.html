@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Appointment Details - Plumbing & Sanitary Services{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('appointments.list_appointments') }}">Appointments</a></li>
+                    <li class="breadcrumb-item active">Appointment #{{ appointment.id }}</li>
+                </ol>
+            </nav>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Appointment #{{ appointment.id }}</h3>
+                    <span class="badge bg-{{ 'success' if appointment.status == 'confirmed' else 'warning' if appointment.status == 'pending' else 'secondary' }}">
+                        {{ appointment.status }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Customer Information</h5>
+                            <p>
+                                <strong>Name:</strong> {{ appointment.customer.first_name }} {{ appointment.customer.last_name }}<br>
+                                <strong>Email:</strong> {{ appointment.customer.email }}<br>
+                                <strong>Phone:</strong> {{ appointment.customer.phone }}<br>
+                                {% if appointment.customer.address %}
+                                <strong>Address:</strong> {{ appointment.customer.address }}<br>
+                                {% endif %}
+                                {% if appointment.customer.city %}
+                                <strong>City:</strong> {{ appointment.customer.city }} {{ appointment.customer.postal_code }}<br>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Appointment Details</h5>
+                            <p>
+                                <strong>Service:</strong> {{ appointment.service.name }}<br>
+                                <strong>Date:</strong> {{ appointment.scheduled_date }}<br>
+                                <strong>Time:</strong> {{ appointment.scheduled_time.strftime('%H:%M') }}<br>
+                                <strong>Duration:</strong> {{ appointment.service.duration_minutes }} minutes<br>
+                                <strong>Price:</strong> ${{ "%.2f"|format(appointment.service.price) }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    {% if appointment.notes %}
+                    <div class="mb-4">
+                        <h5>Notes</h5>
+                        <p>{{ appointment.notes }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    <a href="{{ url_for('appointments.list_appointments') }}" class="btn btn-outline-secondary">Back to Appointments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

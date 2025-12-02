@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment - Plumbing & Sanitary Services{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-4">Book an Appointment</h1>
+            
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('appointments.book_appointment') }}">
+                        <h5 class="mb-3">Personal Information</h5>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone *</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" name="city">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="postal_code" class="form-label">Postal Code</label>
+                                <input type="text" class="form-control" id="postal_code" name="postal_code">
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <h5 class="mb-3">Appointment Details</h5>
+                        
+                        <div class="mb-3">
+                            <label for="service_id" class="form-label">Service *</label>
+                            <select class="form-select" id="service_id" name="service_id" required>
+                                <option value="">Select a service...</option>
+                                {% for service in services %}
+                                <option value="{{ service.id }}" {% if request.args.get('service_id')|int == service.id %}selected{% endif %}>
+                                    {{ service.name }} - ${{ "%.2f"|format(service.price) }} ({{ service.duration_minutes }} min)
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="scheduled_date" class="form-label">Preferred Date *</label>
+                                <input type="date" class="form-control" id="scheduled_date" name="scheduled_date" required min="{{ (now() + timedelta(days=1)).strftime('%Y-%m-%d') }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="scheduled_time" class="form-label">Preferred Time *</label>
+                                <input type="time" class="form-control" id="scheduled_time" name="scheduled_time" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Additional Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any special requirements or details..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Book Appointment</button>
+                        <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Set minimum date to tomorrow
+    const dateInput = document.getElementById('scheduled_date');
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    const tomorrow = today.toISOString().split('T')[0];
+    dateInput.setAttribute('min', tomorrow);
+</script>
+{% endblock %}

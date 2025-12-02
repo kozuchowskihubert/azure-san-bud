@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - Plumbing & Sanitary Services{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Our Services</h1>
+    
+    <div class="row">
+        {% for service in services %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ service.name }}</h5>
+                    <p class="card-text">{{ service.description }}</p>
+                    <p class="text-muted">
+                        <i class="bi bi-tag"></i> Category: {{ service.category }}<br>
+                        <i class="bi bi-clock"></i> Duration: {{ service.duration_minutes }} minutes<br>
+                        <i class="bi bi-currency-dollar"></i> Price: ${{ "%.2f"|format(service.price) }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('appointments.book_appointment') }}?service_id={{ service.id }}" class="btn btn-primary btn-sm">Book This Service</a>
+                    <a href="{{ url_for('services.view_service', service_id=service.id) }}" class="btn btn-outline-secondary btn-sm">Details</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">No services available at the moment.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Plumbing & Sanitary Services{% endblock %}
+
+{% block content %}
+<div class="hero-section bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="display-4">Professional Plumbing & Sanitary Services</h1>
+                <p class="lead">Expert solutions for all your plumbing needs. Available 24/7 for emergencies.</p>
+                <a href="{{ url_for('appointments.book_appointment') }}" class="btn btn-light btn-lg">Book an Appointment</a>
+            </div>
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='images/placeholder-hero.jpg') }}" alt="Plumbing Services" class="img-fluid rounded" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h2>Why Choose Us?</h2>
+        <p class="text-muted">We provide top-quality plumbing and sanitary services</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="bi bi-clock-history display-4 text-primary"></i>
+                    <h5 class="card-title mt-3">24/7 Availability</h5>
+                    <p class="card-text">We're available around the clock for emergency services and scheduled appointments.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="bi bi-award display-4 text-primary"></i>
+                    <h5 class="card-title mt-3">Licensed Professionals</h5>
+                    <p class="card-text">All our technicians are fully licensed, insured, and experienced.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="bi bi-currency-dollar display-4 text-primary"></i>
+                    <h5 class="card-title mt-3">Competitive Pricing</h5>
+                    <p class="card-text">Fair and transparent pricing with no hidden fees.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Our Services</h2>
+            <p class="text-muted">Comprehensive plumbing and sanitary solutions</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-droplet display-5 text-primary"></i>
+                        <h5 class="mt-3">Leak Repairs</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-gear display-5 text-primary"></i>
+                        <h5 class="mt-3">Installation</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-tools display-5 text-primary"></i>
+                        <h5 class="mt-3">Maintenance</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-exclamation-triangle display-5 text-primary"></i>
+                        <h5 class="mt-3">Emergency</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('services.list_services') }}" class="btn btn-primary">View All Services</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

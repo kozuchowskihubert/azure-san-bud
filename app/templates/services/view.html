@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.name }} - Plumbing & Sanitary Services{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('services.list_services') }}">Services</a></li>
+                    <li class="breadcrumb-item active">{{ service.name }}</li>
+                </ol>
+            </nav>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">{{ service.name }}</h1>
+                    <p class="lead">{{ service.description }}</p>
+                    
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Service Details</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Category:</strong> {{ service.category }}</li>
+                                <li><strong>Duration:</strong> {{ service.duration_minutes }} minutes</li>
+                                <li><strong>Price:</strong> ${{ "%.2f"|format(service.price) }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <a href="{{ url_for('appointments.book_appointment') }}?service_id={{ service.id }}" class="btn btn-primary">Book This Service</a>
+                    <a href="{{ url_for('services.list_services') }}" class="btn btn-outline-secondary">Back to Services</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
