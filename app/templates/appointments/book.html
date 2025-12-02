@@ -1,91 +1,266 @@
 {% extends "base.html" %}
 
-{% block title %}Book Appointment - Plumbing & Sanitary Services{% endblock %}
+{% block title %}Book Appointment - Professional Plumbing & Sanitary Services{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+<!-- Page Header -->
+<div class="page-header-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-calendar-plus"></i> Book an Appointment
+                </h1>
+                <p class="lead">
+                    Schedule your service with our licensed professionals.<br>
+                    <strong class="text-orange">Available 24/7 for emergencies!</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Booking Form Section -->
+<div class="container my-5 py-4">
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <h1 class="mb-4">Book an Appointment</h1>
-            
-            <div class="card">
-                <div class="card-body">
-                    <form method="POST" action="{{ url_for('appointments.book_appointment') }}">
-                        <h5 class="mb-3">Personal Information</h5>
-                        
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="first_name" class="form-label">First Name *</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            <!-- Form Card -->
+            <div class="card shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <form id="bookingForm" class="needs-validation" novalidate>
+                        <!-- Personal Information Section -->
+                        <div class="mb-5">
+                            <h4 class="mb-4">
+                                <i class="bi bi-person-fill text-orange"></i>
+                                Personal Information
+                            </h4>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="first_name" class="form-label fw-semibold">
+                                        First Name <span class="text-danger">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="first_name" 
+                                        name="first_name" 
+                                        required
+                                        minlength="2"
+                                        placeholder="John"
+                                    >
+                                    <div class="invalid-feedback">
+                                        Please enter your first name (minimum 2 characters).
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="last_name" class="form-label fw-semibold">
+                                        Last Name <span class="text-danger">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="last_name" 
+                                        name="last_name" 
+                                        required
+                                        minlength="2"
+                                        placeholder="Doe"
+                                    >
+                                    <div class="invalid-feedback">
+                                        Please enter your last name (minimum 2 characters).
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="last_name" class="form-label">Last Name *</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                            
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label fw-semibold">
+                                        Email Address <span class="text-danger">*</span>
+                                    </label>
+                                    <input 
+                                        type="email" 
+                                        class="form-control" 
+                                        id="email" 
+                                        name="email" 
+                                        required
+                                        placeholder="john.doe@example.com"
+                                    >
+                                    <div class="invalid-feedback">
+                                        Please enter a valid email address.
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label fw-semibold">
+                                        Phone Number <span class="text-danger">*</span>
+                                    </label>
+                                    <input 
+                                        type="tel" 
+                                        class="form-control" 
+                                        id="phone" 
+                                        name="phone" 
+                                        required
+                                        pattern="[0-9\-\+\(\)\s]+"
+                                        placeholder="+1 (555) 123-4567"
+                                    >
+                                    <div class="invalid-feedback">
+                                        Please enter a valid phone number.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <label for="address" class="form-label fw-semibold">
+                                    Street Address
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="address" 
+                                    name="address"
+                                    placeholder="123 Main Street"
+                                >
+                            </div>
+                            
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-6">
+                                    <label for="city" class="form-label fw-semibold">City</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="city" 
+                                        name="city"
+                                        placeholder="New York"
+                                    >
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="postal_code" class="form-label fw-semibold">Postal Code</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="postal_code" 
+                                        name="postal_code"
+                                        placeholder="10001"
+                                    >
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">Email *</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                        <hr class="my-5">
+                        
+                        <!-- Appointment Details Section -->
+                        <div class="mb-5">
+                            <h4 class="mb-4">
+                                <i class="bi bi-calendar-check text-orange"></i>
+                                Appointment Details
+                            </h4>
+                            
+                            <div class="mb-4">
+                                <label for="service_id" class="form-label fw-semibold">
+                                    Select Service <span class="text-danger">*</span>
+                                </label>
+                                <select 
+                                    class="form-select" 
+                                    id="service_id" 
+                                    name="service_id" 
+                                    required
+                                >
+                                    <option value="">Loading services...</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a service.
+                                </div>
+                                <div id="service-info" class="mt-2 p-3 bg-light-silver rounded d-none">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <small class="text-muted">Duration:</small>
+                                            <div class="fw-bold" id="service-duration">-</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <small class="text-muted">Price:</small>
+                                            <div class="fw-bold text-orange" id="service-price">-</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="phone" class="form-label">Phone *</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="scheduled_date" class="form-label fw-semibold">
+                                        Preferred Date <span class="text-danger">*</span>
+                                    </label>
+                                    <input 
+                                        type="date" 
+                                        class="form-control" 
+                                        id="scheduled_date" 
+                                        name="scheduled_date" 
+                                        required
+                                    >
+                                    <div class="invalid-feedback">
+                                        Please select a date (must be at least tomorrow).
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="scheduled_time" class="form-label fw-semibold">
+                                        Preferred Time <span class="text-danger">*</span>
+                                    </label>
+                                    <input 
+                                        type="time" 
+                                        class="form-control" 
+                                        id="scheduled_time" 
+                                        name="scheduled_time" 
+                                        required
+                                    >
+                                    <div class="invalid-feedback">
+                                        Please select a time.
+                                    </div>
+                                    <small class="text-muted">Business hours: 8:00 AM - 6:00 PM (24/7 for emergencies)</small>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label for="notes" class="form-label fw-semibold">
+                                    Additional Notes
+                                </label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="notes" 
+                                    name="notes" 
+                                    rows="4" 
+                                    placeholder="Please provide any special requirements, access instructions, or details about the issue..."
+                                ></textarea>
+                                <small class="text-muted">Optional: Help us serve you better by providing relevant details</small>
                             </div>
                         </div>
                         
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address">
+                        <!-- Form Actions -->
+                        <div class="d-flex gap-3 flex-wrap">
+                            <button type="submit" class="btn btn-primary btn-lg flex-grow-1" id="submitBtn">
+                                <i class="bi bi-calendar-check"></i> Book Appointment
+                            </button>
+                            <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
                         </div>
-                        
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="city" class="form-label">City</label>
-                                <input type="text" class="form-control" id="city" name="city">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="postal_code" class="form-label">Postal Code</label>
-                                <input type="text" class="form-control" id="postal_code" name="postal_code">
-                            </div>
-                        </div>
-                        
-                        <hr>
-                        
-                        <h5 class="mb-3">Appointment Details</h5>
-                        
-                        <div class="mb-3">
-                            <label for="service_id" class="form-label">Service *</label>
-                            <select class="form-select" id="service_id" name="service_id" required>
-                                <option value="">Select a service...</option>
-                                {% for service in services %}
-                                <option value="{{ service.id }}" {% if request.args.get('service_id')|int == service.id %}selected{% endif %}>
-                                    {{ service.name }} - ${{ "%.2f"|format(service.price) }} ({{ service.duration_minutes }} min)
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="scheduled_date" class="form-label">Preferred Date *</label>
-                                <input type="date" class="form-control" id="scheduled_date" name="scheduled_date" required min="{{ (now() + timedelta(days=1)).strftime('%Y-%m-%d') }}">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="scheduled_time" class="form-label">Preferred Time *</label>
-                                <input type="time" class="form-control" id="scheduled_time" name="scheduled_time" required>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="notes" class="form-label">Additional Notes</label>
-                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any special requirements or details..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Book Appointment</button>
-                        <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">Cancel</a>
                     </form>
+                </div>
+            </div>
+            
+            <!-- Help Card -->
+            <div class="card shadow-sm mt-4 border-orange">
+                <div class="card-body text-center">
+                    <h5 class="text-dark mb-3">
+                        <i class="bi bi-telephone-fill text-orange"></i>
+                        Need Immediate Assistance?
+                    </h5>
+                    <p class="text-muted mb-3">
+                        For emergencies or urgent service requests, call us directly:
+                    </p>
+                    <a href="tel:+15551234567" class="btn btn-orange btn-lg">
+                        <i class="bi bi-telephone"></i> +1 (555) 123-4567
+                    </a>
+                    <p class="mt-3 mb-0 small text-muted">
+                        Available 24/7 for emergency plumbing services
+                    </p>
                 </div>
             </div>
         </div>
@@ -95,11 +270,121 @@
 
 {% block extra_js %}
 <script>
-    // Set minimum date to tomorrow
+// Initialize booking form handler
+document.addEventListener('DOMContentLoaded', async function() {
+    const form = document.getElementById('bookingForm');
+    const serviceSelect = document.getElementById('service_id');
     const dateInput = document.getElementById('scheduled_date');
+    const serviceInfo = document.getElementById('service-info');
+    const serviceDuration = document.getElementById('service-duration');
+    const servicePrice = document.getElementById('service-price');
+    
+    let servicesData = [];
+    
+    // Set minimum date to tomorrow
     const today = new Date();
     today.setDate(today.getDate() + 1);
     const tomorrow = today.toISOString().split('T')[0];
     dateInput.setAttribute('min', tomorrow);
+    dateInput.value = tomorrow;
+    
+    // Load services
+    try {
+        servicesData = await window.AppUtils.api.getServices();
+        const activeServices = servicesData.filter(s => s.is_active);
+        
+        serviceSelect.innerHTML = '<option value="">-- Select a service --</option>' +
+            activeServices.map(service => 
+                `<option value="${service.id}" data-price="${service.price}" data-duration="${service.duration_minutes}">
+                    ${service.name} - $${service.price.toFixed(2)} (${service.duration_minutes} min)
+                </option>`
+            ).join('');
+            
+        // Pre-select service if provided in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceId = urlParams.get('service_id');
+        if (serviceId) {
+            serviceSelect.value = serviceId;
+            updateServiceInfo();
+        }
+    } catch (error) {
+        console.error('Error loading services:', error);
+        serviceSelect.innerHTML = '<option value="">Error loading services - please refresh</option>';
+        window.AppUtils.notifications.show('Unable to load services. Please refresh the page.', 'error');
+    }
+    
+    // Update service info display
+    function updateServiceInfo() {
+        const selected = serviceSelect.selectedOptions[0];
+        if (selected && selected.value) {
+            const price = selected.dataset.price;
+            const duration = selected.dataset.duration;
+            serviceDuration.textContent = `${duration} minutes`;
+            servicePrice.textContent = `$${parseFloat(price).toFixed(2)}`;
+            serviceInfo.classList.remove('d-none');
+        } else {
+            serviceInfo.classList.add('d-none');
+        }
+    }
+    
+    serviceSelect.addEventListener('change', updateServiceInfo);
+    
+    // Form submission handler
+    const bookingHandler = new window.AppUtils.BookingFormHandler(form);
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (!form.checkValidity()) {
+            form.classList.add('was-validated');
+            window.AppUtils.notifications.show('Please fill in all required fields correctly.', 'error');
+            return;
+        }
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.innerHTML;
+        
+        try {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Booking...';
+            
+            const formData = new FormData(form);
+            const appointmentData = {
+                customer: {
+                    first_name: formData.get('first_name'),
+                    last_name: formData.get('last_name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    address: formData.get('address'),
+                    city: formData.get('city'),
+                    postal_code: formData.get('postal_code')
+                },
+                service_id: parseInt(formData.get('service_id')),
+                scheduled_date: formData.get('scheduled_date'),
+                scheduled_time: formData.get('scheduled_time'),
+                notes: formData.get('notes') || ''
+            };
+            
+            const result = await window.AppUtils.api.createAppointment(appointmentData);
+            
+            window.AppUtils.notifications.show('Appointment booked successfully!', 'success');
+            
+            // Redirect to appointments list after short delay
+            setTimeout(() => {
+                window.location.href = "{{ url_for('appointments.list_appointments') }}";
+            }, 1500);
+            
+        } catch (error) {
+            console.error('Error booking appointment:', error);
+            window.AppUtils.notifications.show(
+                error.message || 'Failed to book appointment. Please try again.', 
+                'error'
+            );
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }
+    });
+});
 </script>
 {% endblock %}

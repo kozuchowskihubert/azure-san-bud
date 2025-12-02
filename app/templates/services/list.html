@@ -1,35 +1,265 @@
 {% extends "base.html" %}
 
-{% block title %}Our Services - Plumbing & Sanitary Services{% endblock %}
+{% block title %}Our Services - Professional Plumbing & Sanitary Services{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <h1 class="mb-4">Our Services</h1>
-    
-    <div class="row">
-        {% for service in services %}
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100">
+<!-- Page Header -->
+<div class="page-header-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-tools"></i> Our Services
+                </h1>
+                <p class="lead">
+                    Comprehensive plumbing and sanitary solutions delivered by licensed professionals with over 20 years of experience
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Services Section -->
+<div class="container my-5 py-4">
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">{{ service.name }}</h5>
-                    <p class="card-text">{{ service.description }}</p>
-                    <p class="text-muted">
-                        <i class="bi bi-tag"></i> Category: {{ service.category }}<br>
-                        <i class="bi bi-clock"></i> Duration: {{ service.duration_minutes }} minutes<br>
-                        <i class="bi bi-currency-dollar"></i> Price: ${{ "%.2f"|format(service.price) }}
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ url_for('appointments.book_appointment') }}?service_id={{ service.id }}" class="btn btn-primary btn-sm">Book This Service</a>
-                    <a href="{{ url_for('services.view_service', service_id=service.id) }}" class="btn btn-outline-secondary btn-sm">Details</a>
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light-silver border-0">
+                                    <i class="bi bi-search text-orange"></i>
+                                </span>
+                                <input 
+                                    type="text" 
+                                    class="form-control border-0" 
+                                    id="searchServices" 
+                                    placeholder="Search services..."
+                                    autocomplete="off"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="sortServices">
+                                <option value="name">Sort by Name</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="duration">Duration</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        {% else %}
-        <div class="col-12">
-            <div class="alert alert-info">No services available at the moment.</div>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="row g-4" id="services-grid">
+        <!-- Loading State -->
+        <div class="col-12" id="loading-state">
+            <div class="text-center py-5">
+                <div class="spinner-border text-orange" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading services...</span>
+                </div>
+                <p class="mt-3 text-muted">Loading our services...</p>
+            </div>
         </div>
-        {% endfor %}
+    </div>
+
+    <!-- Empty State (hidden by default) -->
+    <div class="row d-none" id="empty-state">
+        <div class="col-12">
+            <div class="text-center py-5">
+                <i class="bi bi-inbox display-1 text-muted"></i>
+                <h3 class="mt-4 text-muted">No services found</h3>
+                <p class="text-muted">Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error State (hidden by default) -->
+    <div class="row d-none" id="error-state">
+        <div class="col-12">
+            <div class="alert alert-warning shadow-sm">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-exclamation-triangle-fill fs-3 me-3"></i>
+                    <div>
+                        <h5 class="alert-heading mb-1">Unable to load services</h5>
+                        <p class="mb-0">There was a problem loading our services. Please refresh the page or try again later.</p>
+                    </div>
+                </div>
+                <button class="btn btn-warning mt-3" onclick="location.reload()">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh Page
+                </button>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- Call to Action -->
+<div class="bg-light-silver py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0 text-center text-lg-start">
+                <h3 class="fw-bold text-dark mb-2">
+                    <i class="bi bi-calendar-check text-orange"></i>
+                    Need a service? Book your appointment today!
+                </h3>
+                <p class="text-muted mb-0">
+                    Our licensed professionals are ready to help. Available 24/7 for emergencies.
+                </p>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <a href="{{ url_for('appointments.book_appointment') }}" class="btn btn-primary btn-lg shadow-orange">
+                    <i class="bi bi-calendar-plus"></i> Book Appointment
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Services management
+let allServices = [];
+let filteredServices = [];
+
+// Service card template
+function createServiceCard(service) {
+    return `
+        <div class="col-md-6 col-lg-4 service-item fade-in">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <h5 class="card-title text-orange mb-3">${service.name}</h5>
+                    <p class="card-text text-muted">${service.description}</p>
+                    
+                    <div class="mt-auto pt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-clock"></i> ${service.duration_minutes} min
+                            </span>
+                            ${service.is_active ? 
+                                '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Available</span>' : 
+                                '<span class="badge bg-danger"><i class="bi bi-x-circle"></i> Unavailable</span>'}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="text-orange mb-0">$${service.price.toFixed(2)}</h4>
+                            ${service.is_active ? 
+                                `<button class="btn btn-primary btn-sm" onclick="bookService(${service.id})">
+                                    <i class="bi bi-calendar-check"></i> Book Now
+                                </button>` : 
+                                '<button class="btn btn-secondary btn-sm" disabled>Unavailable</button>'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Render services
+function renderServices(services) {
+    const grid = document.getElementById('services-grid');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (services.length === 0) {
+        grid.classList.add('d-none');
+        emptyState.classList.remove('d-none');
+        return;
+    }
+    
+    grid.classList.remove('d-none');
+    emptyState.classList.add('d-none');
+    
+    grid.innerHTML = services.map(service => createServiceCard(service)).join('');
+}
+
+// Sort services
+function sortServices(services, sortBy) {
+    const sorted = [...services];
+    
+    switch(sortBy) {
+        case 'name':
+            sorted.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        case 'price-low':
+            sorted.sort((a, b) => a.price - b.price);
+            break;
+        case 'price-high':
+            sorted.sort((a, b) => b.price - a.price);
+            break;
+        case 'duration':
+            sorted.sort((a, b) => a.duration_minutes - b.duration_minutes);
+            break;
+    }
+    
+    return sorted;
+}
+
+// Filter services
+function filterServices(services, searchTerm) {
+    if (!searchTerm) return services;
+    
+    const term = searchTerm.toLowerCase();
+    return services.filter(service => 
+        service.name.toLowerCase().includes(term) ||
+        service.description.toLowerCase().includes(term)
+    );
+}
+
+// Apply filters and sorting
+function applyFiltersAndSort() {
+    const searchTerm = document.getElementById('searchServices').value;
+    const sortBy = document.getElementById('sortServices').value;
+    
+    filteredServices = filterServices(allServices, searchTerm);
+    filteredServices = sortServices(filteredServices, sortBy);
+    
+    renderServices(filteredServices);
+}
+
+// Book service function
+function bookService(serviceId) {
+    // Redirect to booking page with service pre-selected
+    window.location.href = `{{ url_for('appointments.book_appointment') }}?service_id=${serviceId}`;
+}
+
+// Load services on page load
+document.addEventListener('DOMContentLoaded', async function() {
+    const grid = document.getElementById('services-grid');
+    const loadingState = document.getElementById('loading-state');
+    const errorState = document.getElementById('error-state');
+    
+    try {
+        // Load services from API
+        allServices = await window.AppUtils.api.getServices();
+        filteredServices = [...allServices];
+        
+        // Hide loading state
+        loadingState.remove();
+        
+        // Apply initial sort
+        applyFiltersAndSort();
+        
+        // Setup event listeners
+        document.getElementById('searchServices').addEventListener('input', 
+            window.AppUtils.debounce(applyFiltersAndSort, 300)
+        );
+        
+        document.getElementById('sortServices').addEventListener('change', applyFiltersAndSort);
+        
+    } catch (error) {
+        console.error('Error loading services:', error);
+        loadingState.remove();
+        grid.classList.add('d-none');
+        errorState.classList.remove('d-none');
+    }
+});
+</script>
 {% endblock %}
