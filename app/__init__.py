@@ -17,18 +17,26 @@ def create_app(config_name='production'):
     config = get_config(config_name)
     app.config.from_object(config)
     
-    # Enable CORS for Azure Static Web App and local development
+    # Enable CORS for production domain, Azure Static Web App and local development
     CORS(app, resources={
         r"/*": {
             "origins": [
+                # Production domain
+                "https://sanbud24.pl",
+                "https://www.sanbud24.pl",
+                "https://api.sanbud24.pl",
+                # Local development
                 "http://localhost:3000",
+                "http://localhost:3001",
                 "http://localhost:5002",
+                # Azure Static Web Apps
                 "https://delightful-ocean-078488b03.3.azurestaticapps.net",
                 "https://swa-sanbud-web-dev.azurestaticapps.net"
             ],
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"],
-            "supports_credentials": True
+            "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"],
+            "supports_credentials": True,
+            "expose_headers": ["Content-Range", "X-Content-Range"]
         }
     })
     
@@ -37,11 +45,12 @@ def create_app(config_name='production'):
     migrate.init_app(app, db)
     
     # Register blueprints
-    from app.routes import main, services, appointments, admin
+    from app.routes import main, services, appointments, admin, api
     app.register_blueprint(main.bp)
     app.register_blueprint(services.bp)
     app.register_blueprint(appointments.bp)
     app.register_blueprint(admin.admin_bp)
+    app.register_blueprint(api.bp)
     
     # Create database tables
     with app.app_context():
