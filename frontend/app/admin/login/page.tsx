@@ -31,9 +31,13 @@ export default function AdminLoginPage() {
 
       const data = await response.json();
 
-      if (response.ok) {
-        // Store admin info in localStorage
+      if (response.ok && data.success) {
+        // Store JWT token and admin info in localStorage
+        if (data.token) {
+          localStorage.setItem('adminToken', data.token);
+        }
         localStorage.setItem('admin', JSON.stringify(data.admin));
+        
         // Redirect to admin dashboard
         router.push('/admin/dashboard');
       } else {

@@ -10,6 +10,10 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
+    # JWT Configuration for cross-domain authentication
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', os.environ.get('SECRET_KEY', 'jwt-secret-key-change-in-production'))
+    JWT_ACCESS_TOKEN_EXPIRES = int(os.environ.get('JWT_ACCESS_TOKEN_EXPIRES', 86400))  # 24 hours in seconds
+    
     # Database configuration - supports both SQLite (local) and PostgreSQL (production)
     DATABASE_URL = os.environ.get('DATABASE_URL')
     

@@ -1,18 +1,62 @@
 """Admin routes for authentication and management."""
-from flask import Blueprint, request, jsonify, session, render_template
+from flask import Blueprint, request, jsonify, session, render_template, current_app
 from app import db
 from app.models.admin import Admin
 from app.models.customer import Customer
 from app.models.service import Service
 from app.models.appointment import Appointment
 from functools import wraps
-from datetime import datetime
+from datetime import datetime, timedelta
+import jwt
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
+def token_required(f):
+    """Decorator to require valid JWT token."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = None
+        
+        # Check for token in Authorization header
+        if 'Authorization' in request.headers:
+            auth_header = request.headers['Authorization']
+            try:
+                token = auth_header.split(' ')[1]  # Format: "Bearer <token>"
+            except IndexError:
+                return jsonify({'error': 'Invalid authorization header format'}), 401
+        
+        if not token:
+            return jsonify({'error': 'Unauthorized', 'message': 'Token is missing'}), 401
+        
+        try:
+            # Decode and verify token
+            data = jwt.decode(
+                token,
+                current_app.config['JWT_SECRET_KEY'],
+                algorithms=['HS256']
+            )
+            current_admin_id = data['admin_id']
+            
+            # Verify admin still exists and is active
+            admin = Admin.query.get(current_admin_id)
+            if not admin or not admin.is_active:
+                return jsonify({'error': 'Unauthorized', 'message': 'Admin account not found or inactive'}), 401
+            
+            # Store admin info for use in route
+            request.current_admin = admin
+            
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Unauthorized', 'message': 'Token has expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Unauthorized', 'message': 'Invalid token'}), 401
+        
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 def login_required(f):
-    """Decorator to require admin login."""
+    """Decorator to require admin login (legacy session-based, kept for backward compatibility)."""
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'admin_id' not in session:
@@ -58,7 +102,7 @@ def admin_appointments():
 
 @admin_bp.route('/api/login', methods=['POST'])
 def login():
-    """Admin login endpoint."""
+    """Admin login endpoint with JWT token generation."""
     try:
         data = request.get_json()
         username = data.get('username')
@@ -72,7 +116,6 @@ def login():
         # Debug logging
         if admin:
             print(f"DEBUG: Admin found - ID: {admin.id}, Username: {admin.username}, Active: {admin.is_active}")
-            print(f"DEBUG: Password hash: {admin.password_hash[:50]}...")
             password_check_result = admin.check_password(password)
             print(f"DEBUG: Password check result: {password_check_result}")
         else:
@@ -84,7 +127,22 @@ def login():
         if not admin.is_active:
             return jsonify({'error': 'Account is disabled'}), 403
         
-        # Set session
+        # Generate JWT token
+        token_payload = {
+            'admin_id': admin.id,
+            'username': admin.username,
+            'is_super_admin': admin.is_super_admin,
+            'exp': datetime.utcnow() + timedelta(seconds=current_app.config['JWT_ACCESS_TOKEN_EXPIRES']),
+            'iat': datetime.utcnow()
+        }
+        
+        token = jwt.encode(
+            token_payload,
+            current_app.config['JWT_SECRET_KEY'],
+            algorithm='HS256'
+        )
+        
+        # Also set session for backward compatibility
         session['admin_id'] = admin.id
         session['admin_username'] = admin.username
         session['is_super_admin'] = admin.is_super_admin
@@ -95,6 +153,7 @@ def login():
         return jsonify({
             'success': True,
             'message': 'Login successful',
+            'token': token,  # JWT token for cross-domain authentication
             'admin': admin.to_dict()
         }), 200
         
@@ -136,15 +195,11 @@ def debug_check_admin():
 
 
 @admin_bp.route('/api/me', methods=['GET'])
-@login_required
+@token_required
 def get_current_admin():
-    """Get current logged-in admin info."""
-    admin = Admin.query.get(session['admin_id'])
-    if not admin:
-        session.clear()
-        return jsonify({'error': 'Admin not found'}), 404
-    
-    return jsonify({'admin': admin.to_dict()}), 200
+    """Get current logged-in admin info (JWT-protected)."""
+    # Admin is already loaded in request.current_admin by token_required decorator
+    return jsonify({'admin': request.current_admin.to_dict()}), 200
 
 
 # ==================== CLIENTS MANAGEMENT ====================
