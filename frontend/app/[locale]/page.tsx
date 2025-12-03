@@ -198,7 +198,7 @@ export default function HomePage() {
       <section className="section bg-white">
         <div className="container-custom">
           <div className="section-header">
-            <div className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-semibold mb-4">
+            <div className="inline-block px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full font-medium text-sm mb-3">
               {isEnglish ? 'OUR SERVICES' : 'NASZA OFERTA'}
             </div>
             <h2 className="section-title">
@@ -206,196 +206,196 @@ export default function HomePage() {
             </h2>
             <p className="section-subtitle">
               {isEnglish 
-                ? 'We will design and install an efficient system tailored to your needs that ensures comfort, positively impacts the environment and increases your wallet\'s resources.'
-                : 'Specjalnie dla Ciebie zaprojektujemy i wykonamy wydajną instalację hydrauliczną, która zapewni Ci komfort, pozytywnie wpłynie na środowisko naturalne oraz zwiększy zasoby Twojego portfela.'}
+                ? 'Comprehensive hydraulic installations and services for residential and commercial properties'
+                : 'Kompleksowe instalacje hydrauliczne i usługi dla nieruchomości mieszkalnych i komercyjnych'}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Service 1: Water & Sewage */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-blue-500 to-blue-600">
-                <Droplets className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Droplets className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'Water & Sewage Systems' : 'Instalacje Wodno-Kanalizacyjne'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Complete installation of water supply and sewage systems for residential and commercial buildings'
-                  : 'Kompleksowy montaż instalacji wodnych i kanalizacyjnych dla budynków mieszkalnych i komercyjnych'}
+                  ? 'Complete installation of water supply and sewage systems'
+                  : 'Kompleksowy montaż instalacji wodnych i kanalizacyjnych'}
               </p>
-              <Link href={`/${locale}/services`} className="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center gap-2 group">
+              <Link href={`/${locale}/services`} className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
 
             {/* Service 2: Gas Installations */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-red-500 to-red-600">
-                <Flame className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Flame className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'Gas Installations' : 'Instalacje Gazowe'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Safe installation and modernization of gas systems by certified specialists'
-                  : 'Bezpieczny montaż i modernizacja instalacji gazowych przez certyfikowanych specjalistów'}
+                  ? 'Safe installation and modernization of gas systems'
+                  : 'Bezpieczny montaż i modernizacja instalacji gazowych'}
               </p>
-              <Link href={`/${locale}/services`} className="text-red-600 font-semibold hover:text-red-700 inline-flex items-center gap-2 group">
+              <Link href={`/${locale}/services`} className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
 
             {/* Service 3: Underfloor Heating */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-orange-500 to-orange-600">
-                <Thermometer className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Thermometer className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'Underfloor Heating' : 'Ogrzewanie Podłogowe'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Energy-efficient underfloor heating systems for modern, comfortable homes'
-                  : 'Energooszczędne systemy ogrzewania podłogowego dla nowoczesnych, komfortowych domów'}
+                  ? 'Energy-efficient underfloor heating systems'
+                  : 'Energooszczędne systemy ogrzewania podłogowego'}
               </p>
-              <Link href={`/${locale}/services`} className="text-orange-600 font-semibold hover:text-orange-700 inline-flex items-center gap-2 group">
+              <Link href={`/${locale}/services`} className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
 
             {/* Service 4: Boiler Room Modernization */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-purple-500 to-purple-600">
-                <Settings className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Settings className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'Boiler Room Modernization' : 'Modernizacja Kotłowni'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Upgrading old boiler rooms to modern, efficient heating systems'
-                  : 'Modernizacja starych kotłowni na nowoczesne, wydajne systemy grzewcze'}
+                  ? 'Upgrading boiler rooms to modern heating systems'
+                  : 'Modernizacja kotłowni na nowoczesne systemy grzewcze'}
               </p>
-              <Link href={`/${locale}/services`} className="text-purple-600 font-semibold hover:text-purple-700 inline-flex items-center gap-2 group">
+              <Link href={`/${locale}/services`} className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
 
             {/* Service 5: New Boiler Room Installation */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-amber-500 to-amber-600">
-                <Factory className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Factory className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'New Boiler Rooms' : 'Montaż Nowych Kotłowni'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Complete installation of modern boiler rooms with full automation'
-                  : 'Kompleksowy montaż nowoczesnych kotłowni z pełną automatyką'}
+                  ? 'Complete installation of modern boiler rooms'
+                  : 'Kompleksowy montaż nowoczesnych kotłowni'}
               </p>
-              <Link href={`/${locale}/services`} className="text-amber-600 font-semibold hover:text-amber-700 inline-flex items-center gap-2 group">
+              <Link href={`/${locale}/services`} className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
 
             {/* Service 6: Gas Furnace Service */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-emerald-500 to-emerald-600">
-                <Wrench className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Wrench className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'Gas Furnace Service' : 'Serwis Piecy Gazowych'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Professional servicing and repairs of gas furnaces by certified technicians'
-                  : 'Profesjonalny serwis i naprawy pieców gazowych przez certyfikowanych techników'}
+                  ? 'Professional servicing and repairs of gas furnaces'
+                  : 'Profesjonalny serwis i naprawy pieców gazowych'}
               </p>
-              <a href="tel:503691808" className="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center gap-2 group">
+              <a href="tel:503691808" className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Call now' : 'Zadzwoń teraz'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </a>
             </div>
 
             {/* Service 7: Gas Installation Inspection */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-yellow-500 to-yellow-600">
-                <ClipboardCheck className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <ClipboardCheck className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'Gas System Inspection' : 'Przegląd Instalacji Gazowych'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Mandatory safety inspections and certification of gas installations'
-                  : 'Obowiązkowe przeglądy bezpieczeństwa i certyfikacja instalacji gazowych'}
+                  ? 'Safety inspections and certification of gas systems'
+                  : 'Przeglądy bezpieczeństwa i certyfikacja instalacji gazowych'}
               </p>
-              <Link href={`/${locale}/services`} className="text-yellow-600 font-semibold hover:text-yellow-700 inline-flex items-center gap-2 group">
+              <Link href={`/${locale}/services`} className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
 
             {/* Service 8: Sewage Treatment Plants */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-lime-500 to-lime-600">
-                <Recycle className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-lime-500 to-lime-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Recycle className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'Sewage Treatment Plants' : 'Przydomowe Oczyszczalnie'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Ecological domestic sewage treatment plant installation and maintenance'
-                  : 'Montaż i serwis ekologicznych przydomowych oczyszczalni ścieków'}
+                  ? 'Ecological sewage treatment plant installation'
+                  : 'Montaż ekologicznych przydomowych oczyszczalni'}
               </p>
-              <Link href={`/${locale}/services`} className="text-lime-600 font-semibold hover:text-lime-700 inline-flex items-center gap-2 group">
+              <Link href={`/${locale}/services`} className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
 
             {/* Service 9: Mini Excavator Services */}
-            <div className="service-card">
-              <div className="service-card-icon bg-gradient-to-br from-stone-500 to-stone-600">
-                <Truck className="w-10 h-10 text-white" strokeWidth={2.5} />
+            <div className="service-card group">
+              <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-stone-500 to-stone-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Truck className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">
                 {isEnglish ? 'Mini Excavator Services' : 'Usługi Minikoparką'}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                 {isEnglish 
-                  ? 'Excavation work for installations, foundations, and site leveling'
-                  : 'Prace ziemne pod instalacje, fundamenty oraz wyrównywanie terenu'}
+                  ? 'Excavation work for installations and foundations'
+                  : 'Prace ziemne pod instalacje i fundamenty'}
               </p>
-              <Link href={`/${locale}/services`} className="text-stone-600 font-semibold hover:text-stone-700 inline-flex items-center gap-2 group">
+              <Link href={`/${locale}/services`} className="text-sm text-blue-600 font-medium hover:text-blue-700 inline-flex items-center gap-1.5 group/link">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>

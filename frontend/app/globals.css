@@ -109,57 +109,55 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold;
     color: rgb(var(--color-text-primary));
     font-family: var(--font-heading);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+  }
+  
+  /* Professional, smaller typography scale */
+  h1 { 
+    font-size: clamp(1.75rem, 3vw, 2.5rem); /* 28px-40px */
+    font-weight: 700;
     line-height: 1.2;
-    font-weight: 700;
   }
   
-  h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; }
-  h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; }
-  h3 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; }
-  
-  h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
-    font-weight: 800;
+  h2 { 
+    font-size: clamp(1.5rem, 2.5vw, 2rem); /* 24px-32px */
+    font-weight: 700;
+    line-height: 1.3;
   }
   
-  h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl;
-    font-weight: 700;
-  }
-  
-  h3 {
-    @apply text-2xl md:text-3xl lg:text-4xl;
-    font-weight: 700;
+  h3 { 
+    font-size: clamp(1.125rem, 2vw, 1.5rem); /* 18px-24px */
+    font-weight: 600;
+    line-height: 1.4;
   }
   
   h4 {
-    @apply text-xl md:text-2xl lg:text-3xl;
+    font-size: 1.125rem; /* 18px */
     font-weight: 600;
   }
   
   p {
-    @apply text-base md:text-lg;
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.6;
     color: rgb(var(--color-text-secondary));
-    line-height: 1.75;
   }
 }
 
 @layer components {
-  /* Section Containers */
+  /* Section Containers - Compact and professional */
   .section {
-    @apply py-16 md:py-20 lg:py-24;
+    @apply py-12 md:py-14 lg:py-16;
   }
   
   .section-sm {
-    @apply py-12 md:py-16;
+    @apply py-8 md:py-10;
   }
   
   .section-lg {
-    @apply py-20 md:py-28 lg:py-32;
+    @apply py-16 md:py-20 lg:py-24;
   }
   
   .container-custom {
@@ -225,13 +223,25 @@
     @apply opacity-100;
   }
   
-  /* Service Cards - Similar to eko-solutions */
+  /* Service Cards - Compact and professional */
   .service-card {
-    @apply card card-hover card-bordered p-8 text-center;
+    padding: 1.5rem;
+    text-align: center;
+    background: white;
+    border-radius: 1rem;
+    border: 1px solid rgb(229 231 235);
+    transition: all 0.3s ease;
   }
   
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: rgb(191 219 254);
+  }
+  
+  /* Icon container - removed, now inline in JSX */
   .service-card-icon {
-    @apply w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-2xl transition-transform duration-300;
+    display: none; /* Deprecated, using inline styles */
   }
   
   /* Stats Display */
@@ -239,12 +249,22 @@
     @apply text-center p-6;
   }
   
+  /* Stats - Professional, smaller */
   .stat-number {
-    @apply text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent;
+    font-size: clamp(2rem, 4vw, 2.75rem); /* 32px-44px */
+    font-weight: 800;
+    background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-secondary)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
   }
   
   .stat-label {
-    @apply text-sm md:text-base text-gray-600 mt-2 font-medium;
+    font-size: 0.875rem; /* 14px */
+    color: rgb(var(--color-text-secondary));
+    margin-top: 0.5rem;
+    font-weight: 500;
   }
   
   /* Hero Section */
@@ -317,17 +337,28 @@
     @apply bg-gradient-to-r from-blue-600 via-green-600 to-blue-600 bg-clip-text text-transparent;
   }
   
-  /* Section Headers */
+  /* Section Headers - Compact and professional */
   .section-header {
-    @apply text-center mb-12 md:mb-16;
+    text-align: center;
+    margin-bottom: 2rem; /* 32px (was 48px) */
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .section-title {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold mb-4;
+    font-size: clamp(1.5rem, 2.5vw, 2rem); /* 24px-32px */
+    font-weight: 700;
+    margin-bottom: 0.75rem; /* 12px (was 16px) */
+    letter-spacing: -0.025em;
   }
   
   .section-subtitle {
-    @apply text-lg md:text-xl text-gray-600 max-w-3xl mx-auto;
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.6;
+    color: rgb(var(--color-text-secondary));
+    max-width: 42rem;
+    margin: 0 auto;
   }
   
   /* Icon Containers */

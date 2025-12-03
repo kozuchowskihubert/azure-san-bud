@@ -171,9 +171,9 @@ export default function AdminLoginPage() {
 
         {/* Dev Info */}
         <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-          <p>Domyślne dane logowania:</p>
+          <p>Dane logowania dostępne w dokumentacji</p>
           <p className="font-mono bg-gray-100 dark:bg-gray-800 rounded px-2 py-1 inline-block mt-1">
-            admin / admin123
+            docs/ADMIN_CONFIGURATION.md
           </p>
         </div>
       </div>
