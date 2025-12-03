@@ -6,6 +6,7 @@ import { Inter, Montserrat, Playfair_Display } from 'next/font/google';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import FloatingAdminButton from '@/components/FloatingAdminButton';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import '../globals.css';
 
 // Modern, clean sans-serif for body text
@@ -58,12 +59,14 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${inter.variable} ${montserrat.variable} ${playfair.variable}`}>
       <body className={inter.className}>
-        <NextIntlClientProvider messages={messages}>
-          <Navigation />
-          {children}
-          <Footer />
-          <FloatingAdminButton />
-        </NextIntlClientProvider>
+        <ThemeProvider>
+          <NextIntlClientProvider messages={messages}>
+            <Navigation />
+            {children}
+            <Footer />
+            <FloatingAdminButton />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

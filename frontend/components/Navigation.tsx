@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navigation() {
   const t = useTranslations();
@@ -171,8 +172,8 @@ export default function Navigation() {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-white shadow-md' 
-          : 'bg-white/95 backdrop-blur-sm'
+          ? 'bg-white dark:bg-gray-900 shadow-md' 
+          : 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm'
       }`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
@@ -189,16 +190,16 @@ export default function Navigation() {
                 />
               </div>
               <div className="hidden md:block">
-                <div className="text-xl font-bold text-gray-900">
+                <div className="text-xl font-bold text-gray-900 dark:text-white">
                   SAN-BUD
                 </div>
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-gray-600 dark:text-gray-400">
                   Hydraulika • Nasza pasja
                 </div>
               </div>
             </Link>
 
-            {/* Desktop Navigation - Professional & Clean */}
+            {/* Desktop Navigation - Professional & Clean with Green/Orange Theme */}
             <div className="hidden lg:flex items-center space-x-1">
               {navItems.map((item, index) => (
                 <div key={item.href} className="relative" ref={item.hasDropdown ? servicesMenuRef : undefined}>
@@ -207,8 +208,8 @@ export default function Navigation() {
                       onClick={() => setServicesMenuOpen(!servicesMenuOpen)}
                       className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 ${
                         pathname.includes('/services')
-                          ? 'bg-blue-600 text-white'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          ? 'bg-green-600 dark:bg-green-700 text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                       }`}
                     >
                       <span>{item.label}</span>
@@ -226,8 +227,8 @@ export default function Navigation() {
                       href={item.href}
                       className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                         pathname === item.href
-                          ? 'bg-blue-600 text-white'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          ? 'bg-orange-500 dark:bg-orange-600 text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                       }`}
                     >
                       {item.label}
@@ -236,11 +237,11 @@ export default function Navigation() {
 
                   {/* Mega Menu Dropdown */}
                   {item.hasDropdown && servicesMenuOpen && (
-                    <div className="absolute top-full left-0 mt-2 w-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-slide-down">
+                    <div className="absolute top-full left-0 mt-2 w-[600px] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden animate-slide-down">
                       <div className="p-6">
                         <div className="mb-4">
-                          <h3 className="text-lg font-bold text-gray-900 mb-1">Nasze usługi</h3>
-                          <p className="text-sm text-gray-600">Kompleksowe rozwiązania hydrauliczne</p>
+                          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Nasze usługi</h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">Kompleksowe rozwiązania hydrauliczne</p>
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                           {services.map((service, idx) => (
@@ -285,10 +286,10 @@ export default function Navigation() {
 
             {/* Action Buttons - Clean & Professional */}
             <div className="hidden lg:flex items-center space-x-3">
-              {/* Phone Button */}
+              {/* Phone Button - Green theme */}
               <a
                 href={`tel:${contactData.phone}`}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium flex items-center gap-2 transition-colors duration-200"
+                className="px-4 py-2 bg-green-600 dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-600 text-white rounded-lg font-medium flex items-center gap-2 transition-colors duration-200"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -296,29 +297,8 @@ export default function Navigation() {
                 <span className="font-semibold">503 691 808</span>
               </a>
 
-              {/* Language Switcher */}
-              <div className="flex items-center gap-1 border border-gray-300 rounded-lg p-1">
-                <button
-                  onClick={() => switchLocale('pl')}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-                    locale === 'pl'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  PL
-                </button>
-                <button
-                  onClick={() => switchLocale('en')}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-                    locale === 'en'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  EN
-                </button>
-              </div>
+              {/* Dark Mode Toggle */}
+              <ThemeToggle />
             </div>
 
             {/* Mobile Menu Button */}

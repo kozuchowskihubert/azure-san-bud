@@ -6,6 +6,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class', // Enable dark mode with class strategy
   theme: {
     extend: {
       fontFamily: {
@@ -14,40 +15,40 @@ const config: Config = {
         display: ['var(--font-playfair)', 'Georgia', 'serif'],
       },
       colors: {
-        // SanBud Professional Blue + HAOS Orange Hybrid Theme
+        // Green and Orange Theme with Dark Mode Support
         primary: {
-          DEFAULT: '#0A4B6E', // SanBud blue for trust and professionalism
-          light: '#1A6B9E',
-          dark: '#083A56',
-          50: '#E8F4F8',
-          100: '#D1E9F1',
-          200: '#A3D3E3',
-          300: '#75BDD5',
-          400: '#47A7C7',
-          500: '#0A4B6E',
-          600: '#083C58',
-          700: '#062D42',
-          800: '#041E2C',
-          900: '#020F16',
+          DEFAULT: '#16a34a', // Green 600
+          light: '#22c55e',   // Green 500
+          dark: '#15803d',    // Green 700
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
         },
         accent: {
-          DEFAULT: '#FF8C42', // HAOS orange for energy and call-to-actions
-          light: '#FFB380',
-          dark: '#E67A2E',
-          50: '#FFF4ED',
-          100: '#FFE6D5',
-          200: '#FFCAA9',
-          300: '#FFB380',
-          400: '#FF9C5C',
-          500: '#FF8C42',
-          600: '#FF7820',
-          700: '#E67A2E',
-          800: '#C65D1A',
-          900: '#A34A12',
+          DEFAULT: '#f97316', // Orange 600
+          light: '#fb923c',   // Orange 400
+          dark: '#ea580c',    // Orange 700
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
         },
         secondary: {
-          DEFAULT: '#2C87B8', // Lighter blue for sections
-          light: '#4AA3D0',
+          DEFAULT: '#10b981', // Emerald 500
+          light: '#34d399',   // Emerald 400
           dark: '#1E6B94',
         },
         neutral: {
