@@ -192,22 +192,22 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
       {/* Progress Steps */}
       <div className="flex justify-center mb-8">
         <div className="flex items-center space-x-4">
-          <div className={`flex items-center gap-2 ${step === 'date' ? 'text-blue-600 font-bold' : step === 'time' || step === 'form' ? 'text-green-600' : 'text-gray-400'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'date' ? 'bg-blue-600 text-white' : step === 'time' || step === 'form' ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+          <div className={`flex items-center gap-2 ${step === 'date' ? 'text-green-600 dark:text-green-400 font-bold' : step === 'time' || step === 'form' ? 'text-green-600 dark:text-green-400' : 'text-gray-400'}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'date' ? 'bg-green-600 text-white' : step === 'time' || step === 'form' ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
               1
             </div>
             <span>Wybierz datę</span>
           </div>
-          <div className="w-12 h-0.5 bg-gray-300" />
-          <div className={`flex items-center gap-2 ${step === 'time' ? 'text-blue-600 font-bold' : step === 'form' ? 'text-green-600' : 'text-gray-400'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'time' ? 'bg-blue-600 text-white' : step === 'form' ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+          <div className="w-12 h-0.5 bg-gray-300 dark:bg-gray-600" />
+          <div className={`flex items-center gap-2 ${step === 'time' ? 'text-green-600 dark:text-green-400 font-bold' : step === 'form' ? 'text-green-600 dark:text-green-400' : 'text-gray-400'}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'time' ? 'bg-green-600 text-white' : step === 'form' ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
               2
             </div>
             <span>Wybierz godzinę</span>
           </div>
-          <div className="w-12 h-0.5 bg-gray-300" />
-          <div className={`flex items-center gap-2 ${step === 'form' ? 'text-blue-600 font-bold' : 'text-gray-400'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'form' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
+          <div className="w-12 h-0.5 bg-gray-300 dark:bg-gray-600" />
+          <div className={`flex items-center gap-2 ${step === 'form' ? 'text-orange-600 dark:text-orange-400 font-bold' : 'text-gray-400'}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'form' ? 'bg-orange-600 text-white' : 'bg-gray-300'}`}>
               3
             </div>
             <span>Dane kontaktowe</span>
@@ -217,20 +217,20 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Calendar Section */}
-        <div className={`bg-white rounded-2xl shadow-lg p-6 ${step === 'date' ? 'ring-2 ring-blue-500' : ''}`}>
+        <div className={`bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 ${step === 'date' ? 'ring-2 ring-green-500' : ''}`}>
           <div className="flex items-center justify-between mb-6">
             <button
               onClick={handlePrevMonth}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
               ←
             </button>
-            <h3 className="text-xl font-bold text-gray-900">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
             </h3>
             <button
               onClick={handleNextMonth}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
               →
             </button>
@@ -239,7 +239,7 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
           {/* Day names */}
           <div className="grid grid-cols-7 gap-2 mb-2">
             {dayNames.map(day => (
-              <div key={day} className="text-center text-sm font-semibold text-gray-600 py-2">
+              <div key={day} className="text-center text-sm font-semibold text-gray-600 dark:text-gray-400 py-2">
                 {day}
               </div>
             ))}
@@ -263,10 +263,10 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                   onClick={() => handleDateSelect(date)}
                   disabled={past || isSunday}
                   className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-all duration-200
-                    ${isSelected ? 'bg-blue-600 text-white shadow-lg scale-110' : ''}
-                    ${!isSelected && today ? 'bg-blue-100 text-blue-600 ring-2 ring-blue-300' : ''}
-                    ${!isSelected && !today && !past && !isSunday ? 'bg-gray-50 hover:bg-blue-50 hover:text-blue-600' : ''}
-                    ${past || isSunday ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'cursor-pointer'}
+                    ${isSelected ? 'bg-green-600 text-white shadow-lg scale-110' : ''}
+                    ${!isSelected && today ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 ring-2 ring-green-300 dark:ring-green-700' : ''}
+                    ${!isSelected && !today && !past && !isSunday ? 'bg-gray-50 dark:bg-gray-700 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400' : ''}
+                    ${past || isSunday ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed' : 'cursor-pointer'}
                   `}
                 >
                   {date.getDate()}
@@ -275,17 +275,17 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
             })}
           </div>
 
-          <div className="mt-6 space-y-2 text-sm text-gray-600">
+          <div className="mt-6 space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-blue-600 rounded" />
+              <div className="w-4 h-4 bg-green-600 rounded" />
               <span>Data wybrana</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-blue-100 ring-2 ring-blue-300 rounded" />
+              <div className="w-4 h-4 bg-green-100 dark:bg-green-900/30 ring-2 ring-green-300 dark:ring-green-700 rounded" />
               <span>Dzisiaj</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-gray-100 rounded" />
+              <div className="w-4 h-4 bg-gray-100 dark:bg-gray-800 rounded" />
               <span>Niedostępne</span>
             </div>
           </div>
@@ -294,8 +294,8 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
         {/* Time Slots / Form Section */}
         <div className="space-y-6">
           {step === 'time' && selectedDate && (
-            <div className={`bg-white rounded-2xl shadow-lg p-6 ${step === 'time' ? 'ring-2 ring-blue-500' : ''}`}>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+            <div className={`bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 ${step === 'time' ? 'ring-2 ring-green-500' : ''}`}>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                 Wybierz godzinę dla {selectedDate.toLocaleDateString('pl-PL')}
               </h3>
               
@@ -306,9 +306,9 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                     onClick={() => slot.available && handleTimeSelect(slot.time)}
                     disabled={!slot.available}
                     className={`p-3 rounded-lg text-sm font-medium transition-all duration-200
-                      ${selectedTime === slot.time ? 'bg-blue-600 text-white shadow-lg scale-105' : ''}
-                      ${selectedTime !== slot.time && slot.available ? 'bg-green-50 text-green-700 hover:bg-green-100 border-2 border-green-200' : ''}
-                      ${!slot.available ? 'bg-gray-100 text-gray-400 cursor-not-allowed line-through' : 'cursor-pointer'}
+                      ${selectedTime === slot.time ? 'bg-green-600 text-white shadow-lg scale-105' : ''}
+                      ${selectedTime !== slot.time && slot.available ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30 border-2 border-green-200 dark:border-green-700' : ''}
+                      ${!slot.available ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed line-through' : 'cursor-pointer'}
                     `}
                   >
                     {slot.time}
@@ -318,18 +318,18 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
 
               <div className="mt-6 flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-green-50 border-2 border-green-200 rounded" />
-                  <span className="text-gray-600">Dostępne</span>
+                  <div className="w-4 h-4 bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-700 rounded" />
+                  <span className="text-gray-600 dark:text-gray-400">Dostępne</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-gray-100 rounded" />
-                  <span className="text-gray-600">Zajęte</span>
+                  <div className="w-4 h-4 bg-gray-100 dark:bg-gray-800 rounded" />
+                  <span className="text-gray-600 dark:text-gray-400">Zajęte</span>
                 </div>
               </div>
 
               <button
                 onClick={() => setStep('date')}
-                className="mt-4 w-full px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors"
+                className="mt-4 w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
               >
                 ← Wróć do kalendarza
               </button>
@@ -337,57 +337,57 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
           )}
 
           {step === 'form' && selectedDate && selectedTime && (
-            <div className="bg-white rounded-2xl shadow-lg p-6 ring-2 ring-blue-500">
-              <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Podsumowanie rezerwacji</h3>
-                <p className="text-gray-700">📅 Data: {selectedDate.toLocaleDateString('pl-PL')}</p>
-                <p className="text-gray-700">🕐 Godzina: {selectedTime}</p>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 ring-2 ring-orange-500">
+              <div className="mb-6 p-4 bg-gradient-to-r from-green-50 to-orange-50 dark:from-green-900/20 dark:to-orange-900/20 rounded-lg border border-green-200 dark:border-green-700">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Podsumowanie rezerwacji</h3>
+                <p className="text-gray-700 dark:text-gray-300">📅 Data: {selectedDate.toLocaleDateString('pl-PL')}</p>
+                <p className="text-gray-700 dark:text-gray-300">🕐 Godzina: {selectedTime}</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Imię i nazwisko *</label>
+                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Imię i nazwisko *</label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="Jan Kowalski"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Telefon *</label>
+                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Telefon *</label>
                     <input
                       type="tel"
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="+48 503 691 808"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">E-mail</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">E-mail</label>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="jan.kowalski@example.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Rodzaj usługi *</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Rodzaj usługi *</label>
                   <select
                     required
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   >
                     <option>Instalacje wodne</option>
                     <option>Remont łazienki</option>
@@ -399,12 +399,12 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Opis problemu/zlecenia</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Opis problemu/zlecenia</label>
                   <textarea
                     rows={4}
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Opisz czego potrzebujesz..."
                   />
                 </div>
@@ -413,13 +413,13 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                   <button
                     type="button"
                     onClick={() => setStep('time')}
-                    className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg transition-colors"
+                    className="flex-1 px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-bold rounded-lg transition-colors"
                   >
                     ← Wróć
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-orange-600 hover:from-green-700 hover:to-orange-700 text-white font-bold rounded-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
                   >
                     Potwierdź rezerwację
                   </button>
@@ -429,20 +429,20 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
           )}
 
           {step === 'date' && !selectedDate && (
-            <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-lg p-8 text-center">
+            <div className="bg-gradient-to-br from-green-50 to-white dark:from-green-950/20 dark:to-gray-800 rounded-2xl shadow-lg p-8 text-center border border-green-200 dark:border-green-800">
               <div className="text-6xl mb-4">📅</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Umów wizytę online</h3>
-              <p className="text-gray-600 mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Umów wizytę online</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
                 Wybierz dogodny termin z kalendarza. Potwierdzimy rezerwację SMS-em i e-mailem.
               </p>
               <div className="space-y-3 text-left">
-                <div className="flex items-center gap-3 text-gray-700">
+                <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                   <div>
                     <p className="font-semibold">Godziny pracy:</p>
                     <p className="text-sm">Pon-Pt: 8:00-18:00, Sob: 9:00-14:00</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-gray-700">
+                <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                   <div>
                     <p className="font-semibold">Awarie 24/7:</p>
                     <p className="text-sm">W nagłych przypadkach zadzwoń: +48 503 691 808</p>

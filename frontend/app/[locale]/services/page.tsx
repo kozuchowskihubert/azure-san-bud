@@ -1,77 +1,80 @@
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function ServicesPage() {
-  const t = useTranslations();
-
   const services = [
     {
       id: 1,
-      title: 'Montaż instalacji wodnych',
+      title: 'Instalacje Wodne',
       description: 'Profesjonalny montaż systemów wodnych dla domów i mieszkań. Kompleksowe rozwiązania z najwyższej jakości materiałów.',
-      image: '/images/service-plumbing.jpg',
+      image: '/images/sanbud-google-1.jpg',
       features: ['Instalacje wodne', 'Systemy filtracji', 'Łazienki', 'Kuchnie'],
-      icon: '',
+      icon: '💧',
+      color: 'green',
     },
     {
       id: 2,
-      title: 'Łazienki pod klucz',
+      title: 'Łazienki Pod Klucz',
       description: 'Realizacja luksusowych łazienek od projektu po wykończenie. Nowoczesny design połączony z funkcjonalnością.',
       image: '/images/sanbud-google-2.jpg',
       features: ['Projektowanie', 'Glazura', 'Armatura', 'Oświetlenie'],
-      icon: '',
+      icon: '🛁',
+      color: 'orange',
     },
     {
       id: 3,
-      title: 'Instalacje grzewcze',
+      title: 'Instalacje Grzewcze',
       description: 'Montaż i serwis systemów ogrzewania. Efektywne rozwiązania grzewcze dostosowane do Twoich potrzeb.',
       image: '/images/sanbud-google-3.jpg',
       features: ['Piece gazowe', 'Pompy ciepła', 'Ogrzewanie podłogowe', 'Grzejniki'],
-      icon: '',
+      icon: '🔥',
+      color: 'green',
     },
     {
       id: 4,
-      title: 'Awarie 24/7',
+      title: 'Serwis 24/7',
       description: 'Całodobowe pogotowie hydrauliczne. Szybka reakcja i profesjonalna pomoc w każdej sytuacji awaryjnej.',
       image: '/images/sanbud-google-4.jpg',
       features: ['Wycieki', 'Przecieki', 'Awarie instalacji', 'Natychmiastowa pomoc'],
-      icon: '',
+      icon: '⚡',
+      color: 'orange',
     },
     {
       id: 5,
-      title: 'Naprawy i konserwacja',
+      title: 'Naprawy i Konserwacja',
       description: 'Fachowe naprawy i regularne przeglądy instalacji hydraulicznych. Zapobiegamy awariom zanim się pojawią.',
-      image: '/images/sanbud-google-1.jpg',
+      image: '/images/sanbud-google-5.jpg',
       features: ['Przeglądy', 'Naprawy', 'Konserwacja', 'Modernizacja'],
-      icon: '',
+      icon: '🔧',
+      color: 'green',
     },
     {
       id: 6,
-      title: 'Instalacje sanitarne',
+      title: 'Instalacje Sanitarne',
       description: 'Kompleksowe systemy sanitarne dla budynków mieszkalnych i użyteczności publicznej.',
-      image: '/images/sanbud-google-5.jpg',
+      image: '/images/sanbud-google-6.jpg',
       features: ['Kanalizacja', 'Wentylacja', 'Odprowadzanie ścieków', 'Systemy bezpieczeństwa'],
-      icon: '',
+      icon: '🚰',
+      color: 'orange',
     },
   ];
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-bg-primary))] via-[rgb(var(--color-bg-secondary))] to-[rgb(var(--color-bg-tertiary))]"></div>
-        
-        {/* Glow effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[rgb(var(--color-primary))] rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[rgb(var(--color-accent))] rounded-full filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
-
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="relative py-20 bg-gradient-to-b from-green-50 via-white to-white dark:from-green-950/20 dark:via-gray-900 dark:to-gray-900">
+        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(var(--color-gradient-mid))] to-[rgb(var(--color-accent))] bg-clip-text text-transparent">
-              Nasze Usługi
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/10 dark:bg-green-600/20 border border-green-500/30 rounded-full mb-6">
+              <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <span className="text-sm font-semibold text-green-600 dark:text-green-400">Profesjonalne Usługi Hydrauliczne</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-black mb-6 text-gray-900 dark:text-white">
+              Nasze <span className="bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">Usługi</span>
             </h1>
-            <p className="text-xl md:text-2xl text-[rgb(var(--color-text-secondary))] leading-relaxed">
+            <p className="text-xl text-gray-600 dark:text-gray-400">
               Kompleksowe rozwiązania hydrauliczne dostosowane do Twoich potrzeb
             </p>
           </div>
@@ -79,14 +82,13 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20">
+      <section className="py-20 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {services.map((service, index) => (
               <div
                 key={service.id}
-                className="card group overflow-hidden"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:-translate-y-2"
               >
                 {/* Image */}
                 <div className="relative h-64 overflow-hidden">
@@ -96,76 +98,55 @@ export default function ServicesPage() {
                     fill
                     className="object-cover transform group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--color-bg-primary))] via-[rgb(var(--color-bg-primary))]/60 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                   
-                  {/* Icon overlay */}
-                  <div className="absolute top-4 right-4 text-6xl transform group-hover:rotate-12 transition-transform duration-300">
+                  {/* Icon Badge */}
+                  <div className={`absolute top-4 right-4 w-14 h-14 ${service.color === 'green' ? 'bg-green-600' : 'bg-orange-600'} rounded-full flex items-center justify-center text-3xl shadow-xl`}>
                     {service.icon}
+                  </div>
+
+                  {/* Title on Image */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-2xl font-bold text-white mb-1">
+                      {service.title}
+                    </h3>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6 space-y-4">
-                  <h3 className="text-2xl font-bold text-[rgb(var(--color-text-primary))] group-hover:text-[rgb(var(--color-primary))] transition-colors">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-[rgb(var(--color-text-secondary))] leading-relaxed">
+                <div className="p-6">
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                     {service.description}
                   </p>
 
                   {/* Features */}
-                  <div className="flex flex-wrap gap-2 pt-4">
+                  <div className="space-y-2 mb-6">
                     {service.features.map((feature, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 rounded-full text-xs font-semibold bg-[rgb(var(--color-bg-elevated))] text-[rgb(var(--color-primary))] border border-[rgb(var(--color-border-light))]"
-                      >
-                        {feature}
-                      </span>
+                      <div key={idx} className="flex items-center gap-2">
+                        <svg 
+                          className={`w-5 h-5 flex-shrink-0 ${service.color === 'green' ? 'text-green-600 dark:text-green-400' : 'text-orange-600 dark:text-orange-400'}`} 
+                          fill="currentColor" 
+                          viewBox="0 0 20 20"
+                        >
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{feature}</span>
+                      </div>
                     ))}
                   </div>
 
-                  {/* CTA */}
-                  <div className="pt-4">
-                    <Link
-                      href="/pl/contact"
-                      className="inline-flex items-center gap-2 text-[rgb(var(--color-primary))] hover:text-[rgb(var(--color-accent))] font-semibold transition-colors"
-                    >
-                      Zapytaj o ofertę
-                      <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </Link>
-                  </div>
+                  {/* CTA Button */}
+                  <Link
+                    href="/#contact"
+                    className={`block text-center px-6 py-3 rounded-lg font-bold transition-all duration-300 ${
+                      service.color === 'green'
+                        ? 'bg-green-600 hover:bg-green-700 text-white'
+                        : 'bg-orange-600 hover:bg-orange-700 text-white'
+                    }`}
+                  >
+                    Zapytaj o usługę
+                  </Link>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-20 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-bg-secondary))] to-[rgb(var(--color-bg-primary))]"></div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[rgb(var(--color-text-primary))]">
-              Dlaczego my?
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {[
-              { title: 'Gwarancja jakości', description: 'Wszystkie usługi objęte gwarancją' },
-              { title: 'Szybka realizacja', description: 'Terminowe wykonanie zleceń' },
-              { title: 'Premium materiały', description: 'Najwyższej klasy komponenty' },
-              { title: 'Doświadczenie', description: '7 lat na rynku' },
-            ].map((item, index) => (
-              <div key={index} className="card p-6 text-center">
-                <h4 className="text-lg font-bold mb-2 text-[rgb(var(--color-text-primary))]">{item.title}</h4>
-                <p className="text-sm text-[rgb(var(--color-text-secondary))]">{item.description}</p>
               </div>
             ))}
           </div>
@@ -173,21 +154,27 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-br from-green-600 via-green-700 to-green-600 dark:from-green-700 dark:via-green-800 dark:to-green-700">
         <div className="container mx-auto px-4">
-          <div className="card-glass max-w-4xl mx-auto p-12 text-center">
-            <h2 className="text-4xl font-bold mb-6 text-[rgb(var(--color-text-primary))]">
-              Potrzebujesz wyceny?
+          <div className="max-w-4xl mx-auto text-center text-white">
+            <h2 className="text-4xl md:text-5xl font-black mb-6">
+              Gotowy na współpracę?
             </h2>
-            <p className="text-xl mb-8 text-[rgb(var(--color-text-secondary))]">
-              Skontaktuj się z nami, aby uzyskać darmową wycenę dla swojego projektu
+            <p className="text-xl mb-10 text-green-100">
+              Skontaktuj się z nami już dziś i otrzymaj bezpłatną wycenę
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/pl/contact" className="btn btn-primary">
-                Skontaktuj się
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link
+                href="/#booking"
+                className="px-8 py-4 bg-white text-green-600 rounded-xl font-bold hover:bg-green-50 transition-all duration-300 shadow-2xl hover:scale-105 flex items-center gap-2"
+              >
+                📅 Umów Wizytę
               </Link>
-              <a href="tel:+48503691808" className="btn btn-outline-primary">
-                Zadzwoń: 503 691 808
+              <a
+                href="tel:503691808"
+                className="px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold transition-all duration-300 shadow-2xl hover:scale-105 flex items-center gap-2"
+              >
+                📞 503 691 808
               </a>
             </div>
           </div>
