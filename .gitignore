@@ -58,6 +58,14 @@ backend.log
 # Archive and old files
 archive/
 
+# Scripts with secrets (specific files)
+scripts/*credentials*
+scripts/*secrets*
+scripts/*password*
+scripts/.env*
+scripts/azure-init-admin.sh
+scripts/init-admin-production.sh
+
 # Deployment artifacts
 deployment.zip
 deployments/
