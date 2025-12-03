@@ -205,65 +205,68 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       
-      {/* HERO SECTION - Eko-solutions style */}
-      <section className="relative h-[600px] md:h-[700px] overflow-hidden">
-        <Image
-          src="/images/hero-bg.jpg"
-          alt="San-Bud Hydraulika"
-          fill
-          className="object-cover brightness-50"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+      {/* HERO SECTION - Professional & Clean */}
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-gray-50 pt-32 pb-20 md:pt-40 md:pb-28">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(59, 130, 246) 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
         
-        <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
-          <div className="max-w-2xl text-white">
-            {/* Logo */}
-            <div className="mb-8 flex items-center gap-4">
-              <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden ring-4 ring-white/30 shadow-2xl">
-                <Image
-                  src="/images/logo.jpg"
-                  alt="SanBud Logo"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              <div className="hidden md:block">
-                <div className="text-2xl font-black text-white">SAN-BUD</div>
-                <div className="text-sm text-gray-300 italic">Hydraulika • Nasza pasja</div>
-              </div>
-            </div>
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
             
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              {businessData.name}
+            {/* Main Heading */}
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900">
+              Profesjonalne Usługi Hydrauliczne
             </h1>
-            <p className="text-xl md:text-2xl mb-4 text-gray-200">
+            
+            <p className="text-xl md:text-2xl mb-4 text-gray-700">
               {businessData.tagline}
             </p>
-            <p className="text-lg mb-8 text-gray-300">
-              Kompleksowe rozwiązania hydrauliczne dla Twojego domu i firmy
+            
+            <p className="text-lg mb-10 text-gray-600 max-w-2xl mx-auto">
+              Kompleksowe rozwiązania hydrauliczne dla Twojego domu i firmy. 
+              Działamy od 2018 roku z pełnym profesjonalizmem i zaangażowaniem.
             </p>
-            <div className="flex flex-wrap gap-4">
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center mb-12">
               <a 
                 href="#contact" 
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-lg transition-colors duration-200 shadow-md hover:shadow-lg"
               >
-                Darmowa wycena
+                Bezpłatna Wycena
               </a>
               <a 
                 href={`tel:${businessData.phone}`}
-                className="px-8 py-4 bg-white/10 backdrop-blur-md border-2 border-white hover:bg-white hover:text-blue-900 text-white font-bold rounded-lg text-lg transition-all duration-300"
+                className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg text-lg transition-colors duration-200 shadow-md hover:shadow-lg flex items-center gap-2"
               >
-                📞 {businessData.phone}
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                503 691 808
               </a>
             </div>
-          </div>
-        </div>
 
-        {/* Emergency badge */}
-        <div className="absolute bottom-8 right-8 bg-red-600 text-white px-6 py-3 rounded-full font-bold animate-pulse shadow-2xl">
-          🚨 Awarie 24/7
+            {/* Trust Badges */}
+            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
+                <div className="text-sm text-gray-600">Projektów</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 mb-2">7 lat</div>
+                <div className="text-sm text-gray-600">Doświadczenia</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 mb-2">24/7</div>
+                <div className="text-sm text-gray-600">Pogotowie</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
