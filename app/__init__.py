@@ -49,12 +49,13 @@ def create_app(config_name='production'):
     init_email(app)
     
     # Register blueprints
-    from app.routes import main, services, appointments, admin, api
+    from app.routes import main, services, appointments, admin, api, init
     app.register_blueprint(main.bp)
     app.register_blueprint(services.bp)
     app.register_blueprint(appointments.bp)
     app.register_blueprint(admin.admin_bp)
     app.register_blueprint(api.bp)
+    app.register_blueprint(init.init_bp)
     
     # Create database tables (commented out - use migrations instead)
     # with app.app_context():
