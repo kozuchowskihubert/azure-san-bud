@@ -69,6 +69,15 @@ def login():
         
         admin = Admin.query.filter_by(username=username).first()
         
+        # Debug logging
+        if admin:
+            print(f"DEBUG: Admin found - ID: {admin.id}, Username: {admin.username}, Active: {admin.is_active}")
+            print(f"DEBUG: Password hash: {admin.password_hash[:50]}...")
+            password_check_result = admin.check_password(password)
+            print(f"DEBUG: Password check result: {password_check_result}")
+        else:
+            print(f"DEBUG: No admin found with username: {username}")
+        
         if not admin or not admin.check_password(password):
             return jsonify({'error': 'Invalid credentials'}), 401
         
@@ -90,6 +99,9 @@ def login():
         }), 200
         
     except Exception as e:
+        print(f"DEBUG: Login exception: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
 
@@ -99,6 +111,28 @@ def logout():
     """Admin logout endpoint."""
     session.clear()
     return jsonify({'success': True, 'message': 'Logged out successfully'}), 200
+
+
+@admin_bp.route('/api/debug/check', methods=['GET'])
+def debug_check_admin():
+    """Debug endpoint to check admin status (remove in production)."""
+    try:
+        admin = Admin.query.filter_by(username='admin').first()
+        if not admin:
+            return jsonify({'error': 'No admin found'}), 404
+        
+        return jsonify({
+            'found': True,
+            'id': admin.id,
+            'username': admin.username,
+            'email': admin.email,
+            'is_active': admin.is_active,
+            'is_super_admin': admin.is_super_admin,
+            'password_hash_prefix': admin.password_hash[:50] if admin.password_hash else None,
+            'hash_length': len(admin.password_hash) if admin.password_hash else 0
+        }), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @admin_bp.route('/api/me', methods=['GET'])
