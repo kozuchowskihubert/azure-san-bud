@@ -137,7 +137,7 @@ jobs:
       - name: 🏗️ Build Next.js application
         working-directory: ./frontend
         env:
-          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl/api
+          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl
           NEXT_PUBLIC_DOMAIN: sanbud24.pl
           NEXT_PUBLIC_SITE_URL: https://sanbud24.pl
           NEXT_PUBLIC_PHONE: +48503691808
@@ -256,7 +256,7 @@ jobs:
       - name: 🏗️ Build frontend
         working-directory: ./frontend
         env:
-          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl/api
+          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl
           NEXT_PUBLIC_DOMAIN: sanbud24.pl
           NEXT_PUBLIC_SITE_URL: https://sanbud24.pl
           NEXT_PUBLIC_PHONE: +48503691808

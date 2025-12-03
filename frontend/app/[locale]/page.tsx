@@ -1,9 +1,64 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import BookingCalendar from '@/components/BookingCalendar';
 import Partners from '@/components/Partners';
 
 export default function HomePage() {
+  // Form state management
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: '',
+  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+    setErrorMessage('');
+    
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.sanbud24.pl'}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        setStatus('success');
+        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setStatus('idle');
+        }, 5000);
+      } else {
+        setStatus('error');
+        setErrorMessage(data.error || 'Wystąpił błąd podczas wysyłania wiadomości');
+      }
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage('Nie udało się połączyć z serwerem. Spróbuj ponownie później lub zadzwoń: +48 503 691 808');
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
   // Business data matching Google Maps
   const businessData = {
     name: 'San-Bud Hydraulika',
@@ -309,56 +364,120 @@ export default function HomePage() {
             </div>
 
             <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Imię</label>
-                    <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">
+                      Imię i nazwisko <span className="text-red-500">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      disabled={status === 'sending'}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100" 
+                      placeholder="Jan Kowalski"
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Nazwisko</label>
-                    <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <label htmlFor="phone" className="block text-sm font-bold text-gray-700 mb-2">
+                      Telefon <span className="text-red-500">*</span>
+                    </label>
+                    <input 
+                      type="tel" 
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      disabled={status === 'sending'}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100" 
+                      placeholder="+48 123 456 789"
+                    />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">E-mail</label>
-                  <input type="email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                  <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
+                    E-mail <span className="text-red-500">*</span>
+                  </label>
+                  <input 
+                    type="email" 
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    disabled={status === 'sending'}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100" 
+                    placeholder="email@example.com"
+                  />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Telefon</label>
-                  <input type="tel" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Rodzaj usługi</label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option>Instalacje wodne</option>
-                    <option>Remont łazienki</option>
-                    <option>Awaria</option>
-                    <option>Konserwacja</option>
-                    <option>Inne</option>
+                  <label htmlFor="service" className="block text-sm font-bold text-gray-700 mb-2">Rodzaj usługi</label>
+                  <select 
+                    id="service"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    disabled={status === 'sending'}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                  >
+                    <option value="">Wybierz usługę</option>
+                    <option value="Instalacje wodne">Instalacje wodne</option>
+                    <option value="Remont łazienki">Remont łazienki</option>
+                    <option value="Awaria">Awaria</option>
+                    <option value="Konserwacja">Konserwacja</option>
+                    <option value="Inne">Inne</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Wiadomość</label>
-                  <textarea rows={4} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                  <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">
+                    Wiadomość <span className="text-red-500">*</span>
+                  </label>
+                  <textarea 
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    disabled={status === 'sending'}
+                    rows={4} 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                    placeholder="Opisz swoją potrzebę..."
+                  ></textarea>
                 </div>
 
                 <div className="flex items-start gap-2">
-                  <input type="checkbox" className="mt-1" id="privacy" />
+                  <input type="checkbox" className="mt-1" id="privacy" required />
                   <label htmlFor="privacy" className="text-sm text-gray-600">
-                    Wyrażam zgodę na przetwarzanie moich danych osobowych w celu kontaktu oraz przesyłania ofert
+                    Wyrażam zgodę na przetwarzanie moich danych osobowych w celu kontaktu oraz przesyłania ofert <span className="text-red-500">*</span>
                   </label>
                 </div>
 
+                {status === 'success' && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
+                    ✅ Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.
+                  </div>
+                )}
+
+                {status === 'error' && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+                    ❌ {errorMessage}
+                  </div>
+                )}
+
                 <button 
                   type="submit"
-                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                  disabled={status === 'sending'}
+                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  Wyślij zapytanie
+                  {status === 'sending' ? 'Wysyłanie...' : 'Wyślij zapytanie'}
                 </button>
               </form>
             </div>
