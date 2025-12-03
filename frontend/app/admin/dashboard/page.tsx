@@ -182,7 +182,7 @@ export default function AdminDashboard() {
         )}
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           <Link
             href="/admin/clients"
             className="group bg-white rounded-2xl shadow-lg p-8 border border-gray-200 hover:border-blue-300 hover:shadow-xl transition-all duration-300"
@@ -223,6 +223,52 @@ export default function AdminDashboard() {
             </div>
             <div className="flex items-center text-purple-600 font-semibold group-hover:translate-x-2 transition-transform">
               Przejdź do listy usług
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </Link>
+
+          <Link
+            href="/admin/appointments"
+            className="group bg-white rounded-2xl shadow-lg p-8 border border-gray-200 hover:border-orange-300 hover:shadow-xl transition-all duration-300"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">Wizyty</h3>
+                <p className="text-sm text-gray-600">Zarządzaj harmonogramem wizyt i rezerwacji</p>
+              </div>
+            </div>
+            <div className="flex items-center text-orange-600 font-semibold group-hover:translate-x-2 transition-transform">
+              Przejdź do wizyt
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </Link>
+
+          <Link
+            href="/admin/messages"
+            className="group bg-white rounded-2xl shadow-lg p-8 border border-gray-200 hover:border-green-300 hover:shadow-xl transition-all duration-300"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">Wiadomości</h3>
+                <p className="text-sm text-gray-600">Zobacz i odpowiedz na wiadomości od klientów</p>
+              </div>
+            </div>
+            <div className="flex items-center text-green-600 font-semibold group-hover:translate-x-2 transition-transform">
+              Przejdź do wiadomości
               <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

@@ -536,3 +536,296 @@ def init_admin_secure():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
+
+
+# ============================================================================
+# Appointments Management API
+# ============================================================================
+
+@admin_bp.route('/api/appointments', methods=['GET'])
+@login_required
+def get_appointments():
+    """Get all appointments with filters."""
+    try:
+        from app.models.appointment import Appointment
+        from app.models.customer import Customer
+        from app.models.service import Service
+        
+        # Query parameters
+        status = request.args.get('status')
+        customer_id = request.args.get('customer_id', type=int)
+        service_id = request.args.get('service_id', type=int)
+        date_from = request.args.get('date_from')
+        date_to = request.args.get('date_to')
+        
+        # Base query
+        query = Appointment.query
+        
+        # Apply filters
+        if status:
+            query = query.filter_by(status=status)
+        if customer_id:
+            query = query.filter_by(customer_id=customer_id)
+        if service_id:
+            query = query.filter_by(service_id=service_id)
+        if date_from:
+            from datetime import datetime
+            date_from_obj = datetime.fromisoformat(date_from).date()
+            query = query.filter(Appointment.scheduled_date >= date_from_obj)
+        if date_to:
+            from datetime import datetime
+            date_to_obj = datetime.fromisoformat(date_to).date()
+            query = query.filter(Appointment.scheduled_date <= date_to_obj)
+        
+        # Order by date and time
+        appointments = query.order_by(
+            Appointment.scheduled_date.desc(),
+            Appointment.scheduled_time.desc()
+        ).all()
+        
+        # Enrich with customer and service data
+        appointments_data = []
+        for appt in appointments:
+            appt_dict = appt.to_dict()
+            
+            # Add customer info
+            customer = Customer.query.get(appt.customer_id)
+            if customer:
+                appt_dict['customer'] = {
+                    'id': customer.id,
+                    'first_name': customer.first_name,
+                    'last_name': customer.last_name,
+                    'email': customer.email,
+                    'phone': customer.phone
+                }
+            
+            # Add service info
+            service = Service.query.get(appt.service_id)
+            if service:
+                appt_dict['service'] = {
+                    'id': service.id,
+                    'name': service.name,
+                    'duration': service.duration,
+                    'price': float(service.price) if service.price else 0
+                }
+            
+            appointments_data.append(appt_dict)
+        
+        return jsonify({
+            'success': True,
+            'appointments': appointments_data
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@admin_bp.route('/api/appointments/<int:appointment_id>', methods=['GET'])
+@login_required
+def get_appointment(appointment_id):
+    """Get single appointment details."""
+    try:
+        from app.models.appointment import Appointment
+        from app.models.customer import Customer
+        from app.models.service import Service
+        
+        appointment = Appointment.query.get_or_404(appointment_id)
+        appt_dict = appointment.to_dict()
+        
+        # Add customer info
+        customer = Customer.query.get(appointment.customer_id)
+        if customer:
+            appt_dict['customer'] = customer.to_dict()
+        
+        # Add service info
+        service = Service.query.get(appointment.service_id)
+        if service:
+            appt_dict['service'] = service.to_dict()
+        
+        return jsonify({
+            'success': True,
+            'appointment': appt_dict
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@admin_bp.route('/api/appointments/<int:appointment_id>', methods=['PUT'])
+@login_required
+def update_appointment(appointment_id):
+    """Update appointment status or details."""
+    try:
+        from app.models.appointment import Appointment
+        
+        appointment = Appointment.query.get_or_404(appointment_id)
+        data = request.get_json()
+        
+        # Update allowed fields
+        if 'status' in data:
+            appointment.status = data['status']
+        if 'scheduled_date' in data:
+            from datetime import datetime
+            appointment.scheduled_date = datetime.fromisoformat(data['scheduled_date']).date()
+        if 'scheduled_time' in data:
+            from datetime import datetime
+            appointment.scheduled_time = datetime.fromisoformat(data['scheduled_time']).time()
+        if 'notes' in data:
+            appointment.notes = data['notes']
+        
+        appointment.updated_at = datetime.utcnow()
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Appointment updated successfully',
+            'appointment': appointment.to_dict()
+        }), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+@admin_bp.route('/api/appointments/<int:appointment_id>', methods=['DELETE'])
+@login_required
+def delete_appointment(appointment_id):
+    """Delete an appointment."""
+    try:
+        from app.models.appointment import Appointment
+        
+        appointment = Appointment.query.get_or_404(appointment_id)
+        db.session.delete(appointment)
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Appointment deleted successfully'
+        }), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+# ============================================================================
+# Messages Management API
+# ============================================================================
+
+@admin_bp.route('/api/messages', methods=['GET'])
+@login_required
+def get_messages():
+    """Get all contact messages with filters."""
+    try:
+        from app.models.message import Message
+        
+        # Query parameters
+        is_read = request.args.get('is_read')
+        replied = request.args.get('replied')
+        message_type = request.args.get('message_type')
+        priority = request.args.get('priority')
+        
+        # Base query
+        query = Message.query
+        
+        # Apply filters
+        if is_read is not None:
+            is_read_bool = is_read.lower() in ['true', '1', 'yes']
+            query = query.filter_by(is_read=is_read_bool)
+        if replied is not None:
+            replied_bool = replied.lower() in ['true', '1', 'yes']
+            query = query.filter_by(replied=replied_bool)
+        if message_type:
+            query = query.filter_by(message_type=message_type)
+        if priority:
+            query = query.filter_by(priority=priority)
+        
+        # Order by priority and date
+        messages = query.order_by(
+            Message.created_at.desc()
+        ).all()
+        
+        return jsonify({
+            'success': True,
+            'messages': [msg.to_dict() for msg in messages]
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@admin_bp.route('/api/messages/<int:message_id>', methods=['GET'])
+@login_required
+def get_message(message_id):
+    """Get single message details."""
+    try:
+        from app.models.message import Message
+        
+        message = Message.query.get_or_404(message_id)
+        
+        # Mark as read
+        message.mark_as_read()
+        
+        return jsonify({
+            'success': True,
+            'message': message.to_dict()
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@admin_bp.route('/api/messages/<int:message_id>', methods=['PUT'])
+@login_required
+def update_message(message_id):
+    """Update message status or notes."""
+    try:
+        from app.models.message import Message
+        
+        message = Message.query.get_or_404(message_id)
+        data = request.get_json()
+        
+        # Update allowed fields
+        if 'is_read' in data:
+            message.is_read = data['is_read']
+            if message.is_read and not message.read_at:
+                message.read_at = datetime.utcnow()
+        if 'replied' in data:
+            message.replied = data['replied']
+        if 'priority' in data:
+            message.priority = data['priority']
+        if 'notes' in data:
+            message.notes = data['notes']
+        
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Message updated successfully',
+            'data': message.to_dict()
+        }), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+@admin_bp.route('/api/messages/<int:message_id>', methods=['DELETE'])
+@login_required
+def delete_message(message_id):
+    """Delete a message."""
+    try:
+        from app.models.message import Message
+        
+        message = Message.query.get_or_404(message_id)
+        db.session.delete(message)
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Message deleted successfully'
+        }), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
