@@ -20,3 +20,6 @@ azure-keyvault-secrets==4.7.0
 
 # Utilities
 Werkzeug==3.0.1
+
+# Email
+Flask-Mail==0.9.1

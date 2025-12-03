@@ -13,16 +13,40 @@ export default function ContactPage() {
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
+    setErrorMessage('');
     
-    // Simulate API call
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ name: '', email: '', phone: '', service: '', message: '' });
-    }, 1500);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.sanbud24.pl'}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        setStatus('success');
+        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setStatus('idle');
+        }, 5000);
+      } else {
+        setStatus('error');
+        setErrorMessage(data.error || 'Wystąpił błąd podczas wysyłania wiadomości');
+      }
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage('Nie udało się połączyć z serwerem. Spróbuj ponownie później lub zadzwoń: +48 503 691 808');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -164,6 +188,12 @@ export default function ContactPage() {
               {status === 'success' && (
                 <div className="mb-6 p-4 rounded-lg bg-[rgb(var(--color-success))]/20 border border-[rgb(var(--color-success))] text-[rgb(var(--color-success))]">
                   ✓ Wiadomość wysłana pomyślnie! Skontaktujemy się wkrótce.
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="mb-6 p-4 rounded-lg bg-red-100 border border-red-400 text-red-700">
+                  ✗ {errorMessage}
                 </div>
               )}
 
