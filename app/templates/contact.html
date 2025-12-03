@@ -1,52 +1,208 @@
 {% extends "base.html" %}
 
-{% block title %}Contact Us - Plumbing & Sanitary Services{% endblock %}
+{% block title %}24/7 Emergency Contact - Plumbing & Sanitary Services{% endblock %}
 
 {% block content %}
+<!-- Emergency Banner -->
+<div class="bg-danger text-white py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h2 class="mb-2">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Emergency Plumbing Service
+                </h2>
+                <p class="mb-0 lead">
+                    <strong>Available 24/7/365</strong> - No extra charges for nights, weekends, or holidays
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="tel:+48503691808" class="btn btn-light btn-lg pulse-animation">
+                    <i class="bi bi-telephone-fill"></i> +48 503 691 808
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container my-5">
+    <!-- Emergency Contact Section -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-danger border-3 shadow-lg">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="bi bi-lightning-charge-fill me-2"></i>
+                        Emergency Response Center
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="me-3">
+                                    <i class="bi bi-telephone-fill text-danger" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-danger mb-2">24/7 Emergency Hotline</h5>
+                                    <h3 class="mb-2">
+                                        <a href="tel:+48503691808" class="text-dark text-decoration-none">
+                                            +48 503 691 808
+                                        </a>
+                                    </h3>
+                                    <p class="text-muted mb-0">
+                                        <strong>Average response time: &lt;60 minutes</strong><br>
+                                        Immediate dispatch for critical emergencies
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-warning mb-0">
+                                <h6 class="alert-heading">
+                                    <i class="bi bi-info-circle-fill me-2"></i>Call Us Immediately For:
+                                </h6>
+                                <ul class="mb-0 small">
+                                    <li>Burst pipes or severe leaks</li>
+                                    <li>No water supply</li>
+                                    <li>Sewage backup or overflow</li>
+                                    <li>Gas leak (evacuate first!)</li>
+                                    <li>Frozen/burst pipes in winter</li>
+                                    <li>Any flooding situation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Regular Contact Methods -->
     <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <h1 class="mb-4">Contact Us</h1>
+        <div class="col-lg-10 mx-auto">
+            <h2 class="mb-4 text-center">General Contact Information</h2>
             
             <div class="row mb-4">
                 <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <i class="bi bi-telephone display-4 text-primary"></i>
-                            <h5 class="mt-3">Phone</h5>
-                            <p>+1 (555) 123-4567</p>
+                    <div class="card h-100 text-center hover-lift">
+                        <div class="card-body">
+                            <i class="bi bi-telephone display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Phone</h5>
+                            <p class="card-text">
+                                <strong>Emergency:</strong><br>
+                                <a href="tel:+48503691808" class="text-decoration-none">+48 503 691 808</a>
+                            </p>
+                            <small class="text-muted">24/7 Available</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <i class="bi bi-envelope display-4 text-primary"></i>
-                            <h5 class="mt-3">Email</h5>
-                            <p>info@sanitaryservices.com</p>
+                    <div class="card h-100 text-center hover-lift">
+                        <div class="card-body">
+                            <i class="bi bi-envelope display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Email</h5>
+                            <p class="card-text">
+                                <a href="mailto:sanbud.biuro@gmail.com" class="text-decoration-none">
+                                    sanbud.biuro@gmail.com
+                                </a>
+                            </p>
+                            <small class="text-muted">Response within 24h</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <i class="bi bi-geo-alt display-4 text-primary"></i>
-                            <h5 class="mt-3">Address</h5>
-                            <p>123 Main Street<br>City, State 12345</p>
+                    <div class="card h-100 text-center hover-lift">
+                        <div class="card-body">
+                            <i class="bi bi-calendar-check display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Online Booking</h5>
+                            <p class="card-text mb-3">
+                                Schedule non-emergency<br>service appointments
+                            </p>
+                            <a href="{{ url_for('appointments.book_appointment') }}" class="btn btn-primary">
+                                <i class="bi bi-calendar-plus"></i> Book Now
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="card">
+            <!-- Operating Hours -->
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-fill me-2"></i>
+                        Operating Hours
+                    </h5>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">Business Hours</h5>
-                    <ul class="list-unstyled">
-                        <li><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</li>
-                        <li><strong>Saturday:</strong> 9:00 AM - 4:00 PM</li>
-                        <li><strong>Sunday:</strong> Emergency Service Only</li>
-                        <li><strong>24/7 Emergency:</strong> Available</li>
-                    </ul>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-danger mb-3">
+                                <i class="bi bi-lightning-fill me-2"></i>Emergency Service
+                            </h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    <strong>24 Hours a Day</strong>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    <strong>7 Days a Week</strong>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    <strong>365 Days a Year</strong>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    <strong>All Public Holidays</strong>
+                                </li>
+                            </ul>
+                            <p class="text-muted small mb-0">
+                                <i class="bi bi-info-circle me-1"></i>
+                                No extra charges for after-hours emergencies
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-primary mb-3">
+                                <i class="bi bi-calendar3 me-2"></i>Scheduled Appointments
+                            </h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Saturday:</strong> 9:00 AM - 4:00 PM
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Sunday:</strong> By Appointment Only
+                                </li>
+                            </ul>
+                            <p class="text-muted small mb-0">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Book online anytime for next available slot
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Area -->
+            <div class="card shadow mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                        Service Area
+                    </h5>
+                    <p class="card-text">
+                        We provide emergency and scheduled plumbing services throughout the region.
+                        Our strategically positioned teams ensure fast response times to all areas.
+                    </p>
+                    <p class="mb-0">
+                        <strong>Not sure if we serve your area?</strong> 
+                        <a href="tel:+48503691808">Call us at +48 503 691 808</a> - we'll let you know immediately!
+                    </p>
                 </div>
             </div>
         </div>

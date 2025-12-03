@@ -619,6 +619,57 @@ footer i {
     }
 }
 
+/* Pulse animation for emergency buttons */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+.pulse-animation:hover {
+    animation: none;
+    transform: scale(1.05);
+}
+
+/* Emergency alert styles */
+.alert-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border: none;
+}
+
+/* Feature card with border color variations */
+.feature-card.border-danger {
+    border-top: 4px solid var(--danger-color) !important;
+}
+
+.feature-card.border-warning {
+    border-top: 4px solid var(--warning-color) !important;
+}
+
+.feature-card.border-primary {
+    border-top: 4px solid var(--primary-orange) !important;
+}
+
+/* Hover lift effect */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
 /* ============================================
    RESPONSIVE
 ============================================ */

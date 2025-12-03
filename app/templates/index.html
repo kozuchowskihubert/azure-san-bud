@@ -1,35 +1,63 @@
 {% extends "base.html" %}
 
-{% block title %}Home - Professional Plumbing & Sanitary Services{% endblock %}
+{% block title %}Home - 24/7 Emergency Plumbing & Sanitary Services{% endblock %}
 
 {% block content %}
+<!-- Emergency Alert Banner -->
+<div class="alert alert-danger alert-dismissible fade show m-0 rounded-0 text-center py-3" role="alert" style="border: none; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+    <div class="container">
+        <h5 class="mb-0 text-white">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong>PLUMBING EMERGENCY?</strong> We're Available 24/7! 
+            <a href="tel:+48503691808" class="text-white text-decoration-underline ms-3 fw-bold">
+                <i class="bi bi-telephone-fill"></i> Call Now: +48 503 691 808
+            </a>
+        </h5>
+    </div>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <!-- Hero Section -->
 <div class="hero-section text-white">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-7 mb-4 mb-lg-0">
+                <div class="badge bg-danger mb-3 px-3 py-2 fs-6">
+                    <i class="bi bi-clock-fill me-1"></i> 24/7 EMERGENCY SERVICE
+                </div>
                 <h1 class="display-3 fw-bold mb-4">
-                    Professional Plumbing<br>
-                    <span class="text-light-silver">& Sanitary Services</span>
+                    Fast Response to<br>
+                    <span class="text-light-silver">Plumbing Emergencies</span>
                 </h1>
                 <p class="lead mb-4">
-                    Expert solutions for all your plumbing needs.<br>
-                    <strong>Available 24/7 for emergencies.</strong>
+                    Expert solutions for urgent plumbing issues and scheduled maintenance.<br>
+                    <strong class="text-warning">⚡ Average response time: Under 60 minutes for emergencies</strong>
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{{ url_for('appointments.book_appointment') }}" class="btn btn-light btn-lg">
-                        <i class="bi bi-calendar-plus"></i> Book Appointment
+                    <a href="tel:+48503691808" class="btn btn-danger btn-lg pulse-animation">
+                        <i class="bi bi-telephone-fill"></i> Emergency Call
                     </a>
-                    <a href="{{ url_for('services.list_services') }}" class="btn btn-outline-light btn-lg">
-                        <i class="bi bi-tools"></i> View Services
+                    <a href="{{ url_for('appointments.book_appointment') }}" class="btn btn-light btn-lg">
+                        <i class="bi bi-calendar-plus"></i> Schedule Service
                     </a>
                 </div>
-                <div class="mt-4 d-flex align-items-center gap-4">
-                    <div>
-                        <i class="bi bi-telephone-fill fs-2"></i>
-                        <div class="d-inline-block ms-2">
-                            <small>24/7 Emergency</small><br>
-                            <strong><a href="tel:+15551234567" class="text-white text-decoration-none">+1 (555) 123-4567</a></strong>
+                <div class="mt-4">
+                    <div class="card bg-dark bg-opacity-75 border-warning border-2">
+                        <div class="card-body py-3">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <i class="bi bi-shield-fill-check text-warning" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <div class="col">
+                                    <h6 class="mb-1 text-warning">24/7 Emergency Hotline</h6>
+                                    <h4 class="mb-0">
+                                        <a href="tel:+48503691808" class="text-white text-decoration-none">
+                                            +48 503 691 808
+                                        </a>
+                                    </h4>
+                                    <small class="text-light">Always available - No extra night/weekend charges</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,54 +71,88 @@
     </div>
 </div>
 
+<!-- Emergency Services Section -->
+<div class="container my-5 py-4">
+    <div class="alert alert-warning border-warning border-2">
+        <div class="row align-items-center">
+            <div class="col-md-1 text-center">
+                <i class="bi bi-exclamation-octagon-fill text-danger" style="font-size: 3rem;"></i>
+            </div>
+            <div class="col-md-11">
+                <h4 class="alert-heading mb-2">
+                    <i class="bi bi-lightning-charge-fill text-danger"></i> Common Plumbing Emergencies We Handle
+                </h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="mb-0">
+                            <li><strong>Burst Pipes</strong> - Immediate water shut-off and repair</li>
+                            <li><strong>Severe Leaks</strong> - Stop water damage before it spreads</li>
+                            <li><strong>Blocked Drains</strong> - 24/7 emergency drain clearing</li>
+                            <li><strong>No Hot Water</strong> - Boiler and water heater emergencies</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="mb-0">
+                            <li><strong>Toilet Overflow</strong> - Fast response to prevent flooding</li>
+                            <li><strong>Gas Leaks</strong> - Immediate safety inspection and repair</li>
+                            <li><strong>Frozen Pipes</strong> - Winter emergency thawing service</li>
+                            <li><strong>Sewer Backups</strong> - Emergency sewage system repairs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Why Choose Us Section -->
 <div class="container my-5 py-5">
     <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold text-dark mb-3">Why Choose Us?</h2>
-        <p class="lead text-muted">We provide top-quality plumbing and sanitary services with professional excellence</p>
+        <h2 class="display-5 fw-bold text-dark mb-3">Why Choose Our 24/7 Service?</h2>
+        <p class="lead text-muted">Round-the-clock professional plumbing services with guaranteed rapid response</p>
     </div>
     
     <div class="row g-4">
         <div class="col-md-4">
-            <div class="feature-card">
-                <i class="bi bi-clock-history"></i>
-                <h5>24/7 Availability</h5>
-                <p>We're available around the clock for emergency services and scheduled appointments. Your plumbing emergency is our priority.</p>
+            <div class="feature-card border-danger">
+                <i class="bi bi-clock-history text-danger"></i>
+                <h5>24/7/365 Availability</h5>
+                <p>True 24-hour service - nights, weekends, and holidays. We're always ready to respond to your plumbing emergencies, no matter when they occur.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="feature-card">
+            <div class="feature-card border-warning">
+                <i class="bi bi-lightning-charge text-warning"></i>
+                <h5>Under 60-Min Response</h5>
+                <p>Our emergency teams are strategically positioned to reach you fast. Average emergency response time under 60 minutes.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card border-primary">
                 <i class="bi bi-award"></i>
-                <h5>Licensed Professionals</h5>
-                <p>All our technicians are fully licensed, insured, and experienced professionals committed to excellence.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-card">
-                <i class="bi bi-currency-dollar"></i>
-                <h5>Competitive Pricing</h5>
-                <p>Fair and transparent pricing with no hidden fees. Get quality service at prices you can afford.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-card">
-                <i class="bi bi-shield-check"></i>
-                <h5>Quality Guaranteed</h5>
-                <p>We stand behind our work with a satisfaction guarantee. Your peace of mind is our commitment.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-card">
-                <i class="bi bi-lightning-charge"></i>
-                <h5>Fast Response</h5>
-                <p>Quick response times for all service calls. We understand time is critical when you have a plumbing issue.</p>
+                <h5>Licensed & Insured</h5>
+                <p>All technicians are fully licensed, insured, and trained in emergency response protocols for your safety and peace of mind.</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="feature-card">
                 <i class="bi bi-tools"></i>
-                <h5>Modern Equipment</h5>
-                <p>We use the latest tools and technology to diagnose and fix problems efficiently and effectively.</p>
+                <h5>Fully Equipped Vehicles</h5>
+                <p>Our emergency response vehicles carry comprehensive equipment and parts to handle most issues on the first visit.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="bi bi-shield-check"></i>
+                <h5>No Hidden Fees</h5>
+                <p>Transparent pricing with no surprise charges. Same fair rates for emergency and scheduled services - no extra night fees!</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="bi bi-star-fill"></i>
+                <h5>Quality Guaranteed</h5>
+                <p>All emergency repairs come with our satisfaction guarantee. We stand behind our work 24/7.</p>
             </div>
         </div>
     </div>
@@ -145,35 +207,38 @@
 </div>
 
 <!-- Stats Section -->
-<div class="bg-light-silver py-5">
+<div class="bg-danger text-white py-5">
     <div class="container">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold">Our Track Record in Emergency Response</h3>
+        </div>
         <div class="row text-center g-4">
             <div class="col-md-3 col-6">
                 <div class="p-4">
-                    <i class="bi bi-people-fill text-orange" style="font-size: 3rem;"></i>
-                    <h3 class="fw-bold mt-3 mb-0 text-dark">5000+</h3>
-                    <p class="text-muted">Happy Customers</p>
+                    <i class="bi bi-clock-fill text-warning" style="font-size: 3rem;"></i>
+                    <h3 class="fw-bold mt-3 mb-0">&lt;60min</h3>
+                    <p class="mb-0">Avg Emergency Response</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="p-4">
-                    <i class="bi bi-check-circle-fill text-orange" style="font-size: 3rem;"></i>
-                    <h3 class="fw-bold mt-3 mb-0 text-dark">10000+</h3>
-                    <p class="text-muted">Jobs Completed</p>
+                    <i class="bi bi-calendar3 text-warning" style="font-size: 3rem;"></i>
+                    <h3 class="fw-bold mt-3 mb-0">24/7/365</h3>
+                    <p class="mb-0">Always Available</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="p-4">
-                    <i class="bi bi-star-fill text-orange" style="font-size: 3rem;"></i>
-                    <h3 class="fw-bold mt-3 mb-0 text-dark">20+</h3>
-                    <p class="text-muted">Years Experience</p>
+                    <i class="bi bi-check-circle-fill text-warning" style="font-size: 3rem;"></i>
+                    <h3 class="fw-bold mt-3 mb-0">10,000+</h3>
+                    <p class="mb-0">Emergencies Resolved</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="p-4">
-                    <i class="bi bi-clock-fill text-orange" style="font-size: 3rem;"></i>
-                    <h3 class="fw-bold mt-3 mb-0 text-dark">24/7</h3>
-                    <p class="text-muted">Emergency Service</p>
+                    <i class="bi bi-star-fill text-warning" style="font-size: 3rem;"></i>
+                    <h3 class="fw-bold mt-3 mb-0">98%</h3>
+                    <p class="mb-0">Same-Day Resolution</p>
                 </div>
             </div>
         </div>
