@@ -137,11 +137,11 @@ jobs:
       - name: 🏗️ Build Next.js application
         working-directory: ./frontend
         env:
-          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl
+          NEXT_PUBLIC_API_URL: https://app-sanbud-api-prod.azurewebsites.net
           NEXT_PUBLIC_DOMAIN: sanbud24.pl
           NEXT_PUBLIC_SITE_URL: https://sanbud24.pl
           NEXT_PUBLIC_PHONE: +48503691808
-          NEXT_PUBLIC_EMAIL: sanbud.biuro@gmail.com
+          NEXT_PUBLIC_EMAIL: kontakt@sanbud24.pl
           NEXT_PUBLIC_DEFAULT_LOCALE: pl
         run: |
           echo "Building Next.js for production..."
@@ -286,11 +286,11 @@ jobs:
       - name: 🏗️ Build frontend
         working-directory: ./frontend
         env:
-          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl
+          NEXT_PUBLIC_API_URL: https://app-sanbud-api-prod.azurewebsites.net
           NEXT_PUBLIC_DOMAIN: sanbud24.pl
           NEXT_PUBLIC_SITE_URL: https://sanbud24.pl
           NEXT_PUBLIC_PHONE: +48503691808
-          NEXT_PUBLIC_EMAIL: sanbud.biuro@gmail.com
+          NEXT_PUBLIC_EMAIL: kontakt@sanbud24.pl
           NEXT_PUBLIC_DEFAULT_LOCALE: pl
         run: npm run build
       
