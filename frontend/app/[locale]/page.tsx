@@ -70,25 +70,25 @@ export default function HomePage() {
                 <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
               </svg>
               <span className="text-sm font-semibold">
-                {isEnglish ? 'Certified Heating Systems Specialists' : 'Certyfikowani Specjaliści Systemów Grzewczych'}
+                {isEnglish ? 'Certified Plumbing & Heating Specialists' : 'Certyfikowani Specjaliści Instalacji Sanitarnych'}
               </span>
             </div>
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight animate-slide-up">
               <span className="block mb-2">
-                {isEnglish ? 'Central Heating' : 'Instalacje Centralnego'}
+                {isEnglish ? 'Plumbing, Heating' : 'Instalacje Sanitarne'}
               </span>
               <span className="block bg-gradient-to-r from-orange-400 via-orange-300 to-yellow-300 bg-clip-text text-transparent">
-                {isEnglish ? 'Systems & Installations' : 'Ogrzewania i Systemów'}
+                {isEnglish ? '& Gas Systems' : 'Ogrzewanie i Gaz'}
               </span>
             </h1>
             
             {/* Subheading */}
             <p className="text-xl md:text-2xl mb-10 font-light text-blue-100 max-w-3xl mx-auto animate-slide-up animation-delay-200">
               {isEnglish 
-                ? 'Professional heating installations, modern heat pumps, and comprehensive maintenance services'
-                : 'Profesjonalne instalacje grzewcze, nowoczesne pompy ciepła i kompleksowy serwis'}
+                ? 'Water & sewage systems, gas installations, underfloor heating, boiler rooms & mini excavator services'
+                : 'Instalacje wodno-kanalizacyjne, gazowe, ogrzewanie podłogowe, kotłownie i usługi minikoparką'}
             </p>
             
             {/* CTA Buttons */}
@@ -138,116 +138,116 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
-              {isEnglish ? 'Our Heating Specializations' : 'Nasze Specjalizacje Grzewcze'}
+              {isEnglish ? 'Our Professional Services' : 'Nasze Profesjonalne Usługi'}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               {isEnglish 
-                ? 'Complete solutions for modern and efficient heating systems'
-                : 'Kompleksowe rozwiązania dla nowoczesnych i wydajnych systemów grzewczych'}
+                ? 'Complete solutions for plumbing, heating, gas systems and excavation work'
+                : 'Kompleksowe rozwiązania w zakresie instalacji sanitarnych, grzewczych, gazowych i prac ziemnych'}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Heat Pumps */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-orange-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">♨️</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Heat Pumps' : 'Pompy Ciepła'}</h3>
-              <p className="text-gray-600 mb-6">
-                {isEnglish 
-                  ? 'Modern air-source and ground-source heat pumps with highest efficiency'
-                  : 'Nowoczesne pompy powietrzne i gruntowe o najwyższej sprawności'}
-              </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-orange-500 mr-2">✓</span>
-                  COP 4.5-5.0
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-orange-500 mr-2">✓</span>
-                  {isEnglish ? '5-year warranty' : 'Gwarancja 5 lat'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-orange-500 mr-2">✓</span>
-                  {isEnglish ? 'Energy savings up to 70%' : 'Oszczędność energii do 70%'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-orange-600 dark:text-orange-400 font-semibold hover:text-orange-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
-              </Link>
-            </div>
-
-            {/* Condensing Boilers */}
+            {/* Instalacje wodno-kanalizacyjne */}
             <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-blue-500 hover:-translate-y-2">
               <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">🔥</span>
+                <span className="text-4xl">💧</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Condensing Boilers' : 'Kotły Kondensacyjne'}</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Water & Sewage Systems' : 'Instalacje Wodno-Kanalizacyjne'}</h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'High-efficiency gas boilers with advanced control systems'
-                  : 'Wysokosprawne kotły gazowe z zaawansowaną regulacją'}
+                  ? 'Professional installation of water supply and sewage systems'
+                  : 'Profesjonalny montaż instalacji wodnych i kanalizacyjnych'}
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center text-gray-700">
                   <span className="text-blue-500 mr-2">✓</span>
-                  {isEnglish ? 'Efficiency >95%' : 'Sprawność >95%'}
+                  {isEnglish ? 'Water supply systems' : 'Instalacje wodne'}
                 </li>
                 <li className="flex items-center text-gray-700">
                   <span className="text-blue-500 mr-2">✓</span>
-                  {isEnglish ? 'Weather compensation' : 'Pogodówka'}
+                  {isEnglish ? 'Sewage systems' : 'Kanalizacja'}
                 </li>
                 <li className="flex items-center text-gray-700">
                   <span className="text-blue-500 mr-2">✓</span>
-                  {isEnglish ? 'Smart control via app' : 'Sterowanie przez aplikację'}
+                  {isEnglish ? 'Bathroom installations' : 'Instalacje łazienkowe'}
                 </li>
               </ul>
-              <Link href={`/${locale}/services`} className="text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-700 flex items-center gap-2">
+              <Link href={`/${locale}/services`} className="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
               </Link>
             </div>
 
-            {/* Underfloor Heating */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-teal-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+            {/* Instalacje gazowe */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-red-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">🔥</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Gas Installations' : 'Instalacje Gazowe'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Safe installation and maintenance of gas systems'
+                  : 'Bezpieczny montaż i konserwacja instalacji gazowych'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-red-500 mr-2">✓</span>
+                  {isEnglish ? 'Gas pipeline installation' : 'Montaż przyłączy gazowych'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-red-500 mr-2">✓</span>
+                  {isEnglish ? 'Internal gas systems' : 'Instalacje wewnętrzne'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-red-500 mr-2">✓</span>
+                  {isEnglish ? 'Certified installers' : 'Certyfikowani instalatorzy'}
+                </li>
+              </ul>
+              <Link href={`/${locale}/services`} className="text-red-600 font-semibold hover:text-red-700 flex items-center gap-2">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              </Link>
+            </div>
+
+            {/* Ogrzewanie Podłogowe */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-orange-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
                 <span className="text-4xl">🌡️</span>
               </div>
               <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Underfloor Heating' : 'Ogrzewanie Podłogowe'}</h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Comfortable heating with even temperature distribution'
-                  : 'Komfortowe ogrzewanie z równomiernym rozkładem temperatury'}
+                  ? 'Modern underfloor heating systems for maximum comfort'
+                  : 'Nowoczesne systemy ogrzewania podłogowego dla maksymalnego komfortu'}
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center text-gray-700">
-                  <span className="text-teal-500 mr-2">✓</span>
-                  {isEnglish ? 'Lower energy costs' : 'Niższe koszty energii'}
+                  <span className="text-orange-500 mr-2">✓</span>
+                  {isEnglish ? 'Electric & water systems' : 'Systemy elektryczne i wodne'}
                 </li>
                 <li className="flex items-center text-gray-700">
-                  <span className="text-teal-500 mr-2">✓</span>
+                  <span className="text-orange-500 mr-2">✓</span>
                   {isEnglish ? 'All floor types' : 'Wszystkie typy podłóg'}
                 </li>
                 <li className="flex items-center text-gray-700">
-                  <span className="text-teal-500 mr-2">✓</span>
-                  {isEnglish ? 'Room-by-room control' : 'Regulacja pokojowa'}
+                  <span className="text-orange-500 mr-2">✓</span>
+                  {isEnglish ? 'Energy efficient' : 'Energooszczędne'}
                 </li>
               </ul>
-              <Link href={`/${locale}/services`} className="text-teal-600 dark:text-teal-400 font-semibold hover:text-teal-700 flex items-center gap-2">
+              <Link href={`/${locale}/services`} className="text-orange-600 font-semibold hover:text-orange-700 flex items-center gap-2">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
               </Link>
             </div>
 
-            {/* Central Heating Modernization */}
+            {/* Modernizacja Kotłowni */}
             <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-purple-500 hover:-translate-y-2">
               <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
                 <span className="text-4xl">⚙️</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'System Modernization' : 'Modernizacja CO'}</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Boiler Room Modernization' : 'Modernizacja Kotłowni'}</h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Upgrade old heating systems to modern, efficient solutions'
-                  : 'Modernizacja starych systemów na nowoczesne, wydajne rozwiązania'}
+                  ? 'Upgrade your old boiler room to modern, efficient systems'
+                  : 'Modernizacja starych kotłowni na nowoczesne, wydajne systemy'}
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center text-gray-700">
@@ -268,64 +268,154 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Boiler Rooms */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-red-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+            {/* Montaż nowych kotłowni */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-amber-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
                 <span className="text-4xl">🏭</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Boiler Rooms' : 'Kotłownie'}</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'New Boiler Room Installation' : 'Montaż Nowych Kotłowni'}</h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Design and installation of complete boiler room systems'
-                  : 'Projektowanie i montaż kompletnych systemów kotłowni'}
+                  ? 'Complete installation of modern, energy-efficient boiler rooms'
+                  : 'Kompleksowy montaż nowoczesnych, energooszczędnych kotłowni'}
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center text-gray-700">
-                  <span className="text-red-500 mr-2">✓</span>
-                  {isEnglish ? 'Professional design' : 'Profesjonalny projekt'}
+                  <span className="text-amber-500 mr-2">✓</span>
+                  {isEnglish ? 'Project design' : 'Projektowanie'}
                 </li>
                 <li className="flex items-center text-gray-700">
-                  <span className="text-red-500 mr-2">✓</span>
-                  {isEnglish ? 'Full automation' : 'Pełna automatyka'}
+                  <span className="text-amber-500 mr-2">✓</span>
+                  {isEnglish ? 'Installation & automation' : 'Montaż i automatyka'}
                 </li>
                 <li className="flex items-center text-gray-700">
-                  <span className="text-red-500 mr-2">✓</span>
+                  <span className="text-amber-500 mr-2">✓</span>
                   {isEnglish ? 'Safety systems' : 'Systemy bezpieczeństwa'}
                 </li>
               </ul>
-              <Link href={`/${locale}/services`} className="text-red-600 dark:text-red-400 font-semibold hover:text-red-700 flex items-center gap-2">
+              <Link href={`/${locale}/services`} className="text-amber-600 dark:text-amber-400 font-semibold hover:text-amber-700 flex items-center gap-2">
                 {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
               </Link>
             </div>
 
-            {/* Service & Maintenance */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-green-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+            {/* Serwis Piecy Gazowych */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-emerald-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
                 <span className="text-4xl">🔧</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? '24/7 Service' : 'Serwis 24/7'}</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Gas Furnace Service' : 'Serwis Piecy Gazowych'}</h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Emergency repairs and regular maintenance of heating systems'
-                  : 'Awarie i regularne przeglądy systemów grzewczych'}
+                  ? 'Professional servicing and repairs of gas furnaces and boilers'
+                  : 'Profesjonalny serwis i naprawy pieców gazowych oraz kotłów'}
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✓</span>
-                  {isEnglish ? 'Response in 2h' : 'Dojazd w 2h'}
+                  <span className="text-emerald-500 mr-2">✓</span>
+                  {isEnglish ? 'Certified technicians' : 'Certyfikowani technicy'}
                 </li>
                 <li className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✓</span>
-                  {isEnglish ? 'Annual inspections' : 'Przeglądy roczne'}
+                  <span className="text-emerald-500 mr-2">✓</span>
+                  {isEnglish ? 'Emergency repairs' : 'Awarie 24/7'}
                 </li>
                 <li className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✓</span>
-                  {isEnglish ? 'Parts in stock' : 'Części zamienne'}
+                  <span className="text-emerald-500 mr-2">✓</span>
+                  {isEnglish ? 'Original parts' : 'Oryginalne części'}
                 </li>
               </ul>
-              <a href="tel:503691808" className="text-green-600 dark:text-green-400 font-semibold hover:text-green-700 flex items-center gap-2">
-                {isEnglish ? 'Call 24/7' : 'Zadzwoń 24/7'} →
+              <a href="tel:503691808" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:text-emerald-700 flex items-center gap-2">
+                {isEnglish ? 'Call now' : 'Zadzwoń teraz'} →
               </a>
+            </div>
+
+            {/* Przegląd instalacji Gazowych */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-yellow-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">📋</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Gas Installation Inspection' : 'Przegląd Instalacji Gazowych'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Mandatory safety inspections and certification of gas installations'
+                  : 'Obowiązkowe przeglądy bezpieczeństwa i certyfikacja instalacji gazowych'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-yellow-500 mr-2">✓</span>
+                  {isEnglish ? 'Safety checks' : 'Kontrola szczelności'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-yellow-500 mr-2">✓</span>
+                  {isEnglish ? 'Official protocols' : 'Protokoły urzędowe'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-yellow-500 mr-2">✓</span>
+                  {isEnglish ? 'Compliance certificates' : 'Certyfikaty zgodności'}
+                </li>
+              </ul>
+              <Link href={`/${locale}/services`} className="text-yellow-600 dark:text-yellow-500 font-semibold hover:text-yellow-700 flex items-center gap-2">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              </Link>
+            </div>
+
+            {/* Montaż przydomowych oczyszczalni */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-lime-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-lime-500 to-lime-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">♻️</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Sewage Treatment Plants' : 'Montaż Przydomowych Oczyszczalni'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Installation of domestic sewage treatment plants for ecological wastewater management'
+                  : 'Instalacja przydomowych oczyszczalni ścieków dla ekologicznego gospodarowania wodami'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-lime-500 mr-2">✓</span>
+                  {isEnglish ? 'Site assessment' : 'Ocena terenu'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-lime-500 mr-2">✓</span>
+                  {isEnglish ? 'Full installation' : 'Kompleksowy montaż'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-lime-500 mr-2">✓</span>
+                  {isEnglish ? 'Service & maintenance' : 'Serwis i konserwacja'}
+                </li>
+              </ul>
+              <Link href={`/${locale}/services`} className="text-lime-600 dark:text-lime-500 font-semibold hover:text-lime-700 flex items-center gap-2">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              </Link>
+            </div>
+
+            {/* Usługi Minikoparką */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-stone-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-stone-500 to-stone-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">🚜</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Mini Excavator Services' : 'Usługi Minikoparką'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Excavation work for installations, foundations, and landscaping'
+                  : 'Prace ziemne pod instalacje, fundamenty oraz prace terenowe'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-stone-500 mr-2">✓</span>
+                  {isEnglish ? 'Trench digging' : 'Kopanie rowów'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-stone-500 mr-2">✓</span>
+                  {isEnglish ? 'Foundation work' : 'Prace fundamentowe'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-stone-500 mr-2">✓</span>
+                  {isEnglish ? 'Site leveling' : 'Wyrównywanie terenu'}
+                </li>
+              </ul>
+              <Link href={`/${locale}/services`} className="text-stone-600 dark:text-stone-400 font-semibold hover:text-stone-700 flex items-center gap-2">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              </Link>
             </div>
           </div>
         </div>

@@ -34,7 +34,7 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
     name: '',
     phone: '',
     email: '',
-    service: 'Instalacje wodne',
+    service: 'Instalacje wodno-kanalizacyjne',
     description: '',
   });
 
@@ -174,7 +174,7 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
       name: '',
       phone: '',
       email: '',
-      service: 'Instalacje wodne',
+      service: 'Instalacje wodno-kanalizacyjne',
       description: '',
     });
   };
@@ -396,11 +396,15 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   >
-                    <option>Instalacje wodne</option>
-                    <option>Remont łazienki</option>
-                    <option>Awaria</option>
-                    <option>Konserwacja</option>
-                    <option>Wycena</option>
+                    <option>Instalacje wodno-kanalizacyjne</option>
+                    <option>Instalacje gazowe</option>
+                    <option>Ogrzewanie podłogowe</option>
+                    <option>Modernizacja kotłowni</option>
+                    <option>Montaż nowych kotłowni</option>
+                    <option>Serwis piecy gazowych</option>
+                    <option>Przegląd instalacji gazowych</option>
+                    <option>Montaż przydomowych oczyszczalni</option>
+                    <option>Usługi minikoparką</option>
                     <option>Inne</option>
                   </select>
                 </div>
