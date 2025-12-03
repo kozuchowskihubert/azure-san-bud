@@ -241,3 +241,34 @@ docs/guides/SANBUD_PROJECT_SUMMARY.md
 
 # Keep only README in root
 !README.md
+
+# ========================
+# EMAIL TEST FILES
+# ========================
+
+# Email testing and configuration files
+*email_test.py
+*email_api_test.py
+emailjs_test.py
+resend_email_test.py
+serverless_email_test.py
+telegram_notification_test.py
+direct_logging_test.py
+production_email_test.py
+real_email_test.py
+send_test_email.py
+test_email.py
+test_logging_system.py
+
+# Email configuration documentation (keep selective ones)
+EMAIL_SETUP.md
+EMAIL_CONFIGURATION.md
+EMAIL_TROUBLESHOOTING.md
+GMAIL_SMTP_SETUP.md
+AZURE_EMAIL_SMTP_SETUP.md
+ALTERNATIVE_EMAIL_PROVIDERS.md
+
+# Log files
+logs/
+*.log
+backend.log

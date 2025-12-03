@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from config.settings import get_config
+from config.email import init_email
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -43,6 +44,9 @@ def create_app(config_name='production'):
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
+    
+    # Initialize email
+    init_email(app)
     
     # Register blueprints
     from app.routes import main, services, appointments, admin, api

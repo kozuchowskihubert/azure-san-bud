@@ -4,55 +4,9 @@ from datetime import datetime
 from app import db
 from app.models.customer import Customer
 from app.models.message import Message
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import os
+from config.email import send_contact_email
 
 bp = Blueprint('api', __name__, url_prefix='/api')
-
-
-def send_email(to_email, subject, body_html, body_text=None):
-    """
-    Send email using Gmail SMTP.
-    Uses app config for email credentials.
-    """
-    try:
-        # Get email configuration from environment
-        smtp_server = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
-        smtp_port = int(os.getenv('MAIL_PORT', '587'))
-        sender_email = os.getenv('MAIL_USERNAME')
-        sender_password = os.getenv('MAIL_PASSWORD')
-        
-        if not sender_email or not sender_password:
-            current_app.logger.warning('Email credentials not configured')
-            return False
-        
-        # Create message
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = subject
-        msg['From'] = f"SanBud Hydraulika <{sender_email}>"
-        msg['To'] = to_email
-        
-        # Add text and HTML parts
-        if body_text:
-            part1 = MIMEText(body_text, 'plain')
-            msg.attach(part1)
-        
-        part2 = MIMEText(body_html, 'html')
-        msg.attach(part2)
-        
-        # Send email
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(sender_email, sender_password)
-            server.sendmail(sender_email, to_email, msg.as_string())
-        
-        return True
-        
-    except Exception as e:
-        current_app.logger.error(f'Email sending failed: {str(e)}')
-        return False
 
 
 @bp.route('/clients/register', methods=['POST'])
@@ -166,65 +120,12 @@ def contact_form():
         db.session.add(message)
         db.session.commit()
         
-        # Send email notification to company
-        company_email = os.getenv('CONTACT_EMAIL', 'sanbud.biuro@gmail.com')
-        service_info = f"\n<p><strong>Rodzaj usługi:</strong> {data.get('service', 'Nie określono')}</p>" if data.get('service') else ''
-        
-        email_html = f"""
-        <html>
-        <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px 10px 0 0;">
-                <h1 style="color: white; margin: 0;">Nowa wiadomość z formularza kontaktowego</h1>
-            </div>
-            
-            <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
-                <h2 style="color: #333; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Dane kontaktowe</h2>
-                
-                <p><strong>Imię i nazwisko:</strong> {data['name']}</p>
-                <p><strong>Email:</strong> <a href="mailto:{data['email']}">{data['email']}</a></p>
-                <p><strong>Telefon:</strong> {data.get('phone', 'Nie podano')}</p>
-                {service_info}
-                
-                <h2 style="color: #333; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin-top: 30px;">Wiadomość</h2>
-                <div style="background: white; padding: 20px; border-left: 4px solid #667eea; margin-top: 15px;">
-                    <p style="line-height: 1.6; color: #555;">{data['message'].replace(chr(10), '<br>')}</p>
-                </div>
-                
-                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; font-size: 12px;">
-                    <p>Data wysłania: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}</p>
-                    <p>IP: {request.remote_addr}</p>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 20px; color: #888; font-size: 12px;">
-                <p>SanBud Hydraulika - System zarządzania</p>
-            </div>
-        </body>
-        </html>
-        """
-        
-        email_text = f"""
-        Nowa wiadomość z formularza kontaktowego
-        
-        Dane kontaktowe:
-        - Imię i nazwisko: {data['name']}
-        - Email: {data['email']}
-        - Telefon: {data.get('phone', 'Nie podano')}
-        {f"- Rodzaj usługi: {data.get('service', 'Nie określono')}" if data.get('service') else ''}
-        
-        Wiadomość:
-        {data['message']}
-        
-        ---
-        Data wysłania: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}
-        """
-        
-        # Send email
-        email_sent = send_email(
-            to_email=company_email,
-            subject=f"Nowa wiadomość kontaktowa od {data['name']}",
-            body_html=email_html,
-            body_text=email_text
+        # Send email notification using new email system
+        email_sent = send_contact_email(
+            name=data['name'],
+            email=data['email'],
+            phone=data.get('phone', 'Nie podano'),
+            message=data['message']
         )
         
         return jsonify({

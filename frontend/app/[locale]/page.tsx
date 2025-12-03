@@ -115,24 +115,30 @@ export default function HomePage() {
     }
   };
 
-  const heroVideo = '/images/IMG_6550.mov';
-
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       
       {/* HERO SECTION */}
       <section className="relative h-[600px] md:h-[700px] overflow-hidden">
+        {/* Video Background */}
         <div className="absolute inset-0 z-0">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover scale-105"
+            style={{ objectPosition: 'center center' }}
+            onError={(e) => {
+              // Hide video and show gradient fallback if video fails to load
+              e.currentTarget.style.display = 'none';
+            }}
           >
-            <source src={heroVideo} type="video/mp4" />
-            <source src={heroVideo} type="video/quicktime" />
+            <source src="/images/menu.mov" type="video/quicktime" />
           </video>
+          {/* Gradient fallback background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-gray-900 to-orange-900 -z-10"></div>
+          {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
         </div>
         

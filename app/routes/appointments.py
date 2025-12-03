@@ -5,6 +5,7 @@ from app import db
 from app.models.appointment import Appointment
 from app.models.customer import Customer
 from app.models.service import Service
+from config.email import send_booking_confirmation
 
 bp = Blueprint('appointments', __name__, url_prefix='/appointments')
 
@@ -160,10 +161,24 @@ def api_book_online():
         db.session.add(appointment)
         db.session.commit()
         
+        # Send confirmation email
+        booking_data = {
+            'name': f"{first_name} {last_name}".strip() or 'Klient',
+            'email': email,
+            'phone': phone,
+            'date': data.get('date'),
+            'time': data.get('time'),
+            'service': service_name,
+            'description': data.get('description', '')
+        }
+        
+        email_sent = send_booking_confirmation(booking_data)
+        
         return jsonify({
             'success': True,
             'appointment': appointment.to_dict(),
-            'message': 'Rezerwacja została pomyślnie utworzona'
+            'message': 'Rezerwacja została pomyślnie utworzona',
+            'email_sent': email_sent
         }), 201
         
     except Exception as e:

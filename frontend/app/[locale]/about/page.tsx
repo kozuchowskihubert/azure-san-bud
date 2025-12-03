@@ -5,29 +5,32 @@ import Image from 'next/image';
 
 export default function AboutPage() {
   const t = useTranslations();
-  
-  // Hero video background
-  const heroVideo = '/images/IMG_6550.mov';
 
   return (
     <main className="min-h-screen">
       {/* Hero Section with Video Background */}
       <section className="relative h-[500px] md:h-[600px] overflow-hidden">
         {/* Video Background */}
-        <video 
-          key={heroVideo}
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src={heroVideo} type="video/mp4" />
-          <source src={heroVideo} type="video/quicktime" />
-        </video>
-        
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover scale-105"
+            style={{ objectPosition: 'center center' }}
+            onError={(e) => {
+              // Hide video and show gradient fallback if video fails to load
+              e.currentTarget.style.display = 'none';
+            }}
+          >
+            <source src="/images/menu.mov" type="video/quicktime" />
+          </video>
+          {/* Gradient fallback background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-gray-900 to-orange-900 -z-10"></div>
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/60"></div>
+        </div>
 
         <div className="container mx-auto px-4 relative z-10 h-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto text-center">
