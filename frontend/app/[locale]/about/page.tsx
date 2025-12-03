@@ -81,23 +81,17 @@ export default function AboutPage() {
               {
                 title: 'Fachowość',
                 description: 'Wieloletnie doświadczenie i ciągłe podnoszenie kwalifikacji zapewniają najwyższy poziom usług.',
-                icon: '🎯',
               },
               {
                 title: 'Rzetelność',
                 description: 'Stawiamy na transparentność w wycenach i uczciwe relacje z klientami.',
-                icon: '🤝',
               },
               {
                 title: 'Terminowość',
                 description: 'Szanujemy Twój czas - realizujemy zlecenia zgodnie z ustalonym harmonogramem.',
-                icon: '⏰',
               },
             ].map((value, index) => (
               <div key={index} className="card p-8 text-center group">
-                <div className="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                  {value.icon}
-                </div>
                 <h3 className="text-2xl font-bold mb-4 text-[rgb(var(--color-text-primary))]">
                   {value.title}
                 </h3>

@@ -421,7 +421,7 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                     type="submit"
                     className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
                   >
-                    Potwierdź rezerwację 🎯
+                    Potwierdź rezerwację
                   </button>
                 </div>
               </form>
@@ -437,14 +437,12 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
               </p>
               <div className="space-y-3 text-left">
                 <div className="flex items-center gap-3 text-gray-700">
-                  <span className="text-2xl">⏰</span>
                   <div>
                     <p className="font-semibold">Godziny pracy:</p>
                     <p className="text-sm">Pon-Pt: 8:00-18:00, Sob: 9:00-14:00</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-gray-700">
-                  <span className="text-2xl">🚨</span>
                   <div>
                     <p className="font-semibold">Awarie 24/7:</p>
                     <p className="text-sm">W nagłych przypadkach zadzwoń: +48 503 691 808</p>

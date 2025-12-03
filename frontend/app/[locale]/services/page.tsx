@@ -12,7 +12,7 @@ export default function ServicesPage() {
       description: 'Profesjonalny montaż systemów wodnych dla domów i mieszkań. Kompleksowe rozwiązania z najwyższej jakości materiałów.',
       image: '/images/service-plumbing.jpg',
       features: ['Instalacje wodne', 'Systemy filtracji', 'Łazienki', 'Kuchnie'],
-      icon: '💧',
+      icon: '',
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ export default function ServicesPage() {
       description: 'Realizacja luksusowych łazienek od projektu po wykończenie. Nowoczesny design połączony z funkcjonalnością.',
       image: '/images/sanbud-google-2.jpg',
       features: ['Projektowanie', 'Glazura', 'Armatura', 'Oświetlenie'],
-      icon: '🛁',
+      icon: '',
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ export default function ServicesPage() {
       description: 'Montaż i serwis systemów ogrzewania. Efektywne rozwiązania grzewcze dostosowane do Twoich potrzeb.',
       image: '/images/sanbud-google-3.jpg',
       features: ['Piece gazowe', 'Pompy ciepła', 'Ogrzewanie podłogowe', 'Grzejniki'],
-      icon: '🔥',
+      icon: '',
     },
     {
       id: 4,
@@ -36,7 +36,7 @@ export default function ServicesPage() {
       description: 'Całodobowe pogotowie hydrauliczne. Szybka reakcja i profesjonalna pomoc w każdej sytuacji awaryjnej.',
       image: '/images/sanbud-google-4.jpg',
       features: ['Wycieki', 'Przecieki', 'Awarie instalacji', 'Natychmiastowa pomoc'],
-      icon: '🚨',
+      icon: '',
     },
     {
       id: 5,
@@ -44,7 +44,7 @@ export default function ServicesPage() {
       description: 'Fachowe naprawy i regularne przeglądy instalacji hydraulicznych. Zapobiegamy awariom zanim się pojawią.',
       image: '/images/sanbud-google-1.jpg',
       features: ['Przeglądy', 'Naprawy', 'Konserwacja', 'Modernizacja'],
-      icon: '🔧',
+      icon: '',
     },
     {
       id: 6,
@@ -52,7 +52,7 @@ export default function ServicesPage() {
       description: 'Kompleksowe systemy sanitarne dla budynków mieszkalnych i użyteczności publicznej.',
       image: '/images/sanbud-google-5.jpg',
       features: ['Kanalizacja', 'Wentylacja', 'Odprowadzanie ścieków', 'Systemy bezpieczeństwa'],
-      icon: '🏗️',
+      icon: '',
     },
   ];
 
@@ -158,13 +158,12 @@ export default function ServicesPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
-              { icon: '✓', title: 'Gwarancja jakości', description: 'Wszystkie usługi objęte gwarancją' },
-              { icon: '⚡', title: 'Szybka realizacja', description: 'Terminowe wykonanie zleceń' },
-              { icon: '💎', title: 'Premium materiały', description: 'Najwyższej klasy komponenty' },
-              { icon: '🎓', title: 'Doświadczenie', description: '7 lat na rynku' },
+              { title: 'Gwarancja jakości', description: 'Wszystkie usługi objęte gwarancją' },
+              { title: 'Szybka realizacja', description: 'Terminowe wykonanie zleceń' },
+              { title: 'Premium materiały', description: 'Najwyższej klasy komponenty' },
+              { title: 'Doświadczenie', description: '7 lat na rynku' },
             ].map((item, index) => (
               <div key={index} className="card p-6 text-center">
-                <div className="text-4xl mb-4">{item.icon}</div>
                 <h4 className="text-lg font-bold mb-2 text-[rgb(var(--color-text-primary))]">{item.title}</h4>
                 <p className="text-sm text-[rgb(var(--color-text-secondary))]">{item.description}</p>
               </div>

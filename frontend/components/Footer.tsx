@@ -172,38 +172,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Gallery Preview */}
-        <div className="py-8 border-t border-gray-700">
-          <h3 className="text-lg font-bold mb-6 text-center text-white">
-            Nasze realizacje
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {[
-              { src: '/images/sanbud-google-1.jpg', alt: 'Realizacja 1' },
-              { src: '/images/sanbud-google-2.jpg', alt: 'Realizacja 2 - Łazienka' },
-              { src: '/images/sanbud-google-3.jpg', alt: 'Realizacja 3' },
-              { src: '/images/sanbud-google-4.jpg', alt: 'Realizacja 4' },
-              { src: '/images/sanbud-google-5.jpg', alt: 'Realizacja 5' },
-              { src: '/images/sanbud-google-6.jpg', alt: 'Realizacja 6' },
-            ].map((image, index) => (
-              <div
-                key={index}
-                className="relative h-32 rounded-lg overflow-hidden group cursor-pointer"
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                  <p className="text-white text-sm font-medium">{image.alt}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Bottom Bar */}
         <div className="py-6 border-t border-gray-700">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">

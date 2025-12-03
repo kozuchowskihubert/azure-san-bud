@@ -33,43 +33,77 @@ export default function Partners() {
           </p>
         </div>
 
-        {/* Partners Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
-          {partners.map((partner) => (
-            <div
-              key={partner.name}
-              className="group relative bg-white rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
-            >
-              <a
-                href={partner.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                {/* Logo Container */}
-                <div className="aspect-[3/2] flex items-center justify-center relative">
-                  {/* Brand Name as Logo */}
-                  <div className="text-center w-full px-2">
-                    <p className="text-lg md:text-xl font-bold text-gray-700 group-hover:text-[#0066CC] transition-colors duration-300 leading-tight">
-                      {partner.name}
-                    </p>
-                  </div>
-                  
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#0066CC]/5 to-[#FF6B35]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+        {/* Infinite Scrolling Carousel */}
+        <div className="relative mb-12">
+          {/* Gradient Overlays */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
+          
+          {/* Scrolling Container */}
+          <div className="overflow-hidden">
+            <div className="flex animate-scroll-left hover:pause-animation">
+              {/* First set of logos */}
+              {partners.map((partner, index) => (
+                <div
+                  key={`first-${index}`}
+                  className="flex-shrink-0 mx-6"
+                >
+                  <a
+                    href={partner.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block bg-white rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 w-48"
+                  >
+                    <div className="aspect-[3/2] flex items-center justify-center relative">
+                      <div className="text-center w-full px-2">
+                        <p className="text-xl font-bold text-gray-700 group-hover:text-blue-600 transition-colors duration-300">
+                          {partner.name}
+                        </p>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-orange-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                    </div>
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
                 </div>
-
-                {/* Badge for verified partner */}
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {partners.map((partner, index) => (
+                <div
+                  key={`second-${index}`}
+                  className="flex-shrink-0 mx-6"
+                >
+                  <a
+                    href={partner.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block bg-white rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 w-48"
+                  >
+                    <div className="aspect-[3/2] flex items-center justify-center relative">
+                      <div className="text-center w-full px-2">
+                        <p className="text-xl font-bold text-gray-700 group-hover:text-blue-600 transition-colors duration-300">
+                          {partner.name}
+                        </p>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-orange-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                    </div>
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
                 </div>
-              </a>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Bottom Text */}
@@ -108,6 +142,49 @@ export default function Partners() {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
       </div>
+
+      <style jsx>{`
+        @keyframes scroll-left {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        .animate-scroll-left {
+          animation: scroll-left 30s linear infinite;
+        }
+
+        .hover\:pause-animation:hover {
+          animation-play-state: paused;
+        }
+
+        @keyframes blob {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+          }
+          25% {
+            transform: translate(20px, -50px) scale(1.1);
+          }
+          50% {
+            transform: translate(0, -100px) scale(1);
+          }
+          75% {
+            transform: translate(-20px, -50px) scale(1.1);
+          }
+        }
+
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+      `}</style>
     </section>
   );
 }
+

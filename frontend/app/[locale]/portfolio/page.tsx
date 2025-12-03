@@ -15,7 +15,6 @@ interface Project {
 export default function PortfolioPage() {
   const t = useTranslations();
   const [selectedImage, setSelectedImage] = useState<Project | null>(null);
-  const [filter, setFilter] = useState<string>('all');
 
   // Portfolio projects with actual images
   const projects: Project[] = [
@@ -161,18 +160,6 @@ export default function PortfolioPage() {
     },
   ];
 
-  const categories = [
-    { id: 'all', label: 'Wszystkie', icon: '🏠' },
-    { id: 'bathroom', label: 'Łazienki', icon: '🛁' },
-    { id: 'plumbing', label: 'Instalacje', icon: '💧' },
-    { id: 'heating', label: 'Ogrzewanie', icon: '🔥' },
-    { id: 'installation', label: 'Montaże', icon: '🔧' },
-  ];
-
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(p => p.category === filter);
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -211,35 +198,10 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Filter Categories */}
-      <section className="bg-white shadow-md md:sticky md:top-20 z-40">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setFilter(cat.id)}
-                className={`px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 text-sm md:text-base ${
-                  filter === cat.id
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                <span className="text-xl hidden md:inline">{cat.icon}</span>
-                <span>{cat.label}</span>
-                <span className="ml-1 px-2 py-0.5 bg-white/20 rounded-full text-xs">
-                  {cat.id === 'all' ? projects.length : projects.filter(p => p.category === cat.id).length}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Portfolio Grid */}
       <section className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProjects.map((project) => (
+          {projects.map((project) => (
             <div
               key={project.id}
               onClick={() => setSelectedImage(project)}
@@ -276,15 +238,6 @@ export default function PortfolioPage() {
             </div>
           ))}
         </div>
-
-        {filteredProjects.length === 0 && (
-          <div className="text-center py-20">
-            <svg className="w-20 h-20 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <p className="text-xl text-gray-600 font-semibold">Brak projektów w tej kategorii</p>
-          </div>
-        )}
       </section>
 
       {/* Lightbox Modal */}

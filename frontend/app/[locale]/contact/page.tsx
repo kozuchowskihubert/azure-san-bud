@@ -93,35 +93,30 @@ export default function ContactPage() {
               <div className="space-y-4">
                 {[
                   {
-                    icon: '📞',
                     title: 'Telefon',
                     value: '+48 503 691 808',
                     link: 'tel:+48503691808',
                     description: 'Pon-Pt: 8:00-18:00, Awarie: 24/7',
                   },
                   {
-                    icon: '✉️',
                     title: 'Email',
                     value: 'sanbud.biuro@gmail.com',
                     link: 'mailto:sanbud.biuro@gmail.com',
                     description: 'Odpowiadamy w ciągu 24h',
                   },
                   {
-                    icon: '📍',
                     title: 'Adres',
                     value: 'ul. Przykładowa 123',
                     description: '00-000 Warszawa, Polska',
                   },
                   {
-                    icon: '⏰',
                     title: 'Godziny otwarcia',
                     value: 'Poniedziałek - Piątek',
                     description: '8:00 - 18:00',
                   },
                 ].map((item, index) => (
-                  <div key={index} className="card p-6 flex gap-4">
-                    <div className="text-4xl">{item.icon}</div>
-                    <div className="flex-1">
+                  <div key={index} className="card p-6">
+                    <div>
                       <h3 className="font-bold text-[rgb(var(--color-text-primary))] mb-1">
                         {item.title}
                       </h3>

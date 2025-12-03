@@ -138,13 +138,13 @@ export default function Stats() {
           <div className="inline-flex flex-col sm:flex-row items-center sm:space-x-4 space-y-3 sm:space-y-0 bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-full px-6 sm:px-8 py-4 border border-white/20">
             <div className="flex -space-x-2">
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-xs sm:text-base font-bold border-2 border-white">
-                ⭐
+                
               </div>
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white text-xs sm:text-base font-bold border-2 border-white">
-                🏆
+                
               </div>
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs sm:text-base font-bold border-2 border-white">
-                ✓
+                
               </div>
             </div>
             <div className="text-center sm:text-left">
