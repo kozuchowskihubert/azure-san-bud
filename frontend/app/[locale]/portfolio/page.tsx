@@ -21,142 +21,142 @@ export default function PortfolioPage() {
     {
       id: 1,
       image: '/images/IMG_6028.jpg',
-      title: 'Nowoczesna łazienka',
-      category: 'bathroom',
-      description: 'Kompleksowy remont łazienki z instalacją wodną i ogrzewaniem podłogowym'
+      title: 'Instalacja wodna',
+      category: 'installation',
+      description: 'Profesjonalny montaż instalacji wodno-kanalizacyjnej'
     },
     {
       id: 2,
       image: '/images/IMG_6030.jpg',
-      title: 'System grzewczy',
-      category: 'heating',
-      description: 'Montaż centralnego ogrzewania z pompą ciepła'
+      title: 'System instalacyjny',
+      category: 'installation',
+      description: 'Kompleksowe instalacje sanitarne w budynku'
     },
     {
       id: 3,
       image: '/images/IMG_6033.jpg',
-      title: 'Instalacja wodno-kanalizacyjna',
-      category: 'plumbing',
-      description: 'Profesjonalna instalacja wodno-kanalizacyjna w nowym budynku'
+      title: 'Montaż instalacji',
+      category: 'installation',
+      description: 'Zaawansowane rozwiązania instalacyjne'
     },
     {
       id: 4,
       image: '/images/IMG_6036.jpg',
-      title: 'Łazienka premium',
-      category: 'bathroom',
-      description: 'Ekskluzywna łazienka z wysokiej jakości armaturą'
+      title: 'Instalacje techniczne',
+      category: 'installation',
+      description: 'Profesjonalne wykonanie instalacji technicznych'
     },
     {
       id: 5,
       image: '/images/IMG_6064.jpg',
-      title: 'System ogrzewania',
+      title: 'System grzewczy',
       category: 'heating',
-      description: 'Nowoczesne rozwiązania grzewcze dla komfortu użytkowników'
+      description: 'Montaż i konfiguracja systemu ogrzewania'
     },
     {
       id: 6,
       image: '/images/IMG_6134.jpg',
-      title: 'Instalacje sanitarne',
-      category: 'plumbing',
-      description: 'Kompleksowe instalacje sanitarne w budynku mieszkalnym'
+      title: 'Instalacja CO',
+      category: 'heating',
+      description: 'Centralne ogrzewanie z nowoczesnym kotłem'
     },
     {
       id: 7,
       image: '/images/IMG_6150.jpg',
-      title: 'Remont łazienki',
-      category: 'bathroom',
-      description: 'Pełny remont łazienki od podstaw'
+      title: 'System ogrzewania',
+      category: 'heating',
+      description: 'Efektywne rozwiązania grzewcze'
     },
     {
       id: 8,
       image: '/images/IMG_6152.jpg',
-      title: 'System wodny',
-      category: 'plumbing',
-      description: 'Zaawansowany system wodny z filtracją'
+      title: 'Instalacja grzewcza',
+      category: 'heating',
+      description: 'Profesjonalny montaż systemu grzewczego'
     },
     {
       id: 9,
       image: '/images/IMG_6241.jpg',
-      title: 'Montaż urządzeń',
-      category: 'installation',
-      description: 'Profesjonalny montaż urządzeń sanitarnych'
+      title: 'Ogrzewanie podłogowe',
+      category: 'heating',
+      description: 'Montaż nowoczesnego ogrzewania podłogowego'
     },
     {
       id: 10,
       image: '/images/IMG_6545.jpg',
-      title: 'Łazienka z wanną',
-      category: 'bathroom',
-      description: 'Elegancka łazienka z wolnostojącą wanną'
+      title: 'Montaż urządzeń',
+      category: 'installation',
+      description: 'Instalacja urządzeń technicznych'
     },
     {
       id: 11,
       image: '/images/IMG_6547.jpg',
-      title: 'Instalacja grzewcza',
-      category: 'heating',
-      description: 'Nowoczesna instalacja grzewcza z termostatami'
+      title: 'System instalacyjny',
+      category: 'installation',
+      description: 'Kompleksowe rozwiązania instalacyjne'
     },
     {
       id: 12,
       image: '/images/IMG_6556.jpg',
-      title: 'System wentylacji',
+      title: 'Instalacje sanitarne',
       category: 'installation',
-      description: 'Instalacja systemu wentylacji mechanicznej'
+      description: 'Profesjonalne instalacje wodno-kanalizacyjne'
     },
     {
       id: 13,
       image: '/images/IMG_6644.jpg',
-      title: 'Łazienka z prysznicem',
-      category: 'bathroom',
-      description: 'Nowoczesna kabina prysznicowa z hydromasażem'
+      title: 'Urządzenia zewnętrzne',
+      category: 'plumbing',
+      description: 'Montaż urządzeń zewnętrznych'
     },
     {
       id: 14,
       image: '/images/IMG_6645.jpg',
-      title: 'Instalacja CO',
-      category: 'heating',
-      description: 'Centralne ogrzewanie z kotłem kondensacyjnym'
+      title: 'Instalacje zewnętrzne',
+      category: 'plumbing',
+      description: 'Systemy instalacyjne na zewnątrz budynku'
     },
     {
       id: 15,
       image: '/images/IMG_6826.jpg',
-      title: 'Remont kompleksowy',
-      category: 'bathroom',
-      description: 'Kompleksowy remont z wymianą wszystkich instalacji'
+      title: 'Montaż techniczny',
+      category: 'installation',
+      description: 'Zaawansowany montaż systemów technicznych'
     },
     {
       id: 16,
       image: '/images/IMG_6827.jpg',
-      title: 'Instalacja przemysłowa',
-      category: 'plumbing',
-      description: 'Instalacje wodno-kanalizacyjne w obiekcie przemysłowym'
+      title: 'Instalacja sanitarna',
+      category: 'installation',
+      description: 'Profesjonalne instalacje sanitarne'
     },
     {
       id: 17,
       image: '/images/IMG_6828.jpg',
-      title: 'System uzdatniania',
+      title: 'System wodny',
       category: 'installation',
-      description: 'Zaawansowany system uzdatniania wody'
+      description: 'Kompleksowy system wodny i kanalizacyjny'
     },
     {
       id: 18,
       image: '/images/IMG_6829.jpg',
-      title: 'Łazienka designerska',
-      category: 'bathroom',
-      description: 'Designerska łazienka według indywidualnego projektu'
+      title: 'Montaż instalacji',
+      category: 'installation',
+      description: 'Instalacje wodno-kanalizacyjne w budynku'
     },
     {
       id: 19,
       image: '/images/IMG_6830.jpg',
-      title: 'Pompa ciepła',
-      category: 'heating',
-      description: 'Montaż i konfiguracja pompy ciepła'
+      title: 'Instalacje techniczne',
+      category: 'installation',
+      description: 'Montaż zaawansowanych instalacji technicznych'
     },
     {
       id: 20,
       image: '/images/IMG_6831.jpg',
-      title: 'Instalacja sanitarna',
-      category: 'plumbing',
-      description: 'Profesjonalna instalacja sanitarna w budynku'
+      title: 'System instalacyjny',
+      category: 'installation',
+      description: 'Profesjonalne wykonanie systemów instalacyjnych'
     },
   ];
 
