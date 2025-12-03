@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { buildApiUrl } from '@/utils/api';
 
 export default function ContactPage() {
   const t = useTranslations();
@@ -21,7 +22,7 @@ export default function ContactPage() {
     setErrorMessage('');
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.sanbud24.pl'}/api/contact`, {
+      const response = await fetch(buildApiUrl('api/contact'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
