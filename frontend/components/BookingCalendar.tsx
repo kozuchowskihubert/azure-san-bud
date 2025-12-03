@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import AddToCalendarButton from './AddToCalendarButton';
 
 interface TimeSlot {
   time: string;
@@ -25,7 +26,8 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [step, setStep] = useState<'date' | 'time' | 'form'>('date');
+  const [step, setStep] = useState<'date' | 'time' | 'form' | 'success'>('date');
+  const [bookingSuccess, setBookingSuccess] = useState<BookingData | null>(null);
   
   // Form data
   const [formData, setFormData] = useState({
@@ -141,28 +143,19 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
       const result = await response.json();
       
       if (response.ok && result.success) {
-        // Success!
-        alert(`✅ Rezerwacja potwierdzona!\n\n${result.message}\n\nData: ${selectedDate.toLocaleDateString('pl-PL')}\nGodzina: ${selectedTime}\nImię: ${formData.name}\nTelefon: ${formData.phone}\n\nPotwierdzenie zostało wysłane SMS-em i e-mailem.`);
+        // Success! Show success screen with calendar integration
+        const successData = {
+          date: selectedDate,
+          time: selectedTime,
+          ...formData,
+        };
+        
+        setBookingSuccess(successData);
+        setStep('success');
         
         if (onBookingComplete) {
-          onBookingComplete({
-            date: selectedDate,
-            time: selectedTime,
-            ...formData,
-          });
+          onBookingComplete(successData);
         }
-        
-        // Reset form
-        setStep('date');
-        setSelectedDate(null);
-        setSelectedTime(null);
-        setFormData({
-          name: '',
-          phone: '',
-          email: '',
-          service: 'Instalacje wodne',
-          description: '',
-        });
       } else {
         throw new Error(result.message || 'Wystąpił błąd podczas rezerwacji');
       }
@@ -170,6 +163,20 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
       console.error('Booking error:', error);
       alert(`❌ Nie udało się utworzyć rezerwacji.\n\nProsimy spróbować ponownie lub skontaktować się telefonicznie: +48 503 691 808`);
     }
+  };
+
+  const handleResetBooking = () => {
+    setStep('date');
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setBookingSuccess(null);
+    setFormData({
+      name: '',
+      phone: '',
+      email: '',
+      service: 'Instalacje wodne',
+      description: '',
+    });
   };
 
   const isToday = (date: Date) => {
@@ -425,6 +432,120 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
                   </button>
                 </div>
               </form>
+            </div>
+          )}
+
+          {/* Success Screen with Calendar Integration */}
+          {step === 'success' && bookingSuccess && (
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-2xl shadow-2xl p-8 border-2 border-green-500/20">
+              <div className="text-center mb-8">
+                {/* Success Icon */}
+                <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                  ✅ Rezerwacja potwierdzona!
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                  Dziękujemy! Potwierdzenie zostało wysłane na email i SMS.
+                </p>
+              </div>
+
+              {/* Booking Details */}
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 mb-6 border border-gray-200 dark:border-gray-700">
+                <h4 className="font-bold text-lg text-gray-900 dark:text-white mb-4">
+                  Szczegóły wizyty:
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Data i godzina</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {bookingSuccess.date.toLocaleDateString('pl-PL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} o {bookingSuccess.time}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Usługa</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">{bookingSuccess.service}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Klient</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">{bookingSuccess.name}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{bookingSuccess.phone}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add to Calendar Button */}
+              <div className="mb-6">
+                <AddToCalendarButton
+                  date={bookingSuccess.date.toISOString().split('T')[0]}
+                  time={bookingSuccess.time}
+                  service={bookingSuccess.service}
+                  customerName={bookingSuccess.name}
+                  phone={bookingSuccess.phone}
+                  description={bookingSuccess.description}
+                  className="w-full justify-center"
+                />
+              </div>
+
+              {/* Additional Info */}
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800 mb-6">
+                <div className="flex gap-3">
+                  <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div className="text-sm text-gray-700 dark:text-gray-300">
+                    <p className="font-semibold mb-1">Ważne informacje:</p>
+                    <ul className="space-y-1 list-disc list-inside">
+                      <li>Potwierdz termination wysłaliśmy na podany adres email</li>
+                      <li>Skontaktujemy się z Tobą dzień przed wizytą</li>
+                      <li>W razie pytań zadzwoń: <strong>+48 503 691 808</strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={handleResetBooking}
+                  className="flex-1 px-6 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl transition-colors"
+                >
+                  Umów kolejną wizytę
+                </button>
+                <a
+                  href="/"
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all text-center"
+                >
+                  Powrót do strony głównej
+                </a>
+              </div>
             </div>
           )}
 
