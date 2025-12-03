@@ -2,14 +2,12 @@
 
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useState } from 'react';
 
 export default function AboutPage() {
   const t = useTranslations();
   
-  // Random video selection for hero
-  const heroVideos = ['/images/IMG_6549.mov', '/images/IMG_6550.mov'];
-  const [heroVideo] = useState(() => heroVideos[Math.floor(Math.random() * heroVideos.length)]);
+  // Hero video background
+  const heroVideo = '/images/IMG_6550.mov';
 
   return (
     <main className="min-h-screen">

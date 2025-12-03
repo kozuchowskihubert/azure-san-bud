@@ -202,9 +202,8 @@ export default function HomePage() {
     { icon: '💰', title: 'Ceny', text: 'Konkurencyjne ceny bez ukrytych kosztów' }
   ];
 
-  // Select random video for hero background
-  const heroVideos = ['/images/IMG_6549.mov', '/images/IMG_6550.mov'];
-  const [heroVideo] = useState(() => heroVideos[Math.floor(Math.random() * heroVideos.length)]);
+  // Hero video background
+  const heroVideo = '/images/IMG_6550.mov';
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
