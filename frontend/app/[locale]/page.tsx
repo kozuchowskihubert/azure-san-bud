@@ -157,10 +157,10 @@ export default function HomePage() {
 
             <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
               <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-                Hydraulika Premium
+                Liderzy Branży
               </span>
               <br />
-              <span className="text-green-400">Dla Twojego Domu</span>
+              <span className="text-green-400">Pionierzy na Rynku</span>
             </h1>
             
             <p className="text-xl md:text-2xl mb-10 font-light text-gray-200">
