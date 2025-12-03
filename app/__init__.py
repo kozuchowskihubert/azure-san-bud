@@ -36,6 +36,8 @@ def create_app(config_name='production'):
                 # Local development
                 "http://localhost:3000",
                 "http://localhost:3001",
+                "http://localhost:3002",
+                "http://localhost:3003",
                 "http://localhost:5002",
                 # Azure Static Web Apps
                 "https://delightful-ocean-078488b03.3.azurestaticapps.net",

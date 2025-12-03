@@ -66,11 +66,6 @@ export default function HomePage() {
         
         <div className="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-4xl">
-            {/* Badge - Minimalist professional style */}
-            <div className="inline-block mb-6 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-light animate-fade-in-down border border-white/20">
-              {isEnglish ? 'Certified Professionals Since 1999' : 'Certyfikowani Profesjonaliści od 1999'}
-            </div>
-            
             {/* Main Headline - Professional HAOS.fm style */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight animate-fade-in-up tracking-tight">
               {isEnglish ? (
