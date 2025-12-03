@@ -338,35 +338,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PROCESS SECTION */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              Profesjonalizm na wyciągnięcie ręki!
-            </h2>
-            <p className="text-xl text-gray-600">
-              Przeprowadzimy Cię przez cały proces realizacji projektu
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
-            {processSteps.map((step, index) => (
-              <div key={index} className="relative">
-                <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full">
-                  <div className="text-5xl font-bold text-blue-600 mb-3">{step.number}</div>
-                  <h3 className="text-lg font-bold mb-2 text-gray-900">{step.title}</h3>
-                  <p className="text-sm text-gray-600">{step.description}</p>
-                </div>
-                {index < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-blue-300" />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* REALIZATIONS MAP SECTION */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -473,7 +444,7 @@ export default function HomePage() {
                       onBlur={handleBlur}
                       required
                       disabled={status === 'sending'}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 text-gray-900 ${
                         fieldErrors.name ? 'border-red-500 bg-red-50' : 'border-gray-300'
                       }`}
                       placeholder="Jan Kowalski"
@@ -500,7 +471,7 @@ export default function HomePage() {
                       onBlur={handleBlur}
                       required
                       disabled={status === 'sending'}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 text-gray-900 ${
                         fieldErrors.phone ? 'border-red-500 bg-red-50' : 'border-gray-300'
                       }`}
                       placeholder="+48 123 456 789"
@@ -529,7 +500,7 @@ export default function HomePage() {
                     onBlur={handleBlur}
                     required
                     disabled={status === 'sending'}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 text-gray-900 ${
                       fieldErrors.email ? 'border-red-500 bg-red-50' : 'border-gray-300'
                     }`}
                     placeholder="email@example.com"
@@ -552,7 +523,7 @@ export default function HomePage() {
                     value={formData.service}
                     onChange={handleChange}
                     disabled={status === 'sending'}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 text-gray-900"
                   >
                     <option value="">Wybierz usługę</option>
                     <option value="Instalacje wodne">Instalacje wodne</option>
@@ -576,7 +547,7 @@ export default function HomePage() {
                     required
                     disabled={status === 'sending'}
                     rows={4} 
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 text-gray-900 ${
                       fieldErrors.message ? 'border-red-500 bg-red-50' : 'border-gray-300'
                     }`}
                     placeholder="Opisz swoją potrzebę... (minimum 10 znaków)"
