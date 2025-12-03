@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezerwacje - Panel Admina</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            margin: 5px 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .badge-pending {
+            background-color: #f59e0b;
+        }
+        .badge-confirmed {
+            background-color: #10b981;
+        }
+        .badge-completed {
+            background-color: #6366f1;
+        }
+        .badge-cancelled {
+            background-color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0 sidebar">
+                <div class="p-4">
+                    <h3 class="mb-4">🔧 SanBud</h3>
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="/admin">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                        <a class="nav-link" href="/admin/clients">
+                            <i class="bi bi-people"></i> Klienci
+                        </a>
+                        <a class="nav-link" href="/admin/services">
+                            <i class="bi bi-tools"></i> Usługi
+                        </a>
+                        <a class="nav-link active" href="/admin/appointments">
+                            <i class="bi bi-calendar-check"></i> Rezerwacje
+                        </a>
+                        <hr class="my-3" style="border-color: rgba(255,255,255,0.3);">
+                        <a class="nav-link" href="/admin/api/logout">
+                            <i class="bi bi-box-arrow-right"></i> Wyloguj
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10">
+                <div class="p-4">
+                    <h1 class="mb-4">Rezerwacje</h1>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Klient</th>
+                                            <th>Usługa</th>
+                                            <th>Data</th>
+                                            <th>Godzina</th>
+                                            <th>Status</th>
+                                            <th>Akcje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="appointments-table">
+                                        <tr>
+                                            <td colspan="7" class="text-center">Ładowanie...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function loadAppointments() {
+            try {
+                const response = await fetch('/admin/api/appointments');
+                const appointments = await response.json();
+                
+                const tbody = document.getElementById('appointments-table');
+                if (appointments.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Brak rezerwacji</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = appointments.map(apt => {
+                    const date = new Date(apt.appointment_date);
+                    const statusBadge = {
+                        'pending': 'badge-pending',
+                        'confirmed': 'badge-confirmed',
+                        'completed': 'badge-completed',
+                        'cancelled': 'badge-cancelled'
+                    }[apt.status] || 'bg-secondary';
+                    
+                    const statusText = {
+                        'pending': 'Oczekujące',
+                        'confirmed': 'Potwierdzone',
+                        'completed': 'Zakończone',
+                        'cancelled': 'Anulowane'
+                    }[apt.status] || apt.status;
+                    
+                    return `
+                        <tr>
+                            <td>${apt.id}</td>
+                            <td>${apt.client_name}</td>
+                            <td>${apt.service_name}</td>
+                            <td>${date.toLocaleDateString('pl-PL')}</td>
+                            <td>${date.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'})}</td>
+                            <td><span class="badge ${statusBadge}">${statusText}</span></td>
+                            <td>
+                                ${apt.status === 'pending' ? `
+                                    <button class="btn btn-sm btn-success me-1" onclick="updateStatus(${apt.id}, 'confirmed')">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                ` : ''}
+                                <button class="btn btn-sm btn-danger" onclick="updateStatus(${apt.id}, 'cancelled')">
+                                    <i class="bi bi-x-circle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading appointments:', error);
+            }
+        }
+        
+        async function updateStatus(id, status) {
+            try {
+                const response = await fetch(`/admin/api/appointments/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                if (response.ok) {
+                    loadAppointments();
+                }
+            } catch (error) {
+                console.error('Error updating appointment:', error);
+            }
+        }
+        
+        loadAppointments();
+        
+        // Refresh every 30 seconds
+        setInterval(loadAppointments, 30000);
+    </script>
+</body>
+</html>

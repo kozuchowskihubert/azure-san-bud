@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import BookingCalendar from '@/components/BookingCalendar';
 
 export default function HomePage() {
+  const locale = useLocale();
   // Business data
   const businessData = {
     phone: '503 691 808',
@@ -95,7 +97,8 @@ export default function HomePage() {
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/contact', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002';
+      const response = await fetch(`${apiUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -225,7 +228,7 @@ export default function HomePage() {
               <p className="text-gray-600 dark:text-gray-300 mb-6">
                 Kompleksowe instalacje wodne, kanalizacyjne i grzewcze
               </p>
-              <Link href="/services" className="text-green-600 dark:text-green-400 font-semibold hover:text-green-700 flex items-center gap-2">
+              <Link href={`/${locale}/services`} className="text-green-600 dark:text-green-400 font-semibold hover:text-green-700 flex items-center gap-2">
                 Dowiedz się więcej →
               </Link>
             </div>
@@ -256,7 +259,7 @@ export default function HomePage() {
               <p className="text-gray-600 dark:text-gray-300 mb-6">
                 Profesjonalne remonty łazienek i modernizacje instalacji
               </p>
-              <Link href="/services" className="text-orange-600 dark:text-orange-400 font-semibold hover:text-orange-700 flex items-center gap-2">
+              <Link href={`/${locale}/services`} className="text-orange-600 dark:text-orange-400 font-semibold hover:text-orange-700 flex items-center gap-2">
                 Zarezerwuj termin →
               </Link>
             </div>

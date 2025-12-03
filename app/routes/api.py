@@ -151,7 +151,7 @@ def list_services():
     from app.models.service import Service
     
     try:
-        services = Service.query.filter_by(active=True).all()
+        services = Service.query.filter_by(is_active=True).all()
         return jsonify({
             'success': True,
             'services': [service.to_dict() for service in services]

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usługi - Panel Admina</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            margin: 5px 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0 sidebar">
+                <div class="p-4">
+                    <h3 class="mb-4">🔧 SanBud</h3>
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="/admin">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                        <a class="nav-link" href="/admin/clients">
+                            <i class="bi bi-people"></i> Klienci
+                        </a>
+                        <a class="nav-link active" href="/admin/services">
+                            <i class="bi bi-tools"></i> Usługi
+                        </a>
+                        <a class="nav-link" href="/admin/appointments">
+                            <i class="bi bi-calendar-check"></i> Rezerwacje
+                        </a>
+                        <hr class="my-3" style="border-color: rgba(255,255,255,0.3);">
+                        <a class="nav-link" href="/admin/api/logout">
+                            <i class="bi bi-box-arrow-right"></i> Wyloguj
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10">
+                <div class="p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1>Usługi</h1>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                            <i class="bi bi-plus-circle"></i> Dodaj Usługę
+                        </button>
+                    </div>
+                    
+                    <div class="row" id="services-grid">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Ładowanie...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Service Modal -->
+    <div class="modal fade" id="addServiceModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Dodaj Nową Usługę</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-service-form">
+                        <div class="mb-3">
+                            <label class="form-label">Nazwa</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Opis</label>
+                            <textarea class="form-control" name="description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cena (PLN)</label>
+                            <input type="number" class="form-control" name="price" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Czas trwania (minuty)</label>
+                            <input type="number" class="form-control" name="duration" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                    <button type="button" class="btn btn-success" onclick="addService()">Dodaj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function loadServices() {
+            try {
+                const response = await fetch('/api/services');
+                const services = await response.json();
+                
+                const grid = document.getElementById('services-grid');
+                if (services.length === 0) {
+                    grid.innerHTML = '<div class="col-12 text-center"><p class="text-muted">Brak usług</p></div>';
+                    return;
+                }
+                
+                grid.innerHTML = services.map(service => `
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">${service.name}</h5>
+                                <p class="card-text">${service.description}</p>
+                                <p class="mb-2"><strong>Cena:</strong> ${service.price} PLN</p>
+                                <p class="mb-3"><strong>Czas:</strong> ${service.duration} min</p>
+                                <button class="btn btn-sm btn-danger" onclick="deleteService(${service.id})">
+                                    <i class="bi bi-trash"></i> Usuń
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading services:', error);
+            }
+        }
+        
+        async function addService() {
+            const form = document.getElementById('add-service-form');
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('/admin/api/services', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                
+                if (response.ok) {
+                    bootstrap.Modal.getInstance(document.getElementById('addServiceModal')).hide();
+                    form.reset();
+                    loadServices();
+                }
+            } catch (error) {
+                console.error('Error adding service:', error);
+                alert('Błąd podczas dodawania usługi');
+            }
+        }
+        
+        async function deleteService(id) {
+            if (!confirm('Czy na pewno chcesz usunąć tę usługę?')) return;
+            
+            try {
+                const response = await fetch(`/admin/api/services/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    loadServices();
+                }
+            } catch (error) {
+                console.error('Error deleting service:', error);
+            }
+        }
+        
+        loadServices();
+    </script>
+</body>
+</html>

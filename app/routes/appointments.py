@@ -10,7 +10,8 @@ from config.email import send_booking_confirmation
 bp = Blueprint('appointments', __name__, url_prefix='/appointments')
 
 
-@bp.route('/')
+@bp.route('', strict_slashes=False)
+@bp.route('/', strict_slashes=False)
 def list_appointments():
     """List all appointments."""
     appointments = Appointment.query.order_by(Appointment.scheduled_date.desc()).all()

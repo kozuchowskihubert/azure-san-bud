@@ -57,126 +57,173 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
+    <main className="min-h-screen bg-white dark:bg-gray-900">
+      {/* Hero Section with gradient matching main page */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-bg-primary))] via-[rgb(var(--color-bg-secondary))] to-[rgb(var(--color-bg-tertiary))]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-gray-900 to-orange-900"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(var(--color-gradient-mid))] to-[rgb(var(--color-accent))] bg-clip-text text-transparent">
-              Kontakt
+          <div className="max-w-4xl mx-auto text-center text-white">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 border border-green-500/30 rounded-full backdrop-blur-sm mb-6">
+              <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+              </svg>
+              <span className="text-sm font-semibold text-green-300">Skontaktuj się z nami</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+                Jesteśmy do
+              </span>
+              <br />
+              <span className="text-green-400">Twojej Dyspozycji</span>
             </h1>
-            <p className="text-xl md:text-2xl text-[rgb(var(--color-text-secondary))] leading-relaxed">
-              Skontaktuj się z nami - jesteśmy do Twojej dyspozycji 24/7
+            <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
+              Odpowiadamy 24/7 • Szybka pomoc • Profesjonalna obsługa
             </p>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {/* Contact Information */}
-            <div className="space-y-8">
+            <div className="space-y-6">
               <div>
-                <h2 className="text-3xl font-bold mb-6 text-[rgb(var(--color-text-primary))]">
+                <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
                   Dane kontaktowe
                 </h2>
-                <p className="text-[rgb(var(--color-text-secondary))] mb-8">
+                <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg">
                   Skontaktuj się z nami w dogodny dla Ciebie sposób. Odpowiadamy na wszystkie zapytania w ciągu 24 godzin.
                 </p>
               </div>
 
-              {/* Contact Cards */}
+              {/* Contact Cards with green/orange theme */}
               <div className="space-y-4">
-                {[
-                  {
-                    title: 'Telefon',
-                    value: '+48 503 691 808',
-                    link: 'tel:+48503691808',
-                    description: 'Pon-Pt: 8:00-18:00, Awarie: 24/7',
-                  },
-                  {
-                    title: 'Email',
-                    value: 'sanbud.biuro@gmail.com',
-                    link: 'mailto:sanbud.biuro@gmail.com',
-                    description: 'Odpowiadamy w ciągu 24h',
-                  },
-                  {
-                    title: 'Adres',
-                    value: 'ul. Przykładowa 123',
-                    description: '00-000 Warszawa, Polska',
-                  },
-                  {
-                    title: 'Godziny otwarcia',
-                    value: 'Poniedziałek - Piątek',
-                    description: '8:00 - 18:00',
-                  },
-                ].map((item, index) => (
-                  <div key={index} className="card p-6">
-                    <div>
-                      <h3 className="font-bold text-[rgb(var(--color-text-primary))] mb-1">
-                        {item.title}
+                {/* Phone Card */}
+                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-green-500/50">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <span className="text-2xl">📞</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-lg">
+                        Telefon
                       </h3>
-                      {item.link ? (
-                        <a
-                          href={item.link}
-                          className="text-[rgb(var(--color-primary))] hover:text-[rgb(var(--color-accent))] font-semibold transition-colors"
-                        >
-                          {item.value}
-                        </a>
-                      ) : (
-                        <p className="text-[rgb(var(--color-text-primary))] font-semibold">
-                          {item.value}
-                        </p>
-                      )}
-                      <p className="text-sm text-[rgb(var(--color-text-secondary))] mt-1">
-                        {item.description}
+                      <a
+                        href="tel:+48503691808"
+                        className="text-green-600 dark:text-green-400 hover:text-green-700 font-semibold transition-colors text-xl"
+                      >
+                        +48 503 691 808
+                      </a>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Pon-Pt: 8:00-18:00, Awarie: 24/7
                       </p>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
 
-              {/* Social Media */}
-              <div className="card p-6">
-                <h3 className="font-bold text-[rgb(var(--color-text-primary))] mb-4">
-                  Obserwuj nas
-                </h3>
-                <div className="flex gap-4">
-                  <a
-                    href="https://facebook.com/sanbud"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-[rgb(var(--color-bg-elevated))] flex items-center justify-center hover:bg-[rgb(var(--color-primary))] transition-colors"
-                  >
-                    <span className="text-2xl">📘</span>
-                  </a>
-                  <a
-                    href="https://instagram.com/sanbud"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-[rgb(var(--color-bg-elevated))] flex items-center justify-center hover:bg-[rgb(var(--color-accent))] transition-colors"
-                  >
-                    <span className="text-2xl">📸</span>
-                  </a>
-                  <a
-                    href="https://maps.google.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-[rgb(var(--color-bg-elevated))] flex items-center justify-center hover:bg-[rgb(var(--color-success))] transition-colors"
-                  >
-                    <span className="text-2xl">🗺️</span>
-                  </a>
+                {/* Email Card */}
+                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-orange-500/50">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <span className="text-2xl">✉️</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-lg">
+                        Email
+                      </h3>
+                      <a
+                        href="mailto:sanbud.biuro@gmail.com"
+                        className="text-orange-600 dark:text-orange-400 hover:text-orange-700 font-semibold transition-colors"
+                      >
+                        sanbud.biuro@gmail.com
+                      </a>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Odpowiadamy w ciągu 24h
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Address Card */}
+                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-green-500/50">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <span className="text-2xl">📍</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-lg">
+                        Lokalizacja
+                      </h3>
+                      <p className="text-gray-900 dark:text-white font-semibold">
+                        Mazowsze, Polska
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Obsługujemy cały region
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Hours Card */}
+                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-orange-500/50">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <span className="text-2xl">�</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-lg">
+                        Godziny otwarcia
+                      </h3>
+                      <p className="text-gray-900 dark:text-white font-semibold">
+                        Poniedziałek - Piątek
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        8:00 - 18:00
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Facebook Card */}
+                <div className="group bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-blue-500">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-white mb-1 text-lg">
+                        Facebook
+                      </h3>
+                      <a
+                        href="https://www.facebook.com/sanbud.hydraulika"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-100 hover:text-white font-semibold transition-colors flex items-center gap-2 group/link"
+                      >
+                        Odwiedź naszą stronę
+                        <svg className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </a>
+                      <p className="text-sm text-blue-100 mt-1">
+                        Zobacz nasze realizacje i opinie
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Contact Form */}
-            <div className="card p-8">
-              <h2 className="text-3xl font-bold mb-6 text-[rgb(var(--color-text-primary))]">
+            {/* Contact Form with green/orange theme */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-gray-100 dark:border-gray-700">
+              <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
                 Wyślij wiadomość
               </h2>
               
@@ -287,24 +334,6 @@ export default function ContactPage() {
                   {status === 'sending' ? 'Wysyłanie...' : 'Wyślij wiadomość'}
                 </button>
               </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section (placeholder) */}
-      <section className="py-20 bg-[rgb(var(--color-bg-secondary))]">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="card overflow-hidden" style={{ height: '400px' }}>
-              <div className="w-full h-full bg-[rgb(var(--color-bg-elevated))] flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🗺️</div>
-                  <p className="text-[rgb(var(--color-text-secondary))]">
-                    Mapa lokalizacji (Google Maps integration)
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>

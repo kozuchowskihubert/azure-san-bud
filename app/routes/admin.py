@@ -1,5 +1,5 @@
 """Admin routes for authentication and management."""
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, session, render_template
 from app import db
 from app.models.admin import Admin
 from app.models.customer import Customer
@@ -20,6 +20,41 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
+# ==================== FRONTEND ROUTES ====================
+
+@admin_bp.route('', strict_slashes=False)
+@admin_bp.route('/', strict_slashes=False)
+def admin_dashboard():
+    """Admin dashboard page."""
+    return render_template('admin/dashboard.html')
+
+
+@admin_bp.route('/login', strict_slashes=False)
+def admin_login_page():
+    """Admin login page."""
+    return render_template('admin/login.html')
+
+
+@admin_bp.route('/clients', strict_slashes=False)
+def admin_clients():
+    """Admin clients management page."""
+    return render_template('admin/clients.html')
+
+
+@admin_bp.route('/services', strict_slashes=False)
+def admin_services():
+    """Admin services management page."""
+    return render_template('admin/services.html')
+
+
+@admin_bp.route('/appointments', strict_slashes=False)
+def admin_appointments():
+    """Admin appointments management page."""
+    return render_template('admin/appointments.html')
+
+
+# ==================== API ROUTES ====================
 
 @admin_bp.route('/api/login', methods=['POST'])
 def login():
