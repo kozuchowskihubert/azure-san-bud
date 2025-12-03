@@ -272,3 +272,19 @@ ALTERNATIVE_EMAIL_PROVIDERS.md
 logs/
 *.log
 backend.log
+
+# ========================
+# SENSITIVE FILES WITH CREDENTIALS
+# ========================
+
+# Go-live checklist with credentials
+GO_LIVE_CHECKLIST.txt
+go_live_checklist.txt
+*go_live*
+*GO_LIVE*
+
+# Other sensitive files
+deployment-credentials.local.sh
+*.credentials
+*.secrets
+*publish-profile*.xml

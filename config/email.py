@@ -85,11 +85,67 @@ def init_email(app: Flask):
     mail.init_app(app)
     logger.info(f"✅ Email initialized: {app.config['MAIL_SERVER']}:{app.config['MAIL_PORT']}")
 
+def send_formsubmit_email(name: str, email: str, phone: str, message: str) -> bool:
+    """Send real email using FormSubmit.co service"""
+    import requests
+    
+    url = "https://formsubmit.co/hubertkozuchowski@gmail.com"
+    
+    form_data = {
+        '_subject': f'🔧 SanBud - Nowa wiadomość od {name}',
+        '_captcha': 'false',
+        '_template': 'box',
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'message': f'''
+        Nowa wiadomość z formularza kontaktowego SanBud:
+        
+        👤 Imię i nazwisko: {name}
+        📧 Email: {email}
+        📱 Telefon: {phone}
+        
+        💬 Wiadomość:
+        {message}
+        
+        ⏰ Data wysłania: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+        
+        --
+        Wysłane z formularza kontaktowego SanBud
+        '''
+    }
+    
+    try:
+        response = requests.post(url, data=form_data, timeout=10)
+        if response.status_code == 200:
+            logger.info(f"✅ Email sent successfully via FormSubmit to {email}")
+            return True
+        else:
+            logger.error(f"❌ FormSubmit failed: {response.status_code}")
+            return False
+    except Exception as e:
+        logger.error(f"❌ FormSubmit error: {str(e)}")
+        return False
+
 def send_contact_email(name: str, email: str, phone: str, message: str) -> bool:
-    """Send contact form email with logging fallback"""
+    """Send contact form email with real delivery + logging fallback"""
     
     subject = f"Nowa wiadomość z formularza kontaktowego - SanBud"
     contact_email = os.environ.get('CONTACT_EMAIL', 'kontakt@sanbud.pl')
+    
+    # Try real email delivery first
+    email_sent = send_formsubmit_email(name, email, phone, message)
+    
+    if email_sent:
+        print(f"🎉 Real email sent successfully to {contact_email}")
+        # Still log for backup
+        log_email_to_file("contact_form", contact_email, subject, f"Real email sent via FormSubmit", {
+            "name": name, "email": email, "phone": phone, "message": message
+        })
+        return True
+    
+    # Fallback to logging if real email fails
+    print(f"⚠️ Real email failed, using logging fallback")
     
     # Create email content
     html_content = f"""
