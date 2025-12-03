@@ -19,14 +19,27 @@ from app.models.message import Message
 def check_table_exists(table_name):
     """Check if a table exists in the database."""
     try:
-        result = db.session.execute(text(f"""
-            SELECT EXISTS (
-                SELECT FROM information_schema.tables 
-                WHERE table_schema = 'public' 
-                AND table_name = '{table_name}'
-            );
-        """))
-        return result.scalar()
+        # Check if we're using SQLite or PostgreSQL
+        engine_name = db.engine.name
+        
+        if engine_name == 'sqlite':
+            # SQLite syntax
+            result = db.session.execute(text(f"""
+                SELECT COUNT(name) 
+                FROM sqlite_master 
+                WHERE type='table' AND name='{table_name}';
+            """))
+            return result.scalar() > 0
+        else:
+            # PostgreSQL syntax
+            result = db.session.execute(text(f"""
+                SELECT EXISTS (
+                    SELECT FROM information_schema.tables 
+                    WHERE table_schema = 'public' 
+                    AND table_name = '{table_name}'
+                );
+            """))
+            return result.scalar()
     except Exception as e:
         print(f"Error checking table {table_name}: {e}")
         return False

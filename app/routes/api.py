@@ -153,6 +153,7 @@ def book_appointment():
         from app.models.appointment import Appointment
         from app.models.customer import Customer
         from app.models.service import Service
+        import re
         
         data = request.get_json()
         
@@ -166,8 +167,16 @@ def book_appointment():
                 'error': f'Brakujące wymagane pola: {", ".join(missing_fields)}'
             }), 400
         
+        # Validate email format
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_pattern, data['email']):
+            return jsonify({
+                'success': False,
+                'error': 'Nieprawidłowy format adresu email'
+            }), 400
+        
         # Parse date and time
-        from datetime import datetime
+        from datetime import datetime, date
         try:
             appointment_date = datetime.strptime(data['date'], '%Y-%m-%d').date()
             appointment_time = datetime.strptime(data['time'], '%H:%M').time()
@@ -175,6 +184,13 @@ def book_appointment():
             return jsonify({
                 'success': False,
                 'error': 'Nieprawidłowy format daty lub godziny'
+            }), 400
+        
+        # Validate that the appointment is not in the past
+        if appointment_date < date.today():
+            return jsonify({
+                'success': False,
+                'error': 'Nie można zarezerwować terminu w przeszłości'
             }), 400
         
         # Find or create customer
