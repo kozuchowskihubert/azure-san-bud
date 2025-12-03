@@ -207,7 +207,8 @@ def book_appointment():
             service = Service(
                 name=data['service'],
                 description=f"Usługa: {data['service']}",
-                duration=60,  # default 1 hour
+                category='repair',  # default category
+                duration_minutes=60,  # default 1 hour
                 price=0,  # price to be determined
                 is_active=True
             )
@@ -250,7 +251,7 @@ def book_appointment():
                 'service': data['service'],
                 'date': data['date'],
                 'time': data['time'],
-                'duration': service.duration,
+                'duration': service.duration_minutes,
                 'customerName': data['name'],
                 'customerEmail': data['email'],
                 'address': data.get('address'),
