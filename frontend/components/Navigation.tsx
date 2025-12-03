@@ -169,18 +169,17 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-white/95 backdrop-blur-xl shadow-2xl border-b border-gray-200' 
-          : 'bg-gradient-to-b from-black/50 to-transparent backdrop-blur-sm'
+          ? 'bg-white shadow-md' 
+          : 'bg-white/95 backdrop-blur-sm'
       }`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             
-            {/* Logo - Premium Design */}
-            <Link href={`/${locale}`} className="flex items-center space-x-4 group relative">
-              <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
-              <div className="relative w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-blue-500/30 shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:ring-4 group-hover:ring-blue-500/50 group-hover:shadow-blue-500/50">
+            {/* Logo - Clean Professional Design */}
+            <Link href={`/${locale}`} className="flex items-center space-x-3 group">
+              <div className="relative w-14 h-14 rounded-lg overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-300">
                 <Image
                   src="/images/logo.jpg"
                   alt="SanBud Hydraulika Logo"
@@ -190,35 +189,31 @@ export default function Navigation() {
                 />
               </div>
               <div className="hidden md:block">
-                <div className="text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                <div className="text-xl font-bold text-gray-900">
                   SAN-BUD
                 </div>
-                <div className={`text-sm font-medium transition-colors ${scrolled ? 'text-gray-600' : 'text-white/90'}`}>
+                <div className="text-sm text-gray-600">
                   Hydraulika • Nasza pasja
                 </div>
               </div>
             </Link>
 
-            {/* Desktop Navigation - Premium */}
+            {/* Desktop Navigation - Professional & Clean */}
             <div className="hidden lg:flex items-center space-x-1">
               {navItems.map((item, index) => (
                 <div key={item.href} className="relative" ref={item.hasDropdown ? servicesMenuRef : undefined}>
                   {item.hasDropdown ? (
                     <button
                       onClick={() => setServicesMenuOpen(!servicesMenuOpen)}
-                      className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 group ${
+                      className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 ${
                         pathname.includes('/services')
-                          ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/50'
-                          : scrolled
-                          ? 'text-gray-700 hover:bg-gray-100'
-                          : 'text-white hover:bg-white/10 backdrop-blur-sm'
+                          ? 'bg-blue-600 text-white'
+                          : 'text-gray-700 hover:bg-gray-100'
                       }`}
-                      style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      <span className="group-hover:scale-110 transition-transform">{item.icon}</span>
                       <span>{item.label}</span>
                       <svg 
-                        className={`w-4 h-4 transition-transform duration-300 ${servicesMenuOpen ? 'rotate-180' : ''}`}
+                        className={`w-4 h-4 transition-transform duration-200 ${servicesMenuOpen ? 'rotate-180' : ''}`}
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -229,17 +224,13 @@ export default function Navigation() {
                   ) : (
                     <Link
                       href={item.href}
-                      className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 group animate-fade-in ${
+                      className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                         pathname === item.href
-                          ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/50'
-                          : scrolled
-                          ? 'text-gray-700 hover:bg-gray-100'
-                          : 'text-white hover:bg-white/10 backdrop-blur-sm'
+                          ? 'bg-blue-600 text-white'
+                          : 'text-gray-700 hover:bg-gray-100'
                       }`}
-                      style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      <span className="group-hover:scale-110 transition-transform">{item.icon}</span>
-                      <span>{item.label}</span>
+                      {item.label}
                     </Link>
                   )}
 
@@ -292,63 +283,26 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Admin Panel Button - Desktop */}
-            <Link
-              href={`/${locale}/admin`}
-              className="hidden lg:flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-xl font-semibold shadow-lg shadow-gray-700/50 hover:shadow-xl hover:shadow-gray-700/60 transition-all duration-300 hover:scale-105"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>Admin</span>
-            </Link>
-
-            {/* Premium Action Buttons */}
+            {/* Action Buttons - Clean & Professional */}
             <div className="hidden lg:flex items-center space-x-3">
-              {/* Phone Button - Premium */}
+              {/* Phone Button */}
               <a
                 href={`tel:${contactData.phone}`}
-                className="group relative px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-green-500/50 hover:shadow-xl hover:shadow-green-500/60 transition-all duration-300 hover:scale-105 overflow-hidden"
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium flex items-center gap-2 transition-colors duration-200"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <svg className="relative w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span className="relative font-bold">503 691 808</span>
-                <div className="absolute -right-1 -top-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
+                <span className="font-semibold">503 691 808</span>
               </a>
 
-              {/* Google Maps Button */}
-              <a
-                href={contactData.googleMaps}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group px-4 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl font-semibold flex items-center gap-2 shadow-lg shadow-orange-500/50 hover:shadow-xl hover:shadow-orange-500/60 transition-all duration-300 hover:scale-105"
-              >
-                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span className="hidden xl:inline">Lokalizacja</span>
-              </a>
-
-              {/* Emergency Badge */}
-              <div className="px-4 py-2.5 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-red-500/50 animate-pulse-slow">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                </span>
-                <span>24/7</span>
-              </div>
-
-              {/* Language Switcher - Fancy */}
-              <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-xl">
+              {/* Language Switcher */}
+              <div className="flex items-center gap-1 border border-gray-300 rounded-lg p-1">
                 <button
                   onClick={() => switchLocale('pl')}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 ${
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
                     locale === 'pl'
-                      ? 'bg-white text-blue-600 shadow-md'
+                      ? 'bg-blue-600 text-white'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -356,9 +310,9 @@ export default function Navigation() {
                 </button>
                 <button
                   onClick={() => switchLocale('en')}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 ${
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
                     locale === 'en'
-                      ? 'bg-white text-blue-600 shadow-md'
+                      ? 'bg-blue-600 text-white'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -367,15 +321,15 @@ export default function Navigation() {
               </div>
             </div>
 
-            {/* Mobile Menu Button - Fancy */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden relative w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="lg:hidden w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
             >
               <div className="flex flex-col gap-1.5">
-                <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
-                <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-200 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-200 ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
+                <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-200 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
               </div>
             </button>
           </div>
@@ -435,21 +389,6 @@ export default function Navigation() {
                   <span>{item.label}</span>
                 </Link>
               ))}
-              
-              {/* Admin Panel Button - Mobile */}
-              <Link
-                href={`/${locale}/admin`}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-gray-700 to-gray-900 text-white shadow-lg"
-              >
-                <span className="scale-125">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </span>
-                <span>Panel Administracyjny</span>
-              </Link>
             </div>
 
             {/* Mobile Services Grid */}

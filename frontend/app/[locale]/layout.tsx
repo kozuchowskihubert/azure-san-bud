@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { Inter, Montserrat, Playfair_Display } from 'next/font/google';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import FloatingAdminButton from '@/components/FloatingAdminButton';
 import '../globals.css';
 
 // Modern, clean sans-serif for body text
@@ -61,6 +62,7 @@ export default async function RootLayout({
           <Navigation />
           {children}
           <Footer />
+          <FloatingAdminButton />
         </NextIntlClientProvider>
       </body>
     </html>
