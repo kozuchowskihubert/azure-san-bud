@@ -102,8 +102,8 @@ export default function ContactPage() {
                   {
                     icon: '✉️',
                     title: 'Email',
-                    value: 'kontakt@sanbud.pl',
-                    link: 'mailto:kontakt@sanbud.pl',
+                    value: 'sanbud.biuro@gmail.com',
+                    link: 'mailto:sanbud.biuro@gmail.com',
                     description: 'Odpowiadamy w ciągu 24h',
                   },
                   {

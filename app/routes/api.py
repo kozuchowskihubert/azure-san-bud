@@ -167,7 +167,7 @@ def contact_form():
         db.session.commit()
         
         # Send email notification to company
-        company_email = os.getenv('CONTACT_EMAIL', 'kontakt@sanbud24.pl')
+        company_email = os.getenv('CONTACT_EMAIL', 'sanbud.biuro@gmail.com')
         service_info = f"\n<p><strong>Rodzaj usługi:</strong> {data.get('service', 'Nie określono')}</p>" if data.get('service') else ''
         
         email_html = f"""

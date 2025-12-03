@@ -11,7 +11,7 @@ export default function HomePage() {
     established: '2018',
     address: 'Polska',
     phone: '+48 503 691 808',
-    email: 'kontakt@sanbud.pl',
+    email: 'sanbud.biuro@gmail.com',
     googleMaps: 'https://www.google.com/maps/place/San-Bud+Hydraulika+Nasza+pasja/@52.6330895,20.3494125,17z',
     facebook: 'https://www.facebook.com/sanbud',
   };
