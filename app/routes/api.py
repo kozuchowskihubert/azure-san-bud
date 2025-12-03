@@ -4,7 +4,7 @@ from datetime import datetime
 from app import db
 from app.models.customer import Customer
 from app.models.message import Message
-from config.email import send_contact_email
+from config.email import send_contact_email, send_booking_confirmation
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -137,6 +137,131 @@ def contact_form():
     except Exception as e:
         db.session.rollback()
         current_app.logger.error(f'Contact form error: {str(e)}')
+        return jsonify({
+            'success': False,
+            'error': 'Przepraszamy, wystąpił błąd. Spróbuj ponownie lub zadzwoń: +48 503 691 808'
+        }), 500
+
+
+@bp.route('/book-appointment', methods=['POST'])
+def book_appointment():
+    """
+    Public endpoint for booking appointments.
+    Creates appointment, customer records, and sends confirmation emails.
+    """
+    try:
+        from app.models.appointment import Appointment
+        from app.models.customer import Customer
+        from app.models.service import Service
+        
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['name', 'email', 'phone', 'service', 'date', 'time']
+        missing_fields = [field for field in required_fields if not data.get(field)]
+        
+        if missing_fields:
+            return jsonify({
+                'success': False,
+                'error': f'Brakujące wymagane pola: {", ".join(missing_fields)}'
+            }), 400
+        
+        # Parse date and time
+        from datetime import datetime
+        try:
+            appointment_date = datetime.strptime(data['date'], '%Y-%m-%d').date()
+            appointment_time = datetime.strptime(data['time'], '%H:%M').time()
+        except ValueError:
+            return jsonify({
+                'success': False,
+                'error': 'Nieprawidłowy format daty lub godziny'
+            }), 400
+        
+        # Find or create customer
+        customer = Customer.query.filter_by(email=data['email']).first()
+        
+        if customer:
+            # Update existing customer
+            customer.first_name = data['name'].split()[0] if data['name'] else 'Klient'
+            customer.last_name = ' '.join(data['name'].split()[1:]) if len(data['name'].split()) > 1 else ''
+            customer.phone = data['phone']
+            if data.get('address'):
+                customer.address = data['address']
+            customer.updated_at = datetime.utcnow()
+        else:
+            # Create new customer
+            customer = Customer(
+                first_name=data['name'].split()[0] if data['name'] else 'Klient',
+                last_name=' '.join(data['name'].split()[1:]) if len(data['name'].split()) > 1 else '',
+                email=data['email'],
+                phone=data['phone'],
+                address=data.get('address', '')
+            )
+            db.session.add(customer)
+            db.session.flush()  # Get customer ID
+        
+        # Find service (try by name first, then create if needed)
+        service = Service.query.filter_by(name=data['service']).first()
+        if not service:
+            # Create basic service entry
+            service = Service(
+                name=data['service'],
+                description=f"Usługa: {data['service']}",
+                duration=60,  # default 1 hour
+                price=0,  # price to be determined
+                is_active=True
+            )
+            db.session.add(service)
+            db.session.flush()  # Get service ID
+        
+        # Create appointment
+        appointment = Appointment(
+            customer_id=customer.id,
+            service_id=service.id,
+            scheduled_date=appointment_date,
+            scheduled_time=appointment_time,
+            notes=data.get('description', ''),
+            status='pending'
+        )
+        db.session.add(appointment)
+        db.session.commit()
+        
+        # Prepare booking data for email
+        booking_data = {
+            'id': appointment.id,
+            'name': data['name'],
+            'email': data['email'],
+            'phone': data['phone'],
+            'service': data['service'],
+            'date': appointment_date.strftime('%d.%m.%Y'),
+            'time': appointment_time.strftime('%H:%M'),
+            'address': data.get('address', 'Do uzgodnienia'),
+            'description': data.get('description', '')
+        }
+        
+        # Send booking confirmation emails
+        email_sent = send_booking_confirmation(booking_data)
+        
+        return jsonify({
+            'success': True,
+            'message': 'Rezerwacja została przyjęta! Skontaktujemy się wkrótce.',
+            'appointment_id': appointment.id,
+            'booking_data': {
+                'service': data['service'],
+                'date': data['date'],
+                'time': data['time'],
+                'duration': service.duration,
+                'customerName': data['name'],
+                'customerEmail': data['email'],
+                'address': data.get('address'),
+                'description': data.get('description')
+            },
+            'email_sent': email_sent
+        }), 201
+        
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f'Booking error: {str(e)}')
         return jsonify({
             'success': False,
             'error': 'Przepraszamy, wystąpił błąd. Spróbuj ponownie lub zadzwoń: +48 503 691 808'
