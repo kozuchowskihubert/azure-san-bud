@@ -18,6 +18,13 @@ def create_app(config_name='production'):
     config = get_config(config_name)
     app.config.from_object(config)
     
+    # Configure session cookies for cross-domain authentication
+    # Required for frontend (sanbud24.pl) to use backend (app-sanbud-api-prod.azurewebsites.net)
+    app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-site cookie access
+    app.config['SESSION_COOKIE_SECURE'] = True      # Required when SameSite=None (HTTPS only)
+    app.config['SESSION_COOKIE_HTTPONLY'] = True    # Security: prevent JavaScript access
+    app.config['SESSION_COOKIE_PATH'] = '/'         # Cookie available for all paths
+    
     # Enable CORS for production domain, Azure Static Web App and local development
     CORS(app, resources={
         r"/*": {
