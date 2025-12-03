@@ -42,10 +42,9 @@ def init_admin_user():
             
             if existing_admin:
                 print(f"\n✅ Admin user already exists (ID: {existing_admin.id})")
-                print("   Updating password...")
-                existing_admin.set_password(admin_password)
-                db.session.commit()
-                print("   ✅ Password updated")
+                print("   ⚠️  Skipping password update to preserve existing credentials")
+                print("   ℹ️  To reset password, delete admin user first or use admin panel")
+                admin = existing_admin
             else:
                 print("\n➕ Creating new admin user...")
                 admin = Admin(

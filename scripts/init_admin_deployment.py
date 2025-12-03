@@ -38,7 +38,8 @@ def init_admin():
         existing_admin = Admin.query.filter_by(username=username).first()
         
         if existing_admin:
-            print(f"📝 Updating existing admin user: {username}")
+            print(f"✅ Admin user already exists: {username}")
+            print(f"⚠️  Skipping password update to preserve existing credentials")
             admin = existing_admin
         else:
             print(f"➕ Creating new admin user: {username}")
@@ -50,13 +51,11 @@ def init_admin():
                 is_active=True,
                 is_super_admin=True
             )
+            admin.set_password(password)
             db.session.add(admin)
-        
-        # Set/update password
-        admin.set_password(password)
-        
-        # Commit changes
-        db.session.commit()
+            
+            # Commit changes only for new admin
+            db.session.commit()
         
         print(f"✅ Admin user initialized successfully")
         print(f"   👤 Username: {admin.username}")
