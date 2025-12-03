@@ -200,6 +200,38 @@
     "description": "Our licensed professionals are ready to help. Available 24/7 for emergencies.",
     "button": "Book Appointment"
   },
+  "emergency": {
+    "title": "24/7 Emergency Contact",
+    "subtitle": "Fast help in any situation",
+    "hotline": {
+      "label": "24/7 Emergency Hotline",
+      "available": "24 hours, 7 days a week",
+      "callNow": "Call Now"
+    },
+    "stats": {
+      "emergenciesHandled": "Emergencies Handled",
+      "averageTime": "Minutes Average",
+      "satisfaction": "Satisfaction",
+      "availability": "Availability"
+    },
+    "categories": {
+      "title": "Emergency Services",
+      "description": "We handle all types of plumbing emergencies. Response times vary by urgency level.",
+      "responseTime": "Response Time",
+      "examples": "Examples",
+      "callNow": "Call Now"
+    },
+    "urgency": {
+      "critical": "CRITICAL",
+      "urgent": "URGENT",
+      "high": "HIGH",
+      "standard": "STANDARD"
+    },
+    "notice": {
+      "title": "24/7 Emergency Service",
+      "description": "For critical emergencies (flooding, gas leaks), we respond immediately any time of day or night. Standard services are available Monday-Friday 8:00-18:00."
+    }
+  },
   "contact": {
     "title": "Start saving time and money!",
     "subtitle": "Leave your contact, we'll call back",

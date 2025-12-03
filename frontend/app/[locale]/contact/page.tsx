@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { buildApiUrl } from '@/utils/api';
+import EmergencyContacts from '@/components/EmergencyContacts';
+import EmergencyServiceCards from '@/components/EmergencyServiceCards';
 
 export default function ContactPage() {
   const t = useTranslations();
@@ -87,7 +89,25 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Emergency Contacts Section - Most Prominent */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <EmergencyContacts />
+          </div>
+        </div>
+      </section>
+
+      {/* Emergency Service Categories */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            <EmergencyServiceCards />
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form and Info Section */}
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">

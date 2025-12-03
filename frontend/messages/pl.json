@@ -206,6 +206,38 @@
     "description": "Nasi licencjonowani specjaliści są gotowi do pomocy. Dostępni 24/7 w nagłych wypadkach.",
     "button": "Umów wizytę"
   },
+  "emergency": {
+    "title": "Kontakt Awaryjny 24/7",
+    "subtitle": "Szybka pomoc w każdej sytuacji",
+    "hotline": {
+      "label": "Linia alarmowa 24/7",
+      "available": "Całą dobę, 7 dni w tygodniu",
+      "callNow": "Zadzwoń teraz"
+    },
+    "stats": {
+      "emergenciesHandled": "Interwencji",
+      "averageTime": "Minut średnio",
+      "satisfaction": "Zadowolenie",
+      "availability": "Dostępność"
+    },
+    "categories": {
+      "title": "Rodzaje Awarii",
+      "description": "Obsługujemy wszystkie rodzaje awarii hydraulicznych. Czas reakcji zależy od stopnia pilności.",
+      "responseTime": "Czas reakcji",
+      "examples": "Przykłady",
+      "callNow": "Zadzwoń Teraz"
+    },
+    "urgency": {
+      "critical": "KRYTYCZNE",
+      "urgent": "PILNE",
+      "high": "WYSOKIE",
+      "standard": "STANDARDOWE"
+    },
+    "notice": {
+      "title": "Serwis Awaryjny 24/7",
+      "description": "W przypadku krytycznych awarii (zalania, wycieki gazu) reagujemy natychmiast o każdej porze dnia i nocy. Standardowe usługi dostępne Pon-Pt 8:00-18:00."
+    }
+  },
   "contact": {
     "title": "Zacznij oszczędzać czas i pieniądze!",
     "subtitle": "Zostaw kontakt, oddzwonimy",
