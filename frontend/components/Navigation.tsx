@@ -21,7 +21,7 @@ export default function Navigation() {
   const contactData = {
     phone: '+48 503 691 808',
     googleMaps: 'https://www.google.com/maps/place/San-Bud+Hydraulika+Nasza+pasja/@52.6330895,20.3494125',
-    facebook: 'https://www.facebook.com/sanbud',
+    facebook: 'https://www.facebook.com/sanbud.hydraulika',
   };
 
   // Usługi dla mega menu
