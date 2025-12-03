@@ -89,13 +89,46 @@ def check_admin():
                 'email': admin.email,
                 'is_active': admin.is_active,
                 'is_super_admin': admin.is_super_admin,
-                'created_at': admin.created_at.isoformat() if admin.created_at else None
+                'created_at': admin.created_at.isoformat() if admin.created_at else None,
+                'password_hash_preview': admin.password_hash[:50] + '...'
             })
         
         return jsonify({
             'admin_exists': True,
             'count': len(admins),
             'admins': admin_list
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@init_bp.route('/test-password', methods=['POST'])
+def test_password():
+    """Test password verification (for debugging only)."""
+    try:
+        data = request.get_json()
+        username = data.get('username', 'admin')
+        password = data.get('password')
+        
+        if not password:
+            return jsonify({'error': 'Password required'}), 400
+        
+        admin = Admin.query.filter_by(username=username).first()
+        
+        if not admin:
+            return jsonify({'error': 'Admin not found'}), 404
+        
+        # Test password
+        result = admin.check_password(password)
+        
+        return jsonify({
+            'username': admin.username,
+            'password_check_result': result,
+            'hash_method': admin.password_hash.split('$')[0] if '$' in admin.password_hash else 'unknown',
+            'hash_preview': admin.password_hash[:80] + '...'
         }), 200
         
     except Exception as e:

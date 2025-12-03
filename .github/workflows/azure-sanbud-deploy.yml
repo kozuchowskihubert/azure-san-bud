@@ -224,13 +224,30 @@ jobs:
               ADMIN_EMAIL="admin@sanbud.pl"
           echo "✅ Admin secrets configured"
       
-      - name: �🔄 Restart Web App
+      - name: 🔄 Restart Web App
         run: |
           echo "Restarting Web App..."
           az webapp restart \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --name ${{ env.AZURE_WEBAPP_NAME }}
           echo "✅ Web App restarted"
+      
+      - name: ⏳ Wait for application startup
+        run: |
+          echo "Waiting 30 seconds for application to start..."
+          sleep 30
+          echo "✅ Application should be running"
+      
+      - name: 👤 Initialize Admin User
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ADMIN_USERNAME: admin
+          ADMIN_EMAIL: admin@sanbud.pl
+          ADMIN_INIT_PASSWORD: ${{ secrets.ADMIN_INIT_PASSWORD }}
+        run: |
+          echo "Initializing admin user in production database..."
+          python scripts/init_admin_deployment.py
+          echo "✅ Admin user created/updated successfully"
       
       - name: 📊 Deployment Summary
         run: |
