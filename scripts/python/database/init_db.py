@@ -1,8 +1,13 @@
 """Database initialization script with sample data."""
+import os
+import sys
+
+# Add the project root directory to Python path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../..'))
+
 from app import create_app, db
 from app.models import Service, Customer, Appointment
 from datetime import datetime, date, time
-import os
 
 def init_db():
     """Initialize database with sample data."""

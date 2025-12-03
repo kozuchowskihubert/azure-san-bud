@@ -7,8 +7,8 @@ import os
 import sys
 from sqlalchemy import inspect
 
-# Add the app directory to Python path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add the project root directory to Python path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../..'))
 
 from app import create_app, db
 

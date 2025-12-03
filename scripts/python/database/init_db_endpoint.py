@@ -10,6 +10,9 @@ def create_tables_endpoint():
     import sys
     from sqlalchemy import inspect
     
+    # Add the project root directory to Python path
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../..'))
+    
     try:
         # Import Flask app
         from app import create_app, db
