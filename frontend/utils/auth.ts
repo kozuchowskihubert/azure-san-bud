@@ -35,11 +35,10 @@ export async function authenticatedFetch(
     authHeaders['Authorization'] = `Bearer ${token}`;
   }
 
-  // Make the request
+  // Make the request WITHOUT credentials (JWT token in header is enough)
   const response = await fetch(buildApiUrl(endpoint), {
     ...rest,
     headers: authHeaders,
-    credentials: 'include', // Still include credentials for backward compatibility
   });
 
   // If unauthorized, clear token and redirect to login

@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
+        // REMOVED credentials: 'include' - use JWT token instead
         body: JSON.stringify(formData),
       });
 

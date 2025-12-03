@@ -9,20 +9,20 @@
 
 @layer base {
   :root {
-    /* Primary Palette - Deep Professional Blue */
-    --color-primary: 30 64 175; /* Deep blue #1E40AF - trust, stability */
-    --color-primary-light: 59 130 246; /* Bright blue #3B82F6 */
-    --color-primary-dark: 30 58 138; /* Navy blue #1E3A8A */
+    /* PRIMARY PALETTE - Professional Navy Blue */
+    --color-primary: 15 23 42; /* Slate 900 #0F172A - Ultra professional */
+    --color-primary-light: 30 41 59; /* Slate 800 #1E293B */
+    --color-primary-dark: 2 6 23; /* Almost black #020617 */
     
-    /* Secondary - Fresh Green (eco, growth) */
-    --color-secondary: 5 150 105; /* Professional green #059669 */
-    --color-secondary-light: 16 185 129; /* Emerald #10B981 */
-    --color-secondary-dark: 4 120 87; /* Deep green #047857 */
+    /* SECONDARY - Premium Teal (trust, innovation) */
+    --color-secondary: 20 184 166; /* Teal 500 #14B8A6 */
+    --color-secondary-light: 45 212 191; /* Teal 400 #2DD4BF */
+    --color-secondary-dark: 17 94 89; /* Teal 700 #115E59 */
     
-    /* Accent - Warm Orange (energy, action) */
-    --color-accent: 234 88 12; /* Vibrant orange #EA580C */
-    --color-accent-light: 249 115 22; /* Bright orange #F97316 */
-    --color-accent-dark: 194 65 12; /* Deep orange #C2410C */
+    /* ACCENT - Sophisticated Orange (energy, premium) */
+    --color-accent: 251 146 60; /* Orange 400 #FB923C */
+    --color-accent-light: 253 186 116; /* Orange 300 #FDBA74 */
+    --color-accent-dark: 234 88 12; /* Orange 600 #EA580C */
     
     /* Neutral Palette - Professional Grays */
     --color-neutral-50: 250 250 250; /* Near white #FAFAFA */
