@@ -117,6 +117,8 @@ resource "azurerm_linux_web_app" "api" {
     cors {
       allowed_origins = [
         "https://${local.static_web_app_name}.azurestaticapps.net",
+        "https://sanbud24.pl",
+        "https://www.sanbud24.pl",
         "http://localhost:3000",
         "http://localhost:5002"
       ]
