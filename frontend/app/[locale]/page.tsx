@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
-import Image from 'next/image';
 import Link from 'next/link';
 import BookingCalendar from '@/components/BookingCalendar';
 import RealizationsMap from '@/components/RealizationsMap';
@@ -10,13 +9,9 @@ import { getRecentPosts } from '@/data/blogPosts';
 
 export default function HomePage() {
   const locale = useLocale();
-  // Business data
-  const businessData = {
-    phone: '503 691 808',
-    email: 'kontakt@san-bud.pl',
-  };
+  const isEnglish = locale === 'en';
 
-  // Form state management
+  // Form state
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,78 +21,11 @@ export default function HomePage() {
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-
-  // Validation functions
-  const validateName = (name: string): string => {
-    if (!name.trim()) return 'Imię i nazwisko są wymagane';
-    if (name.trim().length < 3) return 'Minimum 3 znaki';
-    return '';
-  };
-
-  const validateEmail = (email: string): string => {
-    if (!email.trim()) return 'Email jest wymagany';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Nieprawidłowy email';
-    return '';
-  };
-
-  const validatePhone = (phone: string): string => {
-    if (!phone.trim()) return 'Telefon jest wymagany';
-    const digitsOnly = phone.replace(/\D/g, '');
-    if (digitsOnly.length < 9) return 'Minimum 9 cyfr';
-    return '';
-  };
-
-  const validateMessage = (message: string): string => {
-    if (!message.trim()) return 'Wiadomość jest wymagana';
-    if (message.trim().length < 10) return 'Minimum 10 znaków';
-    return '';
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (fieldErrors[name]) {
-      setFieldErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    let error = '';
-    
-    switch (name) {
-      case 'name': error = validateName(value); break;
-      case 'email': error = validateEmail(value); break;
-      case 'phone': error = validatePhone(value); break;
-      case 'message': error = validateMessage(value); break;
-    }
-    
-    if (error) {
-      setFieldErrors(prev => ({ ...prev, [name]: error }));
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const errors: Record<string, string> = {
-      name: validateName(formData.name),
-      email: validateEmail(formData.email),
-      phone: validatePhone(formData.phone),
-      message: validateMessage(formData.message),
-    };
-
-    const hasErrors = Object.values(errors).some(error => error !== '');
-    
-    if (hasErrors) {
-      setFieldErrors(errors);
-      return;
-    }
-
     setStatus('sending');
-    setErrorMessage('');
-
+    
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002';
       const response = await fetch(`${apiUrl}/api/contact`, {
@@ -112,172 +40,306 @@ export default function HomePage() {
         setStatus('success');
         setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       } else {
-        throw new Error(data.message || 'Błąd wysyłania');
+        throw new Error(data.message || 'Error sending');
       }
     } catch (error) {
       setStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Spróbuj ponownie');
+      setErrorMessage(error instanceof Error ? error.message : 'Please try again');
     }
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white">
       
-      {/* HERO SECTION */}
-      <section className="relative h-[600px] md:h-[700px] overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover scale-105"
-            style={{ objectPosition: 'center center' }}
-            onError={(e) => {
-              // Hide video and show gradient fallback if video fails to load
-              e.currentTarget.style.display = 'none';
-            }}
-          >
-            <source src="/images/menu.mov" type="video/quicktime" />
-          </video>
-          {/* Gradient fallback background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-gray-900 to-orange-900 -z-10"></div>
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
+      {/* HERO SECTION - Central Heating Focus */}
+      <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-teal-900">
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}></div>
         </div>
-        
-        <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
-          <div className="max-w-4xl mx-auto text-center text-white">
+
+        <div className="container mx-auto px-4 py-20 relative z-10">
+          <div className="max-w-5xl mx-auto text-center text-white">
             
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 border border-green-500/30 rounded-full backdrop-blur-sm mb-6">
-              <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full mb-8 animate-fade-in">
+              <svg className="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
               </svg>
-              <span className="text-sm font-semibold text-green-300">Profesjonalne Usługi Hydrauliczne</span>
+              <span className="text-sm font-semibold">
+                {isEnglish ? 'Certified Heating Systems Specialists' : 'Certyfikowani Specjaliści Systemów Grzewczych'}
+              </span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-                Hydraulika
+            {/* Main Heading */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight animate-slide-up">
+              <span className="block mb-2">
+                {isEnglish ? 'Central Heating' : 'Instalacje Centralnego'}
               </span>
-              <br />
-              <span className="text-green-400">Naszą Pasją</span>
+              <span className="block bg-gradient-to-r from-orange-400 via-orange-300 to-yellow-300 bg-clip-text text-transparent">
+                {isEnglish ? 'Systems & Installations' : 'Ogrzewania i Systemów'}
+              </span>
             </h1>
             
-            <p className="text-xl md:text-2xl mb-10 font-light text-gray-200">
-              Kompleksowe rozwiązania • Gwarancja jakości • Serwis 24/7
+            {/* Subheading */}
+            <p className="text-xl md:text-2xl mb-10 font-light text-blue-100 max-w-3xl mx-auto animate-slide-up animation-delay-200">
+              {isEnglish 
+                ? 'Professional heating installations, modern heat pumps, and comprehensive maintenance services'
+                : 'Profesjonalne instalacje grzewcze, nowoczesne pompy ciepła i kompleksowy serwis'}
             </p>
             
-            <div className="flex flex-wrap gap-4 justify-center mb-10">
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center mb-12 animate-slide-up animation-delay-300">
               <a 
                 href="#booking" 
-                className="group px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-2xl hover:shadow-green-500/50 hover:scale-105 flex items-center gap-2"
+                className="group px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-2xl hover:shadow-orange-500/50 hover:scale-105 flex items-center gap-2"
               >
-                📅 Umów Wizytę
+                🔥 {isEnglish ? 'Schedule Installation' : 'Umów Montaż'}
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </a>
               <a 
-                href={`tel:${businessData.phone}`}
-                className="group px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-2xl hover:shadow-orange-500/50 hover:scale-105 flex items-center gap-2"
+                href="tel:503691808"
+                className="group px-8 py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 hover:bg-white hover:text-blue-900 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-2xl hover:scale-105 flex items-center gap-2"
               >
-                📞 {businessData.phone}
+                📞 503-691-808
               </a>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-              <div className="text-center bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4">
-                <div className="text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-1">500+</div>
-                <div className="text-xs text-gray-300">Projektów</div>
+            {/* Trust Indicators */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto animate-fade-in animation-delay-400">
+              <div className="text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all">
+                <div className="text-4xl font-black text-orange-400 mb-2">2000+</div>
+                <div className="text-sm text-blue-100">{isEnglish ? 'Installations' : 'Instalacji'}</div>
               </div>
-              <div className="text-center bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4">
-                <div className="text-3xl font-black bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent mb-1">100%</div>
-                <div className="text-xs text-gray-300">Zadowolonych</div>
+              <div className="text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all">
+                <div className="text-4xl font-black text-orange-400 mb-2">15</div>
+                <div className="text-sm text-blue-100">{isEnglish ? 'Years' : 'Lat'}</div>
               </div>
-              <div className="text-center bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4">
-                <div className="text-3xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-1">7</div>
-                <div className="text-xs text-gray-300">Lat</div>
+              <div className="text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all">
+                <div className="text-4xl font-black text-orange-400 mb-2">24/7</div>
+                <div className="text-sm text-blue-100">{isEnglish ? 'Support' : 'Serwis'}</div>
               </div>
-              <div className="text-center bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4">
-                <div className="text-3xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">24/7</div>
-                <div className="text-xs text-gray-300">Serwis</div>
+              <div className="text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all">
+                <div className="text-4xl font-black text-orange-400 mb-2">98%</div>
+                <div className="text-sm text-blue-100">{isEnglish ? 'Satisfaction' : 'Zadowolenie'}</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SERVICES SECTION */}
-      <section className="py-20 bg-gradient-to-b from-white via-green-50/20 to-white dark:from-gray-900 dark:via-green-950/10 dark:to-gray-900">
+      {/* HEATING SPECIALIZATIONS */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white">
-              Nasze Usługi
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
+              {isEnglish ? 'Our Heating Specializations' : 'Nasze Specjalizacje Grzewcze'}
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Profesjonalne rozwiązania hydrauliczne
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {isEnglish 
+                ? 'Complete solutions for modern and efficient heating systems'
+                : 'Kompleksowe rozwiązania dla nowoczesnych i wydajnych systemów grzewczych'}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-green-500/50 hover:-translate-y-2">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <span className="text-3xl">🔧</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Heat Pumps */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-orange-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">♨️</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Instalacje</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Kompleksowe instalacje wodne, kanalizacyjne i grzewcze
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Heat Pumps' : 'Pompy Ciepła'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Modern air-source and ground-source heat pumps with highest efficiency'
+                  : 'Nowoczesne pompy powietrzne i gruntowe o najwyższej sprawności'}
               </p>
-              <Link href={`/${locale}/services`} className="text-green-600 dark:text-green-400 font-semibold hover:text-green-700 flex items-center gap-2">
-                Dowiedz się więcej →
-              </Link>
-            </div>
-
-            <div className="group bg-gradient-to-br from-green-600 to-green-700 dark:from-green-700 dark:to-green-800 rounded-2xl p-8 shadow-2xl border-2 border-green-500 transform hover:-translate-y-2 transition-all">
-              <div className="absolute -top-4 right-8">
-                <div className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                  ⭐ Najpopularniejsze
-                </div>
-              </div>
-              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <span className="text-3xl">⚡</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Serwis 24/7</h3>
-              <p className="text-green-50 mb-6">
-                Całodobowa pomoc w przypadku awarii i problemów
-              </p>
-              <a href={`tel:${businessData.phone}`} className="bg-white text-green-600 px-6 py-3 rounded-lg font-bold hover:bg-green-50 transition-colors flex items-center justify-center gap-2">
-                📞 Zadzwoń Teraz
-              </a>
-            </div>
-
-            <div className="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-orange-500/50 hover:-translate-y-2">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <span className="text-3xl">🏗️</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Modernizacje</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Profesjonalne remonty łazienek i modernizacje instalacji
-              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-orange-500 mr-2">✓</span>
+                  COP 4.5-5.0
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-orange-500 mr-2">✓</span>
+                  {isEnglish ? '5-year warranty' : 'Gwarancja 5 lat'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-orange-500 mr-2">✓</span>
+                  {isEnglish ? 'Energy savings up to 70%' : 'Oszczędność energii do 70%'}
+                </li>
+              </ul>
               <Link href={`/${locale}/services`} className="text-orange-600 dark:text-orange-400 font-semibold hover:text-orange-700 flex items-center gap-2">
-                Zarezerwuj termin →
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
               </Link>
+            </div>
+
+            {/* Condensing Boilers */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-blue-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">🔥</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Condensing Boilers' : 'Kotły Kondensacyjne'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'High-efficiency gas boilers with advanced control systems'
+                  : 'Wysokosprawne kotły gazowe z zaawansowaną regulacją'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-blue-500 mr-2">✓</span>
+                  {isEnglish ? 'Efficiency >95%' : 'Sprawność >95%'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-blue-500 mr-2">✓</span>
+                  {isEnglish ? 'Weather compensation' : 'Pogodówka'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-blue-500 mr-2">✓</span>
+                  {isEnglish ? 'Smart control via app' : 'Sterowanie przez aplikację'}
+                </li>
+              </ul>
+              <Link href={`/${locale}/services`} className="text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-700 flex items-center gap-2">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              </Link>
+            </div>
+
+            {/* Underfloor Heating */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-teal-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">🌡️</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Underfloor Heating' : 'Ogrzewanie Podłogowe'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Comfortable heating with even temperature distribution'
+                  : 'Komfortowe ogrzewanie z równomiernym rozkładem temperatury'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-teal-500 mr-2">✓</span>
+                  {isEnglish ? 'Lower energy costs' : 'Niższe koszty energii'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-teal-500 mr-2">✓</span>
+                  {isEnglish ? 'All floor types' : 'Wszystkie typy podłóg'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-teal-500 mr-2">✓</span>
+                  {isEnglish ? 'Room-by-room control' : 'Regulacja pokojowa'}
+                </li>
+              </ul>
+              <Link href={`/${locale}/services`} className="text-teal-600 dark:text-teal-400 font-semibold hover:text-teal-700 flex items-center gap-2">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              </Link>
+            </div>
+
+            {/* Central Heating Modernization */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-purple-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">⚙️</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'System Modernization' : 'Modernizacja CO'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Upgrade old heating systems to modern, efficient solutions'
+                  : 'Modernizacja starych systemów na nowoczesne, wydajne rozwiązania'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-purple-500 mr-2">✓</span>
+                  {isEnglish ? 'Energy audit' : 'Audyt energetyczny'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-purple-500 mr-2">✓</span>
+                  {isEnglish ? 'Pipe replacement' : 'Wymiana rur'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-purple-500 mr-2">✓</span>
+                  {isEnglish ? 'New radiators' : 'Nowe grzejniki'}
+                </li>
+              </ul>
+              <Link href={`/${locale}/services`} className="text-purple-600 dark:text-purple-400 font-semibold hover:text-purple-700 flex items-center gap-2">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              </Link>
+            </div>
+
+            {/* Boiler Rooms */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-red-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">🏭</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Boiler Rooms' : 'Kotłownie'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Design and installation of complete boiler room systems'
+                  : 'Projektowanie i montaż kompletnych systemów kotłowni'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-red-500 mr-2">✓</span>
+                  {isEnglish ? 'Professional design' : 'Profesjonalny projekt'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-red-500 mr-2">✓</span>
+                  {isEnglish ? 'Full automation' : 'Pełna automatyka'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-red-500 mr-2">✓</span>
+                  {isEnglish ? 'Safety systems' : 'Systemy bezpieczeństwa'}
+                </li>
+              </ul>
+              <Link href={`/${locale}/services`} className="text-red-600 dark:text-red-400 font-semibold hover:text-red-700 flex items-center gap-2">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              </Link>
+            </div>
+
+            {/* Service & Maintenance */}
+            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-green-500 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                <span className="text-4xl">🔧</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? '24/7 Service' : 'Serwis 24/7'}</h3>
+              <p className="text-gray-600 mb-6">
+                {isEnglish 
+                  ? 'Emergency repairs and regular maintenance of heating systems'
+                  : 'Awarie i regularne przeglądy systemów grzewczych'}
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✓</span>
+                  {isEnglish ? 'Response in 2h' : 'Dojazd w 2h'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✓</span>
+                  {isEnglish ? 'Annual inspections' : 'Przeglądy roczne'}
+                </li>
+                <li className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✓</span>
+                  {isEnglish ? 'Parts in stock' : 'Części zamienne'}
+                </li>
+              </ul>
+              <a href="tel:503691808" className="text-green-600 dark:text-green-400 font-semibold hover:text-green-700 flex items-center gap-2">
+                {isEnglish ? 'Call 24/7' : 'Zadzwoń 24/7'} →
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* BOOKING SECTION */}
-      <section id="booking" className="py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <section id="booking" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white">
-              Umów Wizytę Online
+            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
+              {isEnglish ? 'Schedule Your Installation' : 'Umów Wizytę Online'}
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Wybierz dogodny termin z kalendarza
+            <p className="text-xl text-gray-600">
+              {isEnglish ? 'Choose a convenient date from the calendar' : 'Wybierz dogodny termin z kalendarza'}
             </p>
           </div>
           
@@ -289,14 +351,14 @@ export default function HomePage() {
       <RealizationsMap />
 
       {/* BLOG SECTION */}
-      <section className="py-20 bg-white dark:bg-gray-900">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white">
-              Aktualności i Blog
+            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
+              {isEnglish ? 'Latest News & Expert Tips' : 'Aktualności i Porady Ekspertów'}
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Najnowsze informacje i porady ekspertów
+            <p className="text-xl text-gray-600">
+              {isEnglish ? 'Stay updated with heating technology trends' : 'Bądź na bieżąco z trendami w technologii grzewczej'}
             </p>
           </div>
 
@@ -305,22 +367,22 @@ export default function HomePage() {
               <Link
                 key={post.id}
                 href={`/${locale}/blog/${post.slug}`}
-                className="group bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:-translate-y-2"
+                className="group bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all border border-gray-200 hover:border-blue-500 hover:-translate-y-2"
               >
                 <div className="bg-gradient-to-r from-blue-600 to-blue-700 h-40 flex items-center justify-center p-6">
                   <h3 className="text-lg font-bold text-white text-center line-clamp-2">
-                    {locale === 'en' ? post.titleEn : post.title}
+                    {isEnglish ? post.titleEn : post.title}
                   </h3>
                 </div>
                 <div className="p-6">
-                  <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-semibold mb-3">
-                    {locale === 'en' ? post.categoryEn : post.category}
+                  <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold mb-3">
+                    {isEnglish ? post.categoryEn : post.category}
                   </span>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4">
-                    {locale === 'en' ? post.excerptEn : post.excerpt}
+                  <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+                    {isEnglish ? post.excerptEn : post.excerpt}
                   </p>
-                  <div className="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-2 transition-transform inline-flex items-center">
-                    Czytaj więcej →
+                  <div className="text-blue-600 font-semibold text-sm group-hover:translate-x-2 transition-transform inline-flex items-center">
+                    {isEnglish ? 'Read more' : 'Czytaj więcej'} →
                   </div>
                 </div>
               </Link>
@@ -332,150 +394,118 @@ export default function HomePage() {
               href={`/${locale}/blog`}
               className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
             >
-              Zobacz Wszystkie Artykuły →
+              {isEnglish ? 'View All Articles' : 'Zobacz Wszystkie Artykuły'} →
             </Link>
           </div>
         </div>
       </section>
 
       {/* CONTACT FORM SECTION */}
-      <section id="contact" className="py-20 bg-white dark:bg-gray-900">
+      <section id="contact" className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white">
-                Skontaktuj Się
+              <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
+                {isEnglish ? 'Get in Touch' : 'Skontaktuj Się'}
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400">
-                Zostaw wiadomość, oddzwonimy
+              <p className="text-xl text-gray-600">
+                {isEnglish ? 'We\'ll call you back within 24 hours' : 'Oddzwonimy w ciągu 24h'}
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-100 dark:border-gray-700">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-100">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
-                      Imię i nazwisko <span className="text-red-500">*</span>
+                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                      {isEnglish ? 'Name' : 'Imię i nazwisko'}
                     </label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       id="name"
-                      name="name"
                       value={formData.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
-                      disabled={status === 'sending'}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-700 text-gray-900 dark:text-white dark:bg-gray-700 transition-colors ${
-                        fieldErrors.name ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600'
-                      }`}
-                      placeholder="Jan Kowalski"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      placeholder={isEnglish ? 'Your name' : 'Twoje imię'}
                     />
-                    {fieldErrors.name && (
-                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">{fieldErrors.name}</p>
-                    )}
                   </div>
+
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
-                      Telefon <span className="text-red-500">*</span>
+                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                      {isEnglish ? 'Phone' : 'Telefon'}
                     </label>
-                    <input 
-                      type="tel" 
+                    <input
+                      type="tel"
                       id="phone"
-                      name="phone"
                       value={formData.phone}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       required
-                      disabled={status === 'sending'}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-700 text-gray-900 dark:text-white dark:bg-gray-700 transition-colors ${
-                        fieldErrors.phone ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600'
-                      }`}
-                      placeholder="123 456 789"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      placeholder={isEnglish ? 'Your phone' : 'Twój telefon'}
                     />
-                    {fieldErrors.phone && (
-                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">{fieldErrors.phone}</p>
-                    )}
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
-                    Email <span className="text-red-500">*</span>
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email
                   </label>
-                  <input 
-                    type="email" 
+                  <input
+                    type="email"
                     id="email"
-                    name="email"
                     value={formData.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
-                    disabled={status === 'sending'}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-700 text-gray-900 dark:text-white dark:bg-gray-700 transition-colors ${
-                      fieldErrors.email ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600'
-                    }`}
-                    placeholder="email@example.com"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder={isEnglish ? 'your@email.com' : 'twoj@email.pl'}
                   />
-                  {fieldErrors.email && (
-                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{fieldErrors.email}</p>
-                  )}
                 </div>
 
                 <div>
-                  <label htmlFor="service" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
-                    Rodzaj usługi
+                  <label htmlFor="service" className="block text-sm font-semibold text-gray-700 mb-2">
+                    {isEnglish ? 'Service' : 'Usługa'}
                   </label>
                   <select
                     id="service"
-                    name="service"
                     value={formData.service}
-                    onChange={handleChange}
-                    disabled={status === 'sending'}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-700 text-gray-900 dark:text-white dark:bg-gray-700 transition-colors"
+                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   >
-                    <option value="">Wybierz usługę</option>
-                    <option value="Instalacje wodne">Instalacje wodne</option>
-                    <option value="Instalacje kanalizacyjne">Instalacje kanalizacyjne</option>
-                    <option value="Systemy grzewcze">Systemy grzewcze</option>
-                    <option value="Serwis i naprawy">Serwis i naprawy</option>
-                    <option value="Modernizacje">Modernizacje</option>
-                    <option value="Inne">Inne</option>
+                    <option value="">{isEnglish ? 'Choose service' : 'Wybierz usługę'}</option>
+                    <option value="heat-pump">{isEnglish ? 'Heat Pump Installation' : 'Montaż Pompy Ciepła'}</option>
+                    <option value="boiler">{isEnglish ? 'Condensing Boiler' : 'Kocioł Kondensacyjny'}</option>
+                    <option value="underfloor">{isEnglish ? 'Underfloor Heating' : 'Ogrzewanie Podłogowe'}</option>
+                    <option value="modernization">{isEnglish ? 'System Modernization' : 'Modernizacja CO'}</option>
+                    <option value="service">{isEnglish ? 'Service/Repair' : 'Serwis/Naprawa'}</option>
+                    <option value="other">{isEnglish ? 'Other' : 'Inne'}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
-                    Wiadomość <span className="text-red-500">*</span>
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                    {isEnglish ? 'Message' : 'Wiadomość'}
                   </label>
-                  <textarea 
+                  <textarea
                     id="message"
-                    name="message"
                     value={formData.message}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
-                    disabled={status === 'sending'}
                     rows={5}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-700 text-gray-900 dark:text-white dark:bg-gray-700 transition-colors resize-none ${
-                      fieldErrors.message ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600'
-                    }`}
-                    placeholder="Opisz swoją potrzebę..."
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                    placeholder={isEnglish ? 'Describe your needs...' : 'Opisz swoją potrzebę...'}
                   ></textarea>
-                  {fieldErrors.message && (
-                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{fieldErrors.message}</p>
-                  )}
                 </div>
 
                 {status === 'success' && (
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg text-green-800 dark:text-green-300">
-                    ✅ Dziękujemy! Odpowiemy najszybciej jak to możliwe.
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
+                    ✅ {isEnglish ? 'Thank you! We\'ll respond as soon as possible.' : 'Dziękujemy! Odpowiemy najszybciej jak to możliwe.'}
                   </div>
                 )}
 
                 {status === 'error' && (
-                  <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg text-red-800 dark:text-red-300">
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
                     ❌ {errorMessage}
                   </div>
                 )}
@@ -483,9 +513,9 @@ export default function HomePage() {
                 <button 
                   type="submit"
                   disabled={status === 'sending'}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-green-600 to-orange-600 hover:from-green-700 hover:to-orange-700 text-white font-bold rounded-lg text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  {status === 'sending' ? '⏳ Wysyłanie...' : '🚀 Wyślij zapytanie'}
+                  {status === 'sending' ? '⏳ '+(isEnglish ? 'Sending...' : 'Wysyłanie...') : '🚀 '+(isEnglish ? 'Send Request' : 'Wyślij Zapytanie')}
                 </button>
               </form>
             </div>
