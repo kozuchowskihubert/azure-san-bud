@@ -80,6 +80,8 @@ jobs:
           terraform plan \
             -var-file="environments/${{ github.event.inputs.environment || 'dev' }}/sanbud.tfvars" \
             -var="db_admin_password=${{ secrets.DB_ADMIN_PASSWORD }}" \
+            -var="admin_init_secret=${{ secrets.ADMIN_INIT_SECRET }}" \
+            -var="admin_init_password=${{ secrets.ADMIN_INIT_PASSWORD }}" \
             -out=tfplan
       
       - name: Upload Plan
