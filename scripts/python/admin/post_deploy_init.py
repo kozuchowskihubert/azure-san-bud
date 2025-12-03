@@ -2,93 +2,86 @@
 """
 Automated Admin Initialization for Production
 This script runs after deployment to ensure admin user exists.
+Uses direct database access instead of API endpoints.
 """
 
 import os
 import sys
-import requests
-import time
+from pathlib import Path
+
+# Add project root to Python path
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
 
 def init_admin_user():
-    """Initialize admin user using the init endpoint."""
+    """Initialize admin user using direct database access."""
     
     print("🚀 SanBud Admin Initialization")
     print("=" * 60)
     
-    # Get configuration from environment variables
-    api_url = os.environ.get('API_URL', 'https://app-sanbud-api-prod.azurewebsites.net')
-    admin_secret = os.environ.get('ADMIN_INIT_SECRET')
-    admin_password = os.environ.get('ADMIN_PASSWORD', 'SanBud2025!InitAdmin!Zaj')
-    admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
-    admin_email = os.environ.get('ADMIN_EMAIL', 'admin@sanbud.pl')
-    
-    if not admin_secret:
-        print("❌ ERROR: ADMIN_INIT_SECRET environment variable not set")
-        return False
-    
-    # Wait for API to be ready
-    print("\n⏳ Waiting for API to be ready...")
-    max_retries = 30
-    for i in range(max_retries):
-        try:
-            response = requests.get(f"{api_url}/api/", timeout=10)
-            if response.status_code == 200:
-                print("✅ API is ready!")
-                break
-        except:
-            pass
-        
-        if i < max_retries - 1:
-            print(f"   Retry {i+1}/{max_retries}...")
-            time.sleep(10)
-        else:
-            print("❌ API not responding after 5 minutes")
-            return False
-    
-    # Check if admin already exists
-    print("\n🔍 Checking if admin user exists...")
     try:
-        check_url = f"{api_url}/init/check"
-        response = requests.get(check_url, timeout=10)
+        # Import Flask app and models
+        from app import create_app, db
+        from app.models.admin import Admin
         
-        if response.status_code == 200:
-            data = response.json()
-            if data.get('admin_exists'):
-                print(f"✅ Admin user already exists (count: {data.get('count')})")
-                print("   No initialization needed.")
-                return True
-    except Exception as e:
-        print(f"⚠️  Could not check admin status: {e}")
-        print("   Proceeding with initialization attempt...")
-    
-    # Initialize admin user
-    print("\n🔨 Creating admin user...")
-    try:
-        init_url = f"{api_url}/init/admin"
-        payload = {
-            "secret": admin_secret,
-            "password": admin_password
-        }
+        # Get configuration from environment variables
+        admin_password = os.environ.get('ADMIN_INIT_PASSWORD', 'SanBud2025Admin')
+        admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
+        admin_email = os.environ.get('ADMIN_EMAIL', 'admin@sanbud.pl')
         
-        response = requests.post(init_url, json=payload, timeout=30)
+        print(f"\n📋 Configuration:")
+        print(f"   Username: {admin_username}")
+        print(f"   Email: {admin_email}")
         
-        if response.status_code in [200, 201]:
-            print("✅ Admin user initialized successfully!")
-            data = response.json()
-            print(f"   Username: {data.get('username')}")
-            print(f"   Email: {data.get('email')}")
-            print("\n🔐 Login at: https://sanbud24.pl/admin/login")
-            print(f"   Username: admin")
-            print(f"   Password: {admin_password}")
-            print("\n⚠️  IMPORTANT: Change the password after first login!")
+        # Create Flask app context
+        app = create_app('production')
+        
+        with app.app_context():
+            # Check if admin already exists
+            existing_admin = Admin.query.filter_by(username=admin_username).first()
+            
+            if existing_admin:
+                print(f"\n✅ Admin user already exists (ID: {existing_admin.id})")
+                print("   Updating password...")
+                existing_admin.set_password(admin_password)
+                db.session.commit()
+                print("   ✅ Password updated")
+            else:
+                print("\n➕ Creating new admin user...")
+                admin = Admin(
+                    username=admin_username,
+                    email=admin_email,
+                    first_name='Admin',
+                    last_name='SanBud',
+                    is_active=True,
+                    is_super_admin=True
+                )
+                admin.set_password(admin_password)
+                db.session.add(admin)
+                db.session.commit()
+                print(f"   ✅ Admin created (ID: {admin.id})")
+            
+            # Verify
+            admin = Admin.query.filter_by(username=admin_username).first()
+            if admin and admin.check_password(admin_password):
+                print(f"\n✅ Password verification: PASSED")
+            else:
+                print(f"\n❌ Password verification: FAILED")
+                return False
+            
+            print("\n" + "=" * 60)
+            print("✅ Admin Initialization Complete!")
+            print("=" * 60)
+            print(f"🔐 Login at: https://sanbud24.pl/admin/login")
+            print(f"   Username: {admin_username}")
+            print("=" * 60)
+            
             return True
-        else:
-            print(f"❌ Admin initialization failed: {response.status_code}")
-            print(f"   Response: {response.text}")
-            return False
             
     except Exception as e:
-        print(f"❌ Error during admin initialization: {e}")
+        print(f"\n❌ Error during admin initialization: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 if __name__ == "__main__":
