@@ -66,22 +66,22 @@ export default function HomePage() {
         
         <div className="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-4xl">
-            {/* Badge */}
-            <div className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-light rounded-full text-white font-semibold animate-fade-in-down">
-              ✓ {isEnglish ? 'Certified Professionals Since 1999' : 'Certyfikowani Profesjonaliści od 1999'}
+            {/* Badge - Minimalist professional style */}
+            <div className="inline-block mb-6 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-light animate-fade-in-down border border-white/20">
+              {isEnglish ? 'Certified Professionals Since 1999' : 'Certyfikowani Profesjonaliści od 1999'}
             </div>
             
-            {/* Main Headline */}
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight animate-fade-in-up">
+            {/* Main Headline - Professional HAOS.fm style */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight animate-fade-in-up tracking-tight">
               {isEnglish ? (
-                <>Plumbing<br />Our <span className="gradient-text-accent">Passion</span></>
+                <>Plumbing<br />Our <span className="font-medium text-green-400">Passion</span></>
               ) : (
-                <>Hydraulika<br />Naszą <span className="text-green-400">Pasją</span></>
+                <>Hydraulika<br />Naszą <span className="font-medium text-green-400">Pasją</span></>
               )}
             </h1>
             
-            {/* Subheadline */}
-            <p className="text-xl md:text-2xl text-white/95 mb-10 leading-relaxed max-w-3xl animate-fade-in-up">
+            {/* Subheadline - Clean and professional */}
+            <p className="text-lg md:text-xl text-white/90 mb-10 leading-relaxed max-w-2xl animate-fade-in-up font-light">
               {isEnglish 
                 ? 'Professional water & sewage installations, gas systems, underfloor heating, boiler rooms. 25+ years of experience in Mazowsze region.'
                 : 'Profesjonalne instalacje wodno-kanalizacyjne, gazowe, ogrzewanie podłogowe, kotłownie. 25+ lat doświadczenia w województwie mazowieckim.'}
