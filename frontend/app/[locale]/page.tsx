@@ -5,13 +5,21 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
 import BookingCalendar from '@/components/BookingCalendar';
-import RealizationsMap from '@/components/RealizationsMap';
-import { getRecentPosts } from '@/data/blogPosts';
+import { 
+  Droplets, 
+  Flame, 
+  Thermometer, 
+  Settings, 
+  Factory, 
+  Wrench, 
+  ClipboardCheck, 
+  Recycle, 
+  Truck 
+} from 'lucide-react';
 
 export default function HomePage() {
   const locale = useLocale();
   const isEnglish = locale === 'en';
-  const recentPosts = getRecentPosts(3);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -207,7 +215,7 @@ export default function HomePage() {
             {/* Service 1: Water & Sewage */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-blue-500 to-blue-600">
-                <span className="text-4xl text-white">💧</span>
+                <Droplets className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'Water & Sewage Systems' : 'Instalacje Wodno-Kanalizacyjne'}
@@ -228,7 +236,7 @@ export default function HomePage() {
             {/* Service 2: Gas Installations */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-red-500 to-red-600">
-                <span className="text-4xl text-white">🔥</span>
+                <Flame className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'Gas Installations' : 'Instalacje Gazowe'}
@@ -249,7 +257,7 @@ export default function HomePage() {
             {/* Service 3: Underfloor Heating */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-orange-500 to-orange-600">
-                <span className="text-4xl text-white">🌡️</span>
+                <Thermometer className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'Underfloor Heating' : 'Ogrzewanie Podłogowe'}
@@ -270,7 +278,7 @@ export default function HomePage() {
             {/* Service 4: Boiler Room Modernization */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-purple-500 to-purple-600">
-                <span className="text-4xl text-white">⚙️</span>
+                <Settings className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'Boiler Room Modernization' : 'Modernizacja Kotłowni'}
@@ -291,7 +299,7 @@ export default function HomePage() {
             {/* Service 5: New Boiler Room Installation */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-amber-500 to-amber-600">
-                <span className="text-4xl text-white">🏭</span>
+                <Factory className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'New Boiler Rooms' : 'Montaż Nowych Kotłowni'}
@@ -312,7 +320,7 @@ export default function HomePage() {
             {/* Service 6: Gas Furnace Service */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-emerald-500 to-emerald-600">
-                <span className="text-4xl text-white">🔧</span>
+                <Wrench className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'Gas Furnace Service' : 'Serwis Piecy Gazowych'}
@@ -333,7 +341,7 @@ export default function HomePage() {
             {/* Service 7: Gas Installation Inspection */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-yellow-500 to-yellow-600">
-                <span className="text-4xl text-white">📋</span>
+                <ClipboardCheck className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'Gas System Inspection' : 'Przegląd Instalacji Gazowych'}
@@ -354,7 +362,7 @@ export default function HomePage() {
             {/* Service 8: Sewage Treatment Plants */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-lime-500 to-lime-600">
-                <span className="text-4xl text-white">♻️</span>
+                <Recycle className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'Sewage Treatment Plants' : 'Przydomowe Oczyszczalnie'}
@@ -375,7 +383,7 @@ export default function HomePage() {
             {/* Service 9: Mini Excavator Services */}
             <div className="service-card">
               <div className="service-card-icon bg-gradient-to-br from-stone-500 to-stone-600">
-                <span className="text-4xl text-white">🚜</span>
+                <Truck className="w-10 h-10 text-white" strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">
                 {isEnglish ? 'Mini Excavator Services' : 'Usługi Minikoparką'}
@@ -492,83 +500,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* REALIZATIONS MAP SECTION */}
-      <section className="section bg-white">
-        <div className="container-custom">
-          <div className="section-header">
-            <h2 className="section-title">
-              {isEnglish ? 'Our Realizations Map' : 'Poznaj Mapę Naszych Realizacji'}
-            </h2>
-            <p className="section-subtitle">
-              {isEnglish 
-                ? 'Through our work, we improve air quality throughout Mazowsze region.'
-                : 'Swoją działalnością wpływamy na polepszenie jakości życia w całym województwie mazowieckim.'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            <div className="stat-card">
-              <div className="stat-number">2000+</div>
-              <div className="stat-label">{isEnglish ? 'Completed Projects' : 'Zrealizowanych Projektów'}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">98%</div>
-              <div className="stat-label">{isEnglish ? 'Satisfied Clients' : 'Zadowolonych Klientów'}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">25+</div>
-              <div className="stat-label">{isEnglish ? 'Years of Experience' : 'Lat Doświadczenia'}</div>
-            </div>
-          </div>
-
-          <RealizationsMap />
-        </div>
-      </section>
-
-      {/* BLOG/NEWS SECTION */}
+      {/* PARTNERS SECTION */}
       <section className="section bg-gray-50">
         <div className="container-custom">
           <div className="section-header">
             <h2 className="section-title">
-              {isEnglish ? 'Latest News & Tips' : 'Aktualności i Porady'}
+              {isEnglish ? 'Our Trusted Partners' : 'Nasi Zaufani Partnerzy'}
             </h2>
             <p className="section-subtitle">
               {isEnglish 
-                ? 'Professional advice and industry news from SAN-BUD experts'
-                : 'Profesjonalne porady i aktualności branżowe od ekspertów SAN-BUD'}
+                ? 'We work with world-class manufacturers to ensure the highest quality'
+                : 'Współpracujemy z producentami światowej klasy, aby zapewnić najwyższą jakość'}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {recentPosts.map((post) => (
-              <Link 
-                key={post.slug} 
-                href={`/${locale}/blog/${post.slug}`}
-                className="card card-hover overflow-hidden group"
-              >
-                <div className="h-48 bg-gradient-primary"></div>
-                <div className="p-6">
-                  <div className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-3">
-                    {post.category}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <span>{post.date}</span>
-                  </div>
+          {/* Partners Slider - Simple version */}
+          <div className="overflow-hidden">
+            <div className="flex gap-12 items-center justify-center flex-wrap py-8">
+              {['Vaillant', 'Viessmann', 'Viega', 'Grohe', 'Hydromat', 'Diamond', 'Ferro', 'Arco', 'Mitsubishi', 'Grundfos', 'Buderus', 'Valvex'].map((partner) => (
+                <div 
+                  key={partner}
+                  className="flex items-center justify-center h-20 w-32 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                >
+                  <span className="text-2xl font-bold text-gray-400 hover:text-gray-900 transition-colors">
+                    {partner}
+                  </span>
                 </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link href={`/${locale}/blog`} className="btn btn-primary btn-lg">
-              {isEnglish ? 'View All Articles' : 'Zobacz Wszystkie Artykuły'}
-            </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>

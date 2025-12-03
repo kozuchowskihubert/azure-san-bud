@@ -1,83 +1,99 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* SAN-BUD Professional Theme - Inspired by eko-solutions.pl */
-/* Clean, modern, professional design for hydraulic services */
+/* ================================================
+   SAN-BUD PROFESSIONAL DESIGN SYSTEM
+   Ultra-professional, clean, modern aesthetic
+   ================================================ */
 
 @layer base {
   :root {
-    /* Primary Colors - Professional Blue & Green */
-    --color-primary: 0 102 204; /* Professional blue #0066CC */
-    --color-primary-light: 51 133 214; /* Light blue #3385D6 */
-    --color-primary-dark: 0 77 153; /* Dark blue #004D99 */
+    /* Primary Palette - Deep Professional Blue */
+    --color-primary: 30 64 175; /* Deep blue #1E40AF - trust, stability */
+    --color-primary-light: 59 130 246; /* Bright blue #3B82F6 */
+    --color-primary-dark: 30 58 138; /* Navy blue #1E3A8A */
     
-    /* Secondary Green - Eco/Trust */
-    --color-secondary: 16 185 129; /* Modern green #10B981 */
-    --color-secondary-light: 52 211 153; /* Light green #34D399 */
-    --color-secondary-dark: 5 150 105; /* Dark green #059669 */
+    /* Secondary - Fresh Green (eco, growth) */
+    --color-secondary: 5 150 105; /* Professional green #059669 */
+    --color-secondary-light: 16 185 129; /* Emerald #10B981 */
+    --color-secondary-dark: 4 120 87; /* Deep green #047857 */
     
-    /* Accent Orange - CTA */
-    --color-accent: 249 115 22; /* Orange CTA #F97316 */
-    --color-accent-light: 251 146 60; /* Light orange #FB923C */
-    --color-accent-dark: 234 88 12; /* Dark orange #EA580C */
+    /* Accent - Warm Orange (energy, action) */
+    --color-accent: 234 88 12; /* Vibrant orange #EA580C */
+    --color-accent-light: 249 115 22; /* Bright orange #F97316 */
+    --color-accent-dark: 194 65 12; /* Deep orange #C2410C */
     
-    /* Backgrounds - Clean White */
+    /* Neutral Palette - Professional Grays */
+    --color-neutral-50: 250 250 250; /* Near white #FAFAFA */
+    --color-neutral-100: 245 245 245; /* Ultra light gray #F5F5F5 */
+    --color-neutral-200: 229 229 229; /* Light gray #E5E5E5 */
+    --color-neutral-300: 212 212 212; /* Medium light #D4D4D4 */
+    --color-neutral-400: 163 163 163; /* Medium gray #A3A3A3 */
+    --color-neutral-500: 115 115 115; /* True gray #737373 */
+    --color-neutral-600: 82 82 82; /* Dark gray #525252 */
+    --color-neutral-700: 64 64 64; /* Darker gray #404040 */
+    --color-neutral-800: 38 38 38; /* Very dark #262626 */
+    --color-neutral-900: 23 23 23; /* Near black #171717 */
+    
+    /* Backgrounds - Pristine Clean */
     --color-bg-primary: 255 255 255; /* Pure white #FFFFFF */
-    --color-bg-secondary: 249 250 251; /* Off-white #F9FAFB */
-    --color-bg-tertiary: 243 244 246; /* Light gray #F3F4F6 */
-    --color-bg-dark: 17 24 39; /* Dark mode #111827 */
+    --color-bg-secondary: 250 250 250; /* Off-white #FAFAFA */
+    --color-bg-tertiary: 245 245 245; /* Light gray #F5F5F5 */
+    --color-bg-dark: 23 23 23; /* Dark mode #171717 */
     
-    /* Text Colors */
-    --color-text-primary: 17 24 39; /* Near black #111827 */
-    --color-text-secondary: 75 85 99; /* Dark gray #4B5563 */
-    --color-text-muted: 107 114 128; /* Medium gray #6B7280 */
-    --color-text-light: 156 163 175; /* Light gray #9CA3AF */
+    /* Text Colors - High Contrast */
+    --color-text-primary: 23 23 23; /* Near black #171717 */
+    --color-text-secondary: 82 82 82; /* Dark gray #525252 */
+    --color-text-muted: 115 115 115; /* Medium gray #737373 */
+    --color-text-light: 163 163 163; /* Light gray #A3A3A3 */
     
-    /* Borders */
-    --color-border: 229 231 235; /* Light border #E5E7EB */
-    --color-border-light: 243 244 246; /* Very light #F3F4F6 */
+    /* Borders - Subtle */
+    --color-border: 229 229 229; /* Light #E5E5E5 */
+    --color-border-light: 245 245 245; /* Very light #F5F5F5 */
     
     /* Status Colors */
-    --color-success: 34 197 94; /* Green #22C55E */
-    --color-warning: 251 191 36; /* Yellow #FBBF24 */
-    --color-error: 239 68 68; /* Red #EF4444 */
-    --color-info: 59 130 246; /* Blue #3B82F6 */
+    --color-success: 22 163 74; /* Green #16A34A */
+    --color-warning: 234 179 8; /* Yellow #EAB308 */
+    --color-error: 220 38 38; /* Red #DC2626 */
+    --color-info: 37 99 235; /* Blue #2563EB */
     
-    /* Typography */
-    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --font-heading: 'Poppins', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    /* Typography - Professional Fonts */
+    --font-sans: var(--font-jakarta), 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-heading: var(--font-montserrat), 'Montserrat', ui-sans-serif, system-ui, -apple-system, sans-serif;
     
-    /* Modern Shadows - Softer than previous */
-    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    /* Professional Multi-layer Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
     
-    /* Spacing Scale - Generous padding */
-    --spacing-section: 5rem; /* 80px */
-    --spacing-section-sm: 3rem; /* 48px */
+    /* Card Shadow - Professional depth */
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
     
-    /* Border Radius */
-    --radius-sm: 0.375rem; /* 6px */
-    --radius-md: 0.5rem; /* 8px */
-    --radius-lg: 0.75rem; /* 12px */
-    --radius-xl: 1rem; /* 16px */
-    --radius-2xl: 1.5rem; /* 24px */
+    /* Spacing Scale */
+    --spacing-section: 6rem; /* 96px */
+    --spacing-section-sm: 4rem; /* 64px */
+    
+    /* Border Radius - Modern curves */
+    --radius-sm: 0.5rem; /* 8px */
+    --radius-md: 0.75rem; /* 12px */
+    --radius-lg: 1rem; /* 16px */
+    --radius-xl: 1.5rem; /* 24px */
+    --radius-2xl: 2rem; /* 32px */
     --radius-full: 9999px;
     
-    /* Transitions */
+    /* Smooth Transitions */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   * {
-    @apply border-border;
+    @apply border-gray-200;
   }
   
   body {
@@ -85,19 +101,25 @@
     background-color: rgb(var(--color-bg-primary));
     color: rgb(var(--color-text-primary));
     font-family: var(--font-sans);
-    font-feature-settings: 'rlig' 1, 'calt' 1;
+    font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1, 'ss02' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold;
     color: rgb(var(--color-text-primary));
     font-family: var(--font-heading);
-    letter-spacing: -0.02em;
-    line-height: 1.25;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    font-weight: 700;
   }
+  
+  h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; }
+  h3 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; }
   
   h1 {
     @apply text-4xl md:text-5xl lg:text-6xl;
@@ -205,11 +227,11 @@
   
   /* Service Cards - Similar to eko-solutions */
   .service-card {
-    @apply card card-hover card-bordered p-8 text-center group;
+    @apply card card-hover card-bordered p-8 text-center;
   }
   
   .service-card-icon {
-    @apply w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110;
+    @apply w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-2xl transition-transform duration-300;
   }
   
   /* Stats Display */
@@ -240,11 +262,11 @@
   
   /* Timeline/Process Steps */
   .timeline-step {
-    @apply relative flex items-start gap-6 group;
+    @apply relative flex items-start gap-6;
   }
   
   .timeline-number {
-    @apply flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl text-white shadow-lg transition-transform duration-300 group-hover:scale-110;
+    @apply flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl text-white shadow-lg transition-transform duration-300;
     background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-secondary)) 100%);
   }
   

@@ -2,36 +2,27 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { Inter, Montserrat, Playfair_Display } from 'next/font/google';
+import { Plus_Jakarta_Sans, Montserrat } from 'next/font/google';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import FloatingAdminButton from '@/components/FloatingAdminButton';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import '../globals.css';
 
-// Modern, clean sans-serif for body text
-const inter = Inter({ 
+// Professional, modern sans-serif for body text - Plus Jakarta Sans
+const jakartaSans = Plus_Jakarta_Sans({ 
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-inter',
+  variable: '--font-jakarta',
   display: 'swap',
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700', '800'],
 });
 
-// Professional, bold sans-serif for headings
+// Bold, impactful sans-serif for headings - Montserrat
 const montserrat = Montserrat({ 
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['500', '600', '700', '800', '900'],
   subsets: ['latin', 'latin-ext'],
   variable: '--font-montserrat',
   display: 'swap',
-});
-
-// Elegant serif for premium accents
-const playfair = Playfair_Display({
-  weight: ['400', '500', '600', '700', '800', '900'],
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-playfair',
-  display: 'swap',
-  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
@@ -57,8 +48,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${inter.variable} ${montserrat.variable} ${playfair.variable}`}>
-      <body className={inter.className}>
+    <html lang={locale} className={`${jakartaSans.variable} ${montserrat.variable}`}>
+      <body className={jakartaSans.className}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <Navigation />
