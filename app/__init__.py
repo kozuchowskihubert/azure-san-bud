@@ -26,7 +26,7 @@ def create_app(config_name='production'):
     app.config['SESSION_COOKIE_PATH'] = '/'         # Cookie available for all paths
     
     # Enable CORS for production domain, Azure Static Web App and local development
-    # Note: supports_credentials MUST be set at top level for Access-Control-Allow-Credentials header
+    # Note: support_credentials MUST be set at top level for Access-Control-Allow-Credentials header
     CORS(app, 
          origins=[
              # Production domain
@@ -45,7 +45,7 @@ def create_app(config_name='production'):
          ],
          methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
          allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
-         supports_credentials=True,
+         support_credentials=True,
          expose_headers=["Content-Range", "X-Content-Range"]
     )
     

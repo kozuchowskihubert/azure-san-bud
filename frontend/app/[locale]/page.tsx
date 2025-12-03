@@ -496,38 +496,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PARTNERS SECTION */}
-      <section className="section bg-gray-50">
-        <div className="container-custom">
-          <div className="section-header">
-            <h2 className="section-title">
-              {isEnglish ? 'Our Trusted Partners' : 'Nasi Zaufani Partnerzy'}
-            </h2>
-            <p className="section-subtitle">
-              {isEnglish 
-                ? 'We work with world-class manufacturers to ensure the highest quality'
-                : 'Współpracujemy z producentami światowej klasy, aby zapewnić najwyższą jakość'}
-            </p>
-          </div>
-
-          {/* Partners Slider - Simple version */}
-          <div className="overflow-hidden">
-            <div className="flex gap-12 items-center justify-center flex-wrap py-8">
-              {['Vaillant', 'Viessmann', 'Viega', 'Grohe', 'Hydromat', 'Diamond', 'Ferro', 'Arco', 'Mitsubishi', 'Grundfos', 'Buderus', 'Valvex'].map((partner) => (
-                <div 
-                  key={partner}
-                  className="flex items-center justify-center h-20 w-32 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
-                >
-                  <span className="text-2xl font-bold text-gray-400 hover:text-gray-900 transition-colors">
-                    {partner}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CONTACT FORM SECTION */}
       <section id="contact" className="section bg-white">
         <div className="container-custom">
