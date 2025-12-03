@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
 import BookingCalendar from '@/components/BookingCalendar';
+import PartnersSlider from '@/components/PartnersSlider';
 import { 
   Droplets, 
   Flame, 
@@ -140,7 +141,7 @@ export default function HomePage() {
                 {isEnglish ? 'Years of Experience' : 'Lat Doświadczenia'}
               </p>
               <p className="text-gray-600">
-                {isEnglish ? 'Serving Mazowsze since 1999' : 'Działamy w Mazowszu od 1999'}
+                {isEnglish ? 'Serving Mazowsze since 2018' : 'Działamy w Mazowszu od 2018'}
               </p>
             </div>
 
@@ -694,6 +695,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* PARTNERS SLIDER - Auto-scrolling logos */}
+      <PartnersSlider />
 
       {/* BOOKING CALENDAR SECTION */}
       <section id="booking" className="section bg-gray-50">
