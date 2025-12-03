@@ -52,8 +52,8 @@ def create_app(config_name='production'):
     app.register_blueprint(admin.admin_bp)
     app.register_blueprint(api.bp)
     
-    # Create database tables
-    with app.app_context():
-        db.create_all()
+    # Create database tables (commented out - use migrations instead)
+    # with app.app_context():
+    #     db.create_all()
     
     return app
