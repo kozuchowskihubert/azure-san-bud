@@ -202,6 +202,10 @@ export default function HomePage() {
     { icon: '💰', title: 'Ceny', text: 'Konkurencyjne ceny bez ukrytych kosztów' }
   ];
 
+  // Select random video for hero background
+  const heroVideos = ['/images/IMG_6549.mov', '/images/IMG_6550.mov'];
+  const [heroVideo] = useState(() => heroVideos[Math.floor(Math.random() * heroVideos.length)]);
+
   return (
     <div className="min-h-screen bg-white">
       
@@ -210,14 +214,15 @@ export default function HomePage() {
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
           <video
+            key={heroVideo}
             autoPlay
             loop
             muted
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/images/IMG_6551.mov" type="video/mp4" />
-            <source src="/images/IMG_6551.mov" type="video/quicktime" />
+            <source src={heroVideo} type="video/mp4" />
+            <source src={heroVideo} type="video/quicktime" />
             Your browser does not support the video tag.
           </video>
           {/* Dark overlay for text readability */}
