@@ -462,3 +462,77 @@ def get_stats():
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@admin_bp.route('/api/init-admin-secure', methods=['POST'])
+def init_admin_secure():
+    """
+    Secure endpoint to initialize admin user on production.
+    Requires secret key for security.
+    Set environment variables: ADMIN_INIT_SECRET, ADMIN_INIT_PASSWORD
+    """
+    try:
+        import os
+        data = request.get_json()
+        secret = data.get('secret')
+        
+        # Security check - must provide correct secret from environment
+        INIT_SECRET = os.environ.get('ADMIN_INIT_SECRET')
+        if not INIT_SECRET or secret != INIT_SECRET:
+            return jsonify({'error': 'Unauthorized - invalid secret or not configured'}), 401
+        
+        # Admin credentials from environment variables
+        username = os.environ.get('ADMIN_USERNAME', 'admin')
+        password = os.environ.get('ADMIN_INIT_PASSWORD')
+        email = os.environ.get('ADMIN_EMAIL', 'admin@sanbud.pl')
+        
+        if not password:
+            return jsonify({'error': 'Server configuration error - ADMIN_INIT_PASSWORD not set'}), 500
+        
+        # Check if admin exists
+        existing_admin = Admin.query.filter_by(username=username).first()
+        
+        if existing_admin:
+            # Reset password and ensure active
+            existing_admin.set_password(password)
+            existing_admin.is_active = True
+            existing_admin.is_super_admin = True
+            db.session.commit()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Admin password reset successfully',
+                'admin': {
+                    'username': username,
+                    'email': email,
+                    'created_at': existing_admin.created_at.isoformat() if existing_admin.created_at else None
+                }
+            }), 200
+        else:
+            # Create new admin
+            admin = Admin(
+                username=username,
+                email=email,
+                first_name='Admin',
+                last_name='SanBud',
+                is_active=True,
+                is_super_admin=True
+            )
+            admin.set_password(password)
+            
+            db.session.add(admin)
+            db.session.commit()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Admin user created successfully',
+                'admin': {
+                    'username': username,
+                    'email': email,
+                    'created_at': admin.created_at.isoformat() if admin.created_at else None
+                }
+            }), 201
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500

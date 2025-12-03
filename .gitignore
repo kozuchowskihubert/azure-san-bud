@@ -65,6 +65,12 @@ scripts/*password*
 scripts/.env*
 scripts/azure-init-admin.sh
 scripts/init-admin-production.sh
+scripts/init-admin-azure.sh
+
+# Admin initialization scripts with hardcoded credentials
+setup_admin_azure.py
+init_admin_production.py
+ADMIN_SETUP_GUIDE.md
 
 # Deployment artifacts
 deployment.zip
