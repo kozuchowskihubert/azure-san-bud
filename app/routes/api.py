@@ -297,3 +297,56 @@ def health_check():
         'status': 'healthy',
         'timestamp': datetime.utcnow().isoformat()
     }), 200
+
+
+@bp.route('/init-db', methods=['POST'])
+def init_database():
+    """Initialize database tables - TEMPORARY ENDPOINT."""
+    from sqlalchemy import inspect
+    
+    try:
+        # Import all models to ensure they're registered
+        from app.models.appointment import Appointment
+        from app.models.service import Service
+        from app.models.customer import Customer
+        from app.models.message import Message
+        from app.models.admin import Admin
+        
+        current_app.logger.info("Checking database tables...")
+        
+        # Get current tables
+        inspector = inspect(db.engine)
+        existing_tables = inspector.get_table_names()
+        current_app.logger.info(f"Existing tables: {existing_tables}")
+        
+        # Create all tables
+        current_app.logger.info("Creating missing tables...")
+        db.create_all()
+        
+        # Check tables after creation
+        inspector = inspect(db.engine)
+        final_tables = inspector.get_table_names()
+        current_app.logger.info(f"Final tables: {final_tables}")
+        
+        required_tables = ['customers', 'services', 'appointments', 'messages', 'admins']
+        missing_tables = [table for table in required_tables if table not in final_tables]
+        
+        if missing_tables:
+            return jsonify({
+                'success': False,
+                'error': f'Still missing tables: {missing_tables}',
+                'existing_tables': final_tables
+            }), 500
+        else:
+            return jsonify({
+                'success': True,
+                'message': 'All required tables created successfully!',
+                'tables': final_tables
+            }), 200
+            
+    except Exception as e:
+        current_app.logger.error(f'Database initialization error: {str(e)}')
+        return jsonify({
+            'success': False,
+            'error': f'Database error: {str(e)}'
+        }), 500
