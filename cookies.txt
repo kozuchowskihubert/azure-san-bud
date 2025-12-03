@@ -4,4 +4,3 @@
 
 #HttpOnly_.app-sanbud-api-prod.azurewebsites.net	TRUE	/	TRUE	0	ARRAffinitySameSite	acfa2be2f8b2d7e64ecdf07d4bd819e226b82579bb14c7f9a5a6e221eb0fd7e1
 #HttpOnly_.app-sanbud-api-prod.azurewebsites.net	TRUE	/	TRUE	0	ARRAffinity	acfa2be2f8b2d7e64ecdf07d4bd819e226b82579bb14c7f9a5a6e221eb0fd7e1
-#HttpOnly_app-sanbud-api-prod.azurewebsites.net	FALSE	/	FALSE	0	session	.eJyrVkpMyc3Mi89MUbIy1IFySotTi_ISc1OVrCACSjpKmcXxxaUFqUXxEAGrkqLS1FoAk48V2A.aTBj5A.bjVd-vLoZv8nw5gnLVHwjQRyH_I
