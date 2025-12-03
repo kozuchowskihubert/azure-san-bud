@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { buildApiUrl } from '@/utils/api';
+import { authenticatedFetch, getCurrentAdmin, isAuthenticated } from '@/utils/auth';
 
 interface Admin {
   id: number;
@@ -31,14 +32,26 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check if user is authenticated
+    if (!isAuthenticated()) {
+      router.push('/admin/login');
+      return;
+    }
+    
+    // Load admin from localStorage
+    const currentAdmin = getCurrentAdmin();
+    if (currentAdmin) {
+      setAdmin(currentAdmin);
+    }
+    
     checkAuth();
     loadStats();
   }, []);
 
   const checkAuth = async () => {
     try {
-      const response = await fetch(buildApiUrl('admin/api/me'), {
-        credentials: 'include',
+      const response = await authenticatedFetch('admin/api/me', {
+        method: 'GET',
       });
 
       if (response.ok) {
@@ -57,8 +70,8 @@ export default function AdminDashboard() {
 
   const loadStats = async () => {
     try {
-      const response = await fetch(buildApiUrl('admin/api/stats'), {
-        credentials: 'include',
+      const response = await authenticatedFetch('admin/api/stats', {
+        method: 'GET',
       });
 
       if (response.ok) {
