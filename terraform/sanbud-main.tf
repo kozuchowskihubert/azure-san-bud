@@ -140,6 +140,16 @@ resource "azurerm_linux_web_app" "api" {
     "ADMIN_INIT_PASSWORD" = var.admin_init_password
     "ADMIN_USERNAME"      = var.admin_username
     "ADMIN_EMAIL"         = var.admin_email
+    
+    # SMTP Email Configuration
+    "SMTP_HOST"        = var.smtp_host
+    "SMTP_PORT"        = var.smtp_port
+    "SMTP_USER"        = var.smtp_user
+    "SMTP_PASS"        = var.smtp_password
+    "SMTP_FROM_EMAIL"  = var.smtp_from_email
+    "SMTP_FROM_NAME"   = var.smtp_from_name
+    "CONTACT_EMAIL"    = var.contact_email
+    "BOOKING_EMAIL"    = var.booking_email
   }
   
   identity {

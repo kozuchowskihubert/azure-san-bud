@@ -170,12 +170,14 @@ variable "admin_init_secret" {
   description = "Secret key for admin initialization endpoint"
   type        = string
   sensitive   = true
+  default     = "SanBud2025InitSecret!Zaj"
 }
 
 variable "admin_init_password" {
   description = "Initial admin password"
   type        = string
   sensitive   = true
+  default     = "SanBud2025!InitAdmin!Zaj"
 }
 
 variable "admin_username" {
@@ -188,4 +190,54 @@ variable "admin_email" {
   description = "Admin email address"
   type        = string
   default     = "admin@sanbud.pl"
+}
+
+# SMTP Configuration
+variable "smtp_host" {
+  description = "SMTP server host"
+  type        = string
+  default     = "smtp.gmail.com"
+}
+
+variable "smtp_port" {
+  description = "SMTP server port"
+  type        = number
+  default     = 587
+}
+
+variable "smtp_user" {
+  description = "SMTP username (email)"
+  type        = string
+  sensitive   = true
+  default     = "sanbud.kontakt@gmail.com"
+}
+
+variable "smtp_password" {
+  description = "SMTP app password"
+  type        = string
+  sensitive   = true
+}
+
+variable "smtp_from_email" {
+  description = "Email sender address"
+  type        = string
+  default     = "sanbud.kontakt@gmail.com"
+}
+
+variable "smtp_from_name" {
+  description = "Email sender name"
+  type        = string
+  default     = "SanBud - Usługi Hydrauliczne"
+}
+
+variable "contact_email" {
+  description = "Contact email for receiving messages"
+  type        = string
+  default     = "sanbud.kontakt@gmail.com"
+}
+
+variable "booking_email" {
+  description = "Email for receiving booking notifications"
+  type        = string
+  default     = "sanbud.kontakt@gmail.com"
 }

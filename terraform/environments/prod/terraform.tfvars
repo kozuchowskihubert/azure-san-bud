@@ -1,52 +1,51 @@
-# Production Environment Configuration
+# SanBud Production Environment Configuration
+# Sensitive values should be passed via GitHub Secrets
 
 environment = "prod"
-location    = "eastus"
+location    = "westeurope"
+location_secondary = "northeurope"
 
-# Resource Naming
-resource_group_name    = "rg-sanitary-services-prod"
-postgresql_server_name = "psql-sanitary-prod"
-database_name          = "sanitary_services"
-app_service_plan_name  = "plan-sanitary-prod"
-app_service_name       = "app-sanitary-prod"
-key_vault_name         = "kv-sanitary-prod"
-vnet_name              = "vnet-sanitary-prod"
-subnet_name            = "subnet-app-prod"
+# Database Configuration
+db_name           = "sanbud_prod_db"
+db_admin_user     = "sanbud_admin"
+# db_admin_password - Set via GitHub Secret: TF_VAR_db_admin_password
 
-# PostgreSQL Configuration
-postgresql_admin_user         = "adminuser"
-postgresql_version            = "14"
-postgresql_sku_name           = "B_Standard_B1ms"
-postgresql_storage_mb         = 32768
-backup_retention_days         = 30
-geo_redundant_backup_enabled  = true
+# App Service
+app_service_sku_name = "B1"
+app_service_sku_tier = "Basic"
+python_version       = "3.11"
 
-# Allowed IP Addresses for PostgreSQL
-allowed_ip_addresses = [
-  # {
-  #   name             = "Office"
-  #   start_ip_address = "1.2.3.4"
-  #   end_ip_address   = "1.2.3.4"
-  # }
-]
-
-# App Service Configuration
-app_service_sku = "B1"  # Basic tier - upgrade to P1V2 or higher for production workloads
-python_version  = "3.11"
+# Static Web App
+enable_static_web_app = true
+static_web_app_sku    = "Free"
 
 # Features
-enable_vnet_integration = false  # Set to true to enable VNet integration
-enable_key_vault        = false  # Set to true to enable Azure Key Vault
+enable_app_insights = true
+enable_key_vault    = false
+enable_vnet         = false
+enable_cdn          = false
 
-# Networking Configuration (if VNet enabled)
-vnet_address_space     = ["10.0.0.0/16"]
-subnet_address_prefix  = ["10.0.1.0/24"]
+# Admin Configuration
+admin_username = "admin"
+admin_email    = "admin@sanbud.pl"
+# admin_init_secret - Set via GitHub Secret: TF_VAR_admin_init_secret
+# admin_init_password - Set via GitHub Secret: TF_VAR_admin_init_password
+
+# SMTP Configuration  
+smtp_host       = "smtp.gmail.com"
+smtp_port       = 587
+smtp_user       = "sanbud.kontakt@gmail.com"
+smtp_from_email = "sanbud.kontakt@gmail.com"
+smtp_from_name  = "SanBud - Usługi Hydrauliczne"
+contact_email   = "sanbud.kontakt@gmail.com"
+booking_email   = "sanbud.kontakt@gmail.com"
+# smtp_password - Set via GitHub Secret: TF_VAR_smtp_password
 
 # Tags
 tags = {
+  Project     = "SanBud Hydraulika"
   Environment = "Production"
-  Project     = "SanitaryServices"
   ManagedBy   = "Terraform"
+  Company     = "SanBud"
   CostCenter  = "Operations"
-  Owner       = "DevOps"
 }

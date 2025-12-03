@@ -396,12 +396,56 @@ jobs:
           echo "- [Health Endpoint](https://api.sanbud24.pl/api/health)" >> $GITHUB_STEP_SUMMARY
 
   # ---------------------------------------------------------------------------
+  # Stage 5.5: Initialize Admin User
+  # ---------------------------------------------------------------------------
+  init-admin:
+    name: Initialize Admin User
+    runs-on: ubuntu-latest
+    needs: [deploy-backend]
+    if: success()
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: 🔧 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      
+      - name: 🔐 Initialize Admin User
+        env:
+          API_URL: https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net
+          ADMIN_INIT_SECRET: ${{ secrets.ADMIN_INIT_SECRET }}
+          ADMIN_INIT_PASSWORD: ${{ secrets.ADMIN_INIT_PASSWORD }}
+        run: |
+          echo "🚀 Initializing admin user..."
+          python scripts/python/admin/post_deploy_init.py
+      
+      - name: 📊 Admin Initialization Summary
+        if: always()
+        run: |
+          echo "### 🔐 Admin Initialization" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Admin user initialization attempted." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Login URL:** https://sanbud24.pl/admin/login" >> $GITHUB_STEP_SUMMARY
+          echo "**Username:** admin" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ **Security:** Change the default password after first login!" >> $GITHUB_STEP_SUMMARY
+
+  # ---------------------------------------------------------------------------
   # Stage 6: Notify
   # ---------------------------------------------------------------------------
   notify:
     name: Notify Deployment Status
     runs-on: ubuntu-latest
-    needs: [validate, deploy-backend, deploy-frontend, verify-deployment]
+    needs: [validate, deploy-backend, deploy-frontend, verify-deployment, init-admin]
     if: always()
     
     steps:
