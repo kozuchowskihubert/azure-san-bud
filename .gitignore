@@ -51,6 +51,13 @@ instance/
 # Logs
 *.log
 logs/
+LogFiles/
+app-logs.zip
+backend.log
+
+# Deployment artifacts
+deployment.zip
+deployments/
 
 # OS
 .DS_Store
