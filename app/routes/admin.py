@@ -339,8 +339,10 @@ def create_service():
         service = Service(
             name=data['name'],
             description=data.get('description', ''),
-            duration=data.get('duration', 60),
-            price=data.get('price', 0.0)
+            category=data.get('category', 'general'),
+            duration_minutes=data.get('duration', 60),
+            price=data.get('price', 0.0),
+            is_active=data.get('is_active', True)
         )
         
         db.session.add(service)
@@ -382,7 +384,7 @@ def update_service(service_id):
         if 'description' in data:
             service.description = data['description']
         if 'duration' in data:
-            service.duration = data['duration']
+            service.duration_minutes = data['duration']
         if 'price' in data:
             service.price = data['price']
         
@@ -605,7 +607,7 @@ def get_appointments():
                 appt_dict['service'] = {
                     'id': service.id,
                     'name': service.name,
-                    'duration': service.duration,
+                    'duration': service.duration_minutes,
                     'price': float(service.price) if service.price else 0
                 }
             
