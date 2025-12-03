@@ -26,29 +26,28 @@ def create_app(config_name='production'):
     app.config['SESSION_COOKIE_PATH'] = '/'         # Cookie available for all paths
     
     # Enable CORS for production domain, Azure Static Web App and local development
-    CORS(app, resources={
-        r"/*": {
-            "origins": [
-                # Production domain
-                "https://sanbud24.pl",
-                "https://www.sanbud24.pl",
-                "https://api.sanbud24.pl",
-                # Local development
-                "http://localhost:3000",
-                "http://localhost:3001",
-                "http://localhost:3002",
-                "http://localhost:3003",
-                "http://localhost:5002",
-                # Azure Static Web Apps
-                "https://delightful-ocean-078488b03.3.azurestaticapps.net",
-                "https://swa-sanbud-web-dev.azurestaticapps.net"
-            ],
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"],
-            "supports_credentials": True,
-            "expose_headers": ["Content-Range", "X-Content-Range"]
-        }
-    })
+    # Note: supports_credentials MUST be set at top level for Access-Control-Allow-Credentials header
+    CORS(app, 
+         origins=[
+             # Production domain
+             "https://sanbud24.pl",
+             "https://www.sanbud24.pl",
+             "https://api.sanbud24.pl",
+             # Local development
+             "http://localhost:3000",
+             "http://localhost:3001",
+             "http://localhost:3002",
+             "http://localhost:3003",
+             "http://localhost:5002",
+             # Azure Static Web Apps
+             "https://delightful-ocean-078488b03.3.azurestaticapps.net",
+             "https://swa-sanbud-web-dev.azurestaticapps.net"
+         ],
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+         allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
+         supports_credentials=True,
+         expose_headers=["Content-Range", "X-Content-Range"]
+    )
     
     # Initialize extensions
     db.init_app(app)
