@@ -2,15 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
 
 export default function FloatingAdminButton() {
-  const locale = useLocale();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Link
-      href={`/${locale}/admin`}
+      href="/admin/login"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="fixed bottom-6 right-6 z-40 group"
