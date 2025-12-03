@@ -55,9 +55,14 @@ LogFiles/
 app-logs.zip
 backend.log
 
+# Archive and old files
+archive/
+
 # Deployment artifacts
 deployment.zip
 deployments/
+*.xml
+deployment-credentials.local.sh
 
 # OS
 .DS_Store

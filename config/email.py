@@ -147,6 +147,12 @@ def send_contact_email(name: str, email: str, phone: str, message: str) -> bool:
     # Fallback to logging if real email fails
     print(f"⚠️ Real email failed, using logging fallback")
     
+    # Format message for HTML (replace newlines with <br>)
+    formatted_message = message.replace('\n', '<br>')
+    
+    # Get current time
+    current_time = datetime.now().strftime('%d.%m.%Y %H:%M')
+    
     # Create email content
     html_content = f"""
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -164,11 +170,11 @@ def send_contact_email(name: str, email: str, phone: str, message: str) -> bool:
             
             <h3 style="color: #f97316; margin-top: 25px;">💬 Wiadomość:</h3>
             <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #16a34a;">
-                {message.replace('\\n', '<br>')}
+                {formatted_message}
             </div>
             
             <p style="margin-top: 25px; color: #666; font-size: 14px;">
-                <strong>🕐 Data:</strong> {datetime.now().strftime('%d.%m.%Y %H:%M')}<br>
+                <strong>🕐 Data:</strong> {current_time}<br>
                 <strong>🌐 Źródło:</strong> sanbud.pl
             </p>
         </div>
