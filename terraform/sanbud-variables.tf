@@ -164,3 +164,28 @@ variable "allowed_ips" {
   type        = list(string)
   default     = []
 }
+
+# Admin User Configuration
+variable "admin_init_secret" {
+  description = "Secret key for admin initialization endpoint"
+  type        = string
+  sensitive   = true
+}
+
+variable "admin_init_password" {
+  description = "Initial admin password"
+  type        = string
+  sensitive   = true
+}
+
+variable "admin_username" {
+  description = "Admin username"
+  type        = string
+  default     = "admin"
+}
+
+variable "admin_email" {
+  description = "Admin email address"
+  type        = string
+  default     = "admin@sanbud.pl"
+}

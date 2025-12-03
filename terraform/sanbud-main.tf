@@ -132,6 +132,12 @@ resource "azurerm_linux_web_app" "api" {
     "FLASK_ENV"                      = var.environment
     "DATABASE_URL"                   = "postgresql://${var.db_admin_user}:${var.db_admin_password}@${azurerm_postgresql_flexible_server.main.fqdn}:5432/${var.db_name}"
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = var.enable_app_insights ? azurerm_application_insights.main[0].connection_string : ""
+    
+    # Admin initialization secrets (should be rotated after first use)
+    "ADMIN_INIT_SECRET"   = var.admin_init_secret
+    "ADMIN_INIT_PASSWORD" = var.admin_init_password
+    "ADMIN_USERNAME"      = var.admin_username
+    "ADMIN_EMAIL"         = var.admin_email
   }
   
   identity {

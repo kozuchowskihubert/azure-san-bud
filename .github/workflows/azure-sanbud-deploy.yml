@@ -211,7 +211,20 @@ jobs:
             --timeout 600
           echo "✅ Deployment package uploaded"
       
-      - name: 🔄 Restart Web App
+      - name: � Configure Admin Secrets
+        run: |
+          echo "Setting admin initialization environment variables..."
+          az webapp config appsettings set \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --settings \
+              ADMIN_INIT_SECRET="${{ secrets.ADMIN_INIT_SECRET }}" \
+              ADMIN_INIT_PASSWORD="${{ secrets.ADMIN_INIT_PASSWORD }}" \
+              ADMIN_USERNAME="admin" \
+              ADMIN_EMAIL="admin@sanbud.pl"
+          echo "✅ Admin secrets configured"
+      
+      - name: �🔄 Restart Web App
         run: |
           echo "Restarting Web App..."
           az webapp restart \
