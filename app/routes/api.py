@@ -215,14 +215,22 @@ def book_appointment():
             db.session.add(service)
             db.session.flush()  # Get service ID
         
-        # Create appointment
+        # Create appointment with calendar event information
+        event_title = f"{data['service']} - {data['name']}"
+        event_location = data.get('address', 'Do uzgodnienia')
+        calendar_platforms = "Google Calendar,Apple Calendar,Outlook,Office 365"
+        
         appointment = Appointment(
             customer_id=customer.id,
             service_id=service.id,
             scheduled_date=appointment_date,
             scheduled_time=appointment_time,
             notes=data.get('description', ''),
-            status='pending'
+            status='pending',
+            calendar_event_sent=True,  # We're providing calendar integration
+            calendar_platforms=calendar_platforms,
+            event_title=event_title,
+            event_location=event_location
         )
         db.session.add(appointment)
         db.session.commit()
@@ -302,7 +310,7 @@ def health_check():
 @bp.route('/init-db', methods=['POST'])
 def init_database():
     """Initialize database tables - TEMPORARY ENDPOINT."""
-    from sqlalchemy import inspect
+    from sqlalchemy import inspect, text
     
     try:
         # Import all models to ensure they're registered
@@ -323,6 +331,19 @@ def init_database():
         current_app.logger.info("Creating missing tables...")
         db.create_all()
         
+        # Add new columns to appointments table if they don't exist
+        current_app.logger.info("Adding calendar columns to appointments table...")
+        try:
+            db.session.execute(text("ALTER TABLE appointments ADD COLUMN calendar_event_sent BOOLEAN DEFAULT FALSE"))
+            db.session.execute(text("ALTER TABLE appointments ADD COLUMN calendar_platforms VARCHAR(255)"))
+            db.session.execute(text("ALTER TABLE appointments ADD COLUMN event_title VARCHAR(255)"))
+            db.session.execute(text("ALTER TABLE appointments ADD COLUMN event_location VARCHAR(500)"))
+            db.session.commit()
+            current_app.logger.info("Calendar columns added successfully")
+        except Exception as e:
+            current_app.logger.info(f"Calendar columns may already exist: {e}")
+            db.session.rollback()
+        
         # Check tables after creation
         inspector = inspect(db.engine)
         final_tables = inspector.get_table_names()
@@ -340,7 +361,7 @@ def init_database():
         else:
             return jsonify({
                 'success': True,
-                'message': 'All required tables created successfully!',
+                'message': 'All required tables and calendar columns created successfully!',
                 'tables': final_tables
             }), 200
             

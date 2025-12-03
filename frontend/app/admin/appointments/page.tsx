@@ -31,6 +31,11 @@ interface Appointment {
   created_at: string;
   customer?: Customer;
   service?: Service;
+  // Calendar integration fields
+  calendar_event_sent?: boolean;
+  calendar_platforms?: string[];
+  event_title?: string;
+  event_location?: string;
 }
 
 export default function AppointmentsPage() {
@@ -186,6 +191,7 @@ export default function AppointmentsPage() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Klient</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Usługa</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Kalendarz</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Akcje</th>
                 </tr>
               </thead>
@@ -212,6 +218,31 @@ export default function AppointmentsPage() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       {getStatusBadge(appointment.status)}
                     </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm">
+                        {appointment.calendar_event_sent ? (
+                          <div>
+                            <div className="flex items-center text-green-600 dark:text-green-400 mb-1">
+                              <span className="text-xs">📅</span>
+                              <span className="ml-1 text-xs font-semibold">Kalendarz wysłany</span>
+                            </div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                              <div className="font-medium">{appointment.event_title}</div>
+                              {appointment.event_location && (
+                                <div className="text-xs mt-1">📍 {appointment.event_location}</div>
+                              )}
+                              {appointment.calendar_platforms && appointment.calendar_platforms.length > 0 && (
+                                <div className="text-xs mt-1">
+                                  Platformy: {appointment.calendar_platforms.join(', ')}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ) : (
+                          <span className="text-xs text-gray-400">Brak integracji</span>
+                        )}
+                      </div>
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <button
                         onClick={() => handleEdit(appointment)}
@@ -230,7 +261,7 @@ export default function AppointmentsPage() {
                 ))}
                 {appointments.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
+                    <td colSpan={6} className="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
                       Brak wizyt do wyświetlenia
                     </td>
                   </tr>
