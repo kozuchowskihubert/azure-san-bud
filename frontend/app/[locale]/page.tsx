@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
+import Image from 'next/image';
 import BookingCalendar from '@/components/BookingCalendar';
 import RealizationsMap from '@/components/RealizationsMap';
 import { getRecentPosts } from '@/data/blogPosts';
@@ -10,17 +11,17 @@ import { getRecentPosts } from '@/data/blogPosts';
 export default function HomePage() {
   const locale = useLocale();
   const isEnglish = locale === 'en';
+  const recentPosts = getRecentPosts(3);
 
   // Form state
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    service: '',
+    service: 'Instalacje wodno-kanalizacyjne',
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,578 +35,705 @@ export default function HomePage() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
+      if (response.ok) {
         setStatus('success');
-        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', service: 'Instalacje wodno-kanalizacyjne', message: '' });
+        setTimeout(() => setStatus('idle'), 5000);
       } else {
-        throw new Error(data.message || 'Error sending');
+        setStatus('error');
       }
     } catch (error) {
       setStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Please try again');
     }
   };
 
   return (
     <div className="min-h-screen bg-white">
-      
-      {/* HERO SECTION - Central Heating Focus */}
-      <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-teal-900">
-        {/* Animated Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}></div>
-        </div>
-
-        <div className="container mx-auto px-4 py-20 relative z-10">
-          <div className="max-w-5xl mx-auto text-center text-white">
-            
+      {/* HERO SECTION - Full screen with gradient overlay */}
+      <section className="hero relative bg-cover bg-center" style={{
+        backgroundImage: 'url(/images/hero-bg.jpg)',
+        minHeight: 'calc(100vh - 80px)'
+      }}>
+        <div className="hero-overlay"></div>
+        
+        <div className="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="max-w-4xl">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full mb-8 animate-fade-in">
-              <svg className="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
-              </svg>
-              <span className="text-sm font-semibold">
-                {isEnglish ? 'Certified Plumbing & Heating Specialists' : 'Certyfikowani Specjaliści Instalacji Sanitarnych'}
-              </span>
+            <div className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-light rounded-full text-white font-semibold animate-fade-in-down">
+              ✓ {isEnglish ? 'Certified Professionals Since 1999' : 'Certyfikowani Profesjonaliści od 1999'}
             </div>
-
-            {/* Main Heading */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight animate-slide-up">
-              <span className="block mb-2">
-                {isEnglish ? 'Plumbing, Heating' : 'Instalacje Sanitarne'}
-              </span>
-              <span className="block bg-gradient-to-r from-orange-400 via-orange-300 to-yellow-300 bg-clip-text text-transparent">
-                {isEnglish ? '& Gas Systems' : 'Ogrzewanie i Gaz'}
-              </span>
+            
+            {/* Main Headline */}
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight animate-fade-in-up">
+              {isEnglish ? (
+                <>Plumbing<br />Our <span className="gradient-text-accent">Passion</span></>
+              ) : (
+                <>Hydraulika<br />Naszą <span className="text-green-400">Pasją</span></>
+              )}
             </h1>
             
-            {/* Subheading */}
-            <p className="text-xl md:text-2xl mb-10 font-light text-blue-100 max-w-3xl mx-auto animate-slide-up animation-delay-200">
+            {/* Subheadline */}
+            <p className="text-xl md:text-2xl text-white/95 mb-10 leading-relaxed max-w-3xl animate-fade-in-up">
               {isEnglish 
-                ? 'Water & sewage systems, gas installations, underfloor heating, boiler rooms & mini excavator services'
-                : 'Instalacje wodno-kanalizacyjne, gazowe, ogrzewanie podłogowe, kotłownie i usługi minikoparką'}
+                ? 'Professional water & sewage installations, gas systems, underfloor heating, boiler rooms. 25+ years of experience in Mazowsze region.'
+                : 'Profesjonalne instalacje wodno-kanalizacyjne, gazowe, ogrzewanie podłogowe, kotłownie. 25+ lat doświadczenia w województwie mazowieckim.'}
             </p>
             
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 justify-center mb-12 animate-slide-up animation-delay-300">
+            <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up">
               <a 
-                href="#booking" 
-                className="group px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-2xl hover:shadow-orange-500/50 hover:scale-105 flex items-center gap-2"
+                href="#contact" 
+                className="btn btn-accent btn-xl group"
               >
-                🔥 {isEnglish ? 'Schedule Installation' : 'Umów Montaż'}
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span>{isEnglish ? 'Free Quote' : 'Darmowa Wycena'}</span>
+                <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </a>
+              
               <a 
-                href="tel:503691808"
-                className="group px-8 py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 hover:bg-white hover:text-blue-900 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-2xl hover:scale-105 flex items-center gap-2"
+                href="tel:503691808" 
+                className="btn btn-outline btn-xl border-2 border-white text-white hover:bg-white hover:text-blue-600"
               >
-                📞 503-691-808
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <span>{isEnglish ? 'Call Now: 503 691 808' : 'Zadzwoń: 503 691 808'}</span>
               </a>
             </div>
+          </div>
+        </div>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </section>
 
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto animate-fade-in animation-delay-400">
-              <div className="text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all">
-                <div className="text-4xl font-black text-orange-400 mb-2">2000+</div>
-                <div className="text-sm text-blue-100">{isEnglish ? 'Installations' : 'Instalacji'}</div>
+      {/* WHY SAN-BUD SECTION - Trust indicators */}
+      <section className="section bg-gray-50">
+        <div className="container-custom">
+          <div className="section-header">
+            <h2 className="section-title">
+              {isEnglish ? 'Industry Leader in Plumbing & Heating' : 'Lider Branży Hydraulicznej'}
+            </h2>
+            <p className="section-subtitle">
+              {isEnglish 
+                ? 'Experience, professionalism, and individual approach to each client is what sets us apart from other companies'
+                : 'Doświadczenie, profesjonalizm i indywidualne podejście do klienta to coś, co wyróżnia nas na tle innych firm'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Experience */}
+            <div className="card card-hover p-8 text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-4xl">🏆</span>
               </div>
-              <div className="text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all">
-                <div className="text-4xl font-black text-orange-400 mb-2">15</div>
-                <div className="text-sm text-blue-100">{isEnglish ? 'Years' : 'Lat'}</div>
+              <h3 className="text-3xl font-bold text-blue-600 mb-2">25+</h3>
+              <p className="text-lg font-semibold text-gray-900 mb-2">
+                {isEnglish ? 'Years of Experience' : 'Lat Doświadczenia'}
+              </p>
+              <p className="text-gray-600">
+                {isEnglish ? 'Serving Mazowsze since 1999' : 'Działamy w Mazowszu od 1999'}
+              </p>
+            </div>
+
+            {/* Certifications */}
+            <div className="card card-hover p-8 text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-secondary rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-4xl">📜</span>
               </div>
-              <div className="text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all">
-                <div className="text-4xl font-black text-orange-400 mb-2">24/7</div>
-                <div className="text-sm text-blue-100">{isEnglish ? 'Support' : 'Serwis'}</div>
+              <h3 className="text-3xl font-bold text-green-600 mb-2">100%</h3>
+              <p className="text-lg font-semibold text-gray-900 mb-2">
+                {isEnglish ? 'Certified & Licensed' : 'Certyfikowani'}
+              </p>
+              <p className="text-gray-600">
+                {isEnglish ? 'Gas, water & heating qualifications' : 'Uprawnienia gazowe, wodne i c.o.'}
+              </p>
+            </div>
+
+            {/* Warranty */}
+            <div className="card card-hover p-8 text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-accent rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-4xl">🛡️</span>
               </div>
-              <div className="text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all">
-                <div className="text-4xl font-black text-orange-400 mb-2">98%</div>
-                <div className="text-sm text-blue-100">{isEnglish ? 'Satisfaction' : 'Zadowolenie'}</div>
+              <h3 className="text-3xl font-bold text-orange-600 mb-2">5</h3>
+              <p className="text-lg font-semibold text-gray-900 mb-2">
+                {isEnglish ? 'Years Warranty' : 'Lat Gwarancji'}
+              </p>
+              <p className="text-gray-600">
+                {isEnglish ? 'On all installations & parts' : 'Na instalacje i części'}
+              </p>
+            </div>
+
+            {/* Availability */}
+            <div className="card card-hover p-8 text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-4xl text-white">⚡</span>
               </div>
+              <h3 className="text-3xl font-bold text-blue-600 mb-2">24/7</h3>
+              <p className="text-lg font-semibold text-gray-900 mb-2">
+                {isEnglish ? 'Emergency Service' : 'Pogotowie Hydrauliczne'}
+              </p>
+              <p className="text-gray-600">
+                {isEnglish ? 'Fast response, always available' : 'Szybki dojazd, zawsze dostępni'}
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* HEATING SPECIALIZATIONS */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
-              {isEnglish ? 'Our Professional Services' : 'Nasze Profesjonalne Usługi'}
+      {/* SERVICES SECTION - 9 SAN-BUD services */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="section-header">
+            <div className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-semibold mb-4">
+              {isEnglish ? 'OUR SERVICES' : 'NASZA OFERTA'}
+            </div>
+            <h2 className="section-title">
+              {isEnglish ? 'Professional Hydraulic Services' : 'Profesjonalne Usługi Hydrauliczne'}
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="section-subtitle">
               {isEnglish 
-                ? 'Complete solutions for plumbing, heating, gas systems and excavation work'
-                : 'Kompleksowe rozwiązania w zakresie instalacji sanitarnych, grzewczych, gazowych i prac ziemnych'}
+                ? 'We will design and install an efficient system tailored to your needs that ensures comfort, positively impacts the environment and increases your wallet\'s resources.'
+                : 'Specjalnie dla Ciebie zaprojektujemy i wykonamy wydajną instalację hydrauliczną, która zapewni Ci komfort, pozytywnie wpłynie na środowisko naturalne oraz zwiększy zasoby Twojego portfela.'}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Instalacje wodno-kanalizacyjne */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-blue-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">💧</span>
+            {/* Service 1: Water & Sewage */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-blue-500 to-blue-600">
+                <span className="text-4xl text-white">💧</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Water & Sewage Systems' : 'Instalacje Wodno-Kanalizacyjne'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'Water & Sewage Systems' : 'Instalacje Wodno-Kanalizacyjne'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Professional installation of water supply and sewage systems'
-                  : 'Profesjonalny montaż instalacji wodnych i kanalizacyjnych'}
+                  ? 'Complete installation of water supply and sewage systems for residential and commercial buildings'
+                  : 'Kompleksowy montaż instalacji wodnych i kanalizacyjnych dla budynków mieszkalnych i komercyjnych'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-blue-500 mr-2">✓</span>
-                  {isEnglish ? 'Water supply systems' : 'Instalacje wodne'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-blue-500 mr-2">✓</span>
-                  {isEnglish ? 'Sewage systems' : 'Kanalizacja'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-blue-500 mr-2">✓</span>
-                  {isEnglish ? 'Bathroom installations' : 'Instalacje łazienkowe'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              <Link href={`/${locale}/services`} className="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
-            {/* Instalacje gazowe */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-red-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">🔥</span>
+            {/* Service 2: Gas Installations */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-red-500 to-red-600">
+                <span className="text-4xl text-white">🔥</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Gas Installations' : 'Instalacje Gazowe'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'Gas Installations' : 'Instalacje Gazowe'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Safe installation and maintenance of gas systems'
-                  : 'Bezpieczny montaż i konserwacja instalacji gazowych'}
+                  ? 'Safe installation and modernization of gas systems by certified specialists'
+                  : 'Bezpieczny montaż i modernizacja instalacji gazowych przez certyfikowanych specjalistów'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-red-500 mr-2">✓</span>
-                  {isEnglish ? 'Gas pipeline installation' : 'Montaż przyłączy gazowych'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-red-500 mr-2">✓</span>
-                  {isEnglish ? 'Internal gas systems' : 'Instalacje wewnętrzne'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-red-500 mr-2">✓</span>
-                  {isEnglish ? 'Certified installers' : 'Certyfikowani instalatorzy'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-red-600 font-semibold hover:text-red-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              <Link href={`/${locale}/services`} className="text-red-600 font-semibold hover:text-red-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
-            {/* Ogrzewanie Podłogowe */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-orange-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">🌡️</span>
+            {/* Service 3: Underfloor Heating */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-orange-500 to-orange-600">
+                <span className="text-4xl text-white">🌡️</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Underfloor Heating' : 'Ogrzewanie Podłogowe'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'Underfloor Heating' : 'Ogrzewanie Podłogowe'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Modern underfloor heating systems for maximum comfort'
-                  : 'Nowoczesne systemy ogrzewania podłogowego dla maksymalnego komfortu'}
+                  ? 'Energy-efficient underfloor heating systems for modern, comfortable homes'
+                  : 'Energooszczędne systemy ogrzewania podłogowego dla nowoczesnych, komfortowych domów'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-orange-500 mr-2">✓</span>
-                  {isEnglish ? 'Electric & water systems' : 'Systemy elektryczne i wodne'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-orange-500 mr-2">✓</span>
-                  {isEnglish ? 'All floor types' : 'Wszystkie typy podłóg'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-orange-500 mr-2">✓</span>
-                  {isEnglish ? 'Energy efficient' : 'Energooszczędne'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-orange-600 font-semibold hover:text-orange-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              <Link href={`/${locale}/services`} className="text-orange-600 font-semibold hover:text-orange-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
-            {/* Modernizacja Kotłowni */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-purple-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">⚙️</span>
+            {/* Service 4: Boiler Room Modernization */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-purple-500 to-purple-600">
+                <span className="text-4xl text-white">⚙️</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Boiler Room Modernization' : 'Modernizacja Kotłowni'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'Boiler Room Modernization' : 'Modernizacja Kotłowni'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Upgrade your old boiler room to modern, efficient systems'
-                  : 'Modernizacja starych kotłowni na nowoczesne, wydajne systemy'}
+                  ? 'Upgrading old boiler rooms to modern, efficient heating systems'
+                  : 'Modernizacja starych kotłowni na nowoczesne, wydajne systemy grzewcze'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-purple-500 mr-2">✓</span>
-                  {isEnglish ? 'Energy audit' : 'Audyt energetyczny'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-purple-500 mr-2">✓</span>
-                  {isEnglish ? 'Pipe replacement' : 'Wymiana rur'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-purple-500 mr-2">✓</span>
-                  {isEnglish ? 'New radiators' : 'Nowe grzejniki'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-purple-600 dark:text-purple-400 font-semibold hover:text-purple-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              <Link href={`/${locale}/services`} className="text-purple-600 font-semibold hover:text-purple-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
-            {/* Montaż nowych kotłowni */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-amber-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">🏭</span>
+            {/* Service 5: New Boiler Room Installation */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-amber-500 to-amber-600">
+                <span className="text-4xl text-white">🏭</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'New Boiler Room Installation' : 'Montaż Nowych Kotłowni'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'New Boiler Rooms' : 'Montaż Nowych Kotłowni'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Complete installation of modern, energy-efficient boiler rooms'
-                  : 'Kompleksowy montaż nowoczesnych, energooszczędnych kotłowni'}
+                  ? 'Complete installation of modern boiler rooms with full automation'
+                  : 'Kompleksowy montaż nowoczesnych kotłowni z pełną automatyką'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-amber-500 mr-2">✓</span>
-                  {isEnglish ? 'Project design' : 'Projektowanie'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-amber-500 mr-2">✓</span>
-                  {isEnglish ? 'Installation & automation' : 'Montaż i automatyka'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-amber-500 mr-2">✓</span>
-                  {isEnglish ? 'Safety systems' : 'Systemy bezpieczeństwa'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-amber-600 dark:text-amber-400 font-semibold hover:text-amber-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              <Link href={`/${locale}/services`} className="text-amber-600 font-semibold hover:text-amber-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
-            {/* Serwis Piecy Gazowych */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-emerald-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">🔧</span>
+            {/* Service 6: Gas Furnace Service */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-emerald-500 to-emerald-600">
+                <span className="text-4xl text-white">🔧</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Gas Furnace Service' : 'Serwis Piecy Gazowych'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'Gas Furnace Service' : 'Serwis Piecy Gazowych'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Professional servicing and repairs of gas furnaces and boilers'
-                  : 'Profesjonalny serwis i naprawy pieców gazowych oraz kotłów'}
+                  ? 'Professional servicing and repairs of gas furnaces by certified technicians'
+                  : 'Profesjonalny serwis i naprawy pieców gazowych przez certyfikowanych techników'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-emerald-500 mr-2">✓</span>
-                  {isEnglish ? 'Certified technicians' : 'Certyfikowani technicy'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-emerald-500 mr-2">✓</span>
-                  {isEnglish ? 'Emergency repairs' : 'Awarie 24/7'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-emerald-500 mr-2">✓</span>
-                  {isEnglish ? 'Original parts' : 'Oryginalne części'}
-                </li>
-              </ul>
-              <a href="tel:503691808" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:text-emerald-700 flex items-center gap-2">
-                {isEnglish ? 'Call now' : 'Zadzwoń teraz'} →
+              <a href="tel:503691808" className="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Call now' : 'Zadzwoń teraz'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </a>
             </div>
 
-            {/* Przegląd instalacji Gazowych */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-yellow-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">📋</span>
+            {/* Service 7: Gas Installation Inspection */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-yellow-500 to-yellow-600">
+                <span className="text-4xl text-white">📋</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Gas Installation Inspection' : 'Przegląd Instalacji Gazowych'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'Gas System Inspection' : 'Przegląd Instalacji Gazowych'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
                   ? 'Mandatory safety inspections and certification of gas installations'
                   : 'Obowiązkowe przeglądy bezpieczeństwa i certyfikacja instalacji gazowych'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-yellow-500 mr-2">✓</span>
-                  {isEnglish ? 'Safety checks' : 'Kontrola szczelności'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-yellow-500 mr-2">✓</span>
-                  {isEnglish ? 'Official protocols' : 'Protokoły urzędowe'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-yellow-500 mr-2">✓</span>
-                  {isEnglish ? 'Compliance certificates' : 'Certyfikaty zgodności'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-yellow-600 dark:text-yellow-500 font-semibold hover:text-yellow-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              <Link href={`/${locale}/services`} className="text-yellow-600 font-semibold hover:text-yellow-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
-            {/* Montaż przydomowych oczyszczalni */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-lime-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-lime-500 to-lime-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">♻️</span>
+            {/* Service 8: Sewage Treatment Plants */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-lime-500 to-lime-600">
+                <span className="text-4xl text-white">♻️</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Sewage Treatment Plants' : 'Montaż Przydomowych Oczyszczalni'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'Sewage Treatment Plants' : 'Przydomowe Oczyszczalnie'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Installation of domestic sewage treatment plants for ecological wastewater management'
-                  : 'Instalacja przydomowych oczyszczalni ścieków dla ekologicznego gospodarowania wodami'}
+                  ? 'Ecological domestic sewage treatment plant installation and maintenance'
+                  : 'Montaż i serwis ekologicznych przydomowych oczyszczalni ścieków'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-lime-500 mr-2">✓</span>
-                  {isEnglish ? 'Site assessment' : 'Ocena terenu'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-lime-500 mr-2">✓</span>
-                  {isEnglish ? 'Full installation' : 'Kompleksowy montaż'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-lime-500 mr-2">✓</span>
-                  {isEnglish ? 'Service & maintenance' : 'Serwis i konserwacja'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-lime-600 dark:text-lime-500 font-semibold hover:text-lime-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              <Link href={`/${locale}/services`} className="text-lime-600 font-semibold hover:text-lime-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
-            {/* Usługi Minikoparką */}
-            <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-stone-500 hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-stone-500 to-stone-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
-                <span className="text-4xl">🚜</span>
+            {/* Service 9: Mini Excavator Services */}
+            <div className="service-card">
+              <div className="service-card-icon bg-gradient-to-br from-stone-500 to-stone-600">
+                <span className="text-4xl text-white">🚜</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">{isEnglish ? 'Mini Excavator Services' : 'Usługi Minikoparką'}</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                {isEnglish ? 'Mini Excavator Services' : 'Usługi Minikoparką'}
+              </h3>
               <p className="text-gray-600 mb-6">
                 {isEnglish 
-                  ? 'Excavation work for installations, foundations, and landscaping'
-                  : 'Prace ziemne pod instalacje, fundamenty oraz prace terenowe'}
+                  ? 'Excavation work for installations, foundations, and site leveling'
+                  : 'Prace ziemne pod instalacje, fundamenty oraz wyrównywanie terenu'}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <span className="text-stone-500 mr-2">✓</span>
-                  {isEnglish ? 'Trench digging' : 'Kopanie rowów'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-stone-500 mr-2">✓</span>
-                  {isEnglish ? 'Foundation work' : 'Prace fundamentowe'}
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <span className="text-stone-500 mr-2">✓</span>
-                  {isEnglish ? 'Site leveling' : 'Wyrównywanie terenu'}
-                </li>
-              </ul>
-              <Link href={`/${locale}/services`} className="text-stone-600 dark:text-stone-400 font-semibold hover:text-stone-700 flex items-center gap-2">
-                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'} →
+              <Link href={`/${locale}/services`} className="text-stone-600 font-semibold hover:text-stone-700 inline-flex items-center gap-2 group">
+                {isEnglish ? 'Learn more' : 'Dowiedz się więcej'}
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* BOOKING SECTION */}
-      <section id="booking" className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
-              {isEnglish ? 'Schedule Your Installation' : 'Umów Wizytę Online'}
+      {/* PROCESS SECTION - How we work (6 steps) */}
+      <section className="section bg-gradient-to-br from-blue-50 to-green-50">
+        <div className="container-custom">
+          <div className="section-header">
+            <h2 className="section-title">
+              {isEnglish ? 'Professional Service Within Reach!' : 'Profesjonalna Usługa na Wyciągnięcie Ręki!'}
             </h2>
-            <p className="text-xl text-gray-600">
-              {isEnglish ? 'Choose a convenient date from the calendar' : 'Wybierz dogodny termin z kalendarza'}
+            <p className="section-subtitle">
+              {isEnglish 
+                ? 'We will guide you through the entire installation process. With our help, it\'s incredibly simple.'
+                : 'Przeprowadzimy Cię przez cały proces realizacji instalacji. Z naszą pomocą jest to dziecinnie proste.'}
             </p>
           </div>
-          
-          <BookingCalendar />
+
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Step 1 */}
+            <div className="timeline-step">
+              <div className="timeline-number">01</div>
+              <div className="timeline-content">
+                <h3 className="text-2xl font-bold mb-2">{isEnglish ? 'Contact' : 'Kontakt'}</h3>
+                <p className="text-gray-600">
+                  {isEnglish 
+                    ? 'Call us, send an email, or fill out the contact form. We respond within 24 hours.'
+                    : 'Zadzwoń, wyślij email lub wypełnij formularz kontaktowy. Odpowiadamy w ciągu 24 godzin.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="timeline-step">
+              <div className="timeline-number">02</div>
+              <div className="timeline-content">
+                <h3 className="text-2xl font-bold mb-2">{isEnglish ? 'Free Quote' : 'Darmowa Wycena'}</h3>
+                <p className="text-gray-600">
+                  {isEnglish 
+                    ? 'Site visit and professional assessment. We prepare a detailed quote with no obligations.'
+                    : 'Wizyta w terenie i profesjonalna ocena. Przygotowujemy szczegółową wycenę bez zobowiązań.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="timeline-step">
+              <div className="timeline-number">03</div>
+              <div className="timeline-content">
+                <h3 className="text-2xl font-bold mb-2">{isEnglish ? 'Agreement' : 'Uzgodnienia'}</h3>
+                <p className="text-gray-600">
+                  {isEnglish 
+                    ? 'We agree on project details, materials, and execution timeline. Contract signing.'
+                    : 'Ustalamy szczegóły projektu, materiały oraz termin realizacji. Podpisanie umowy.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="timeline-step">
+              <div className="timeline-number">04</div>
+              <div className="timeline-content">
+                <h3 className="text-2xl font-bold mb-2">{isEnglish ? 'Installation' : 'Realizacja'}</h3>
+                <p className="text-gray-600">
+                  {isEnglish 
+                    ? 'Our certified team performs the work professionally, on time, and according to regulations.'
+                    : 'Nasz certyfikowany zespół wykonuje prace profesjonalnie, w terminie i zgodnie z przepisami.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Step 5 */}
+            <div className="timeline-step">
+              <div className="timeline-number">05</div>
+              <div className="timeline-content">
+                <h3 className="text-2xl font-bold mb-2">{isEnglish ? 'Acceptance' : 'Odbiór'}</h3>
+                <p className="text-gray-600">
+                  {isEnglish 
+                    ? 'Final acceptance of work, testing systems, and handing over documentation.'
+                    : 'Końcowy odbiór prac, testy systemów oraz przekazanie dokumentacji.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Step 6 */}
+            <div className="timeline-step">
+              <div className="timeline-number">06</div>
+              <div className="timeline-content">
+                <h3 className="text-2xl font-bold mb-2">{isEnglish ? 'Warranty & Service' : 'Gwarancja i Serwis'}</h3>
+                <p className="text-gray-600">
+                  {isEnglish 
+                    ? '5-year warranty on installations. We provide ongoing service and technical support.'
+                    : '5 lat gwarancji na instalacje. Zapewniamy stały serwis i wsparcie techniczne.'}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* REALIZATIONS MAP */}
-      <RealizationsMap />
-
-      {/* BLOG SECTION */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
-              {isEnglish ? 'Latest News & Expert Tips' : 'Aktualności i Porady Ekspertów'}
+      {/* REALIZATIONS MAP SECTION */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="section-header">
+            <h2 className="section-title">
+              {isEnglish ? 'Our Realizations Map' : 'Poznaj Mapę Naszych Realizacji'}
             </h2>
-            <p className="text-xl text-gray-600">
-              {isEnglish ? 'Stay updated with heating technology trends' : 'Bądź na bieżąco z trendami w technologii grzewczej'}
+            <p className="section-subtitle">
+              {isEnglish 
+                ? 'Through our work, we improve air quality throughout Mazowsze region.'
+                : 'Swoją działalnością wpływamy na polepszenie jakości życia w całym województwie mazowieckim.'}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {getRecentPosts(3).map((post) => (
-              <Link
-                key={post.id}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div className="stat-card">
+              <div className="stat-number">2000+</div>
+              <div className="stat-label">{isEnglish ? 'Completed Projects' : 'Zrealizowanych Projektów'}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">98%</div>
+              <div className="stat-label">{isEnglish ? 'Satisfied Clients' : 'Zadowolonych Klientów'}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">25+</div>
+              <div className="stat-label">{isEnglish ? 'Years of Experience' : 'Lat Doświadczenia'}</div>
+            </div>
+          </div>
+
+          <RealizationsMap />
+        </div>
+      </section>
+
+      {/* BLOG/NEWS SECTION */}
+      <section className="section bg-gray-50">
+        <div className="container-custom">
+          <div className="section-header">
+            <h2 className="section-title">
+              {isEnglish ? 'Latest News & Tips' : 'Aktualności i Porady'}
+            </h2>
+            <p className="section-subtitle">
+              {isEnglish 
+                ? 'Professional advice and industry news from SAN-BUD experts'
+                : 'Profesjonalne porady i aktualności branżowe od ekspertów SAN-BUD'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {recentPosts.map((post) => (
+              <Link 
+                key={post.slug} 
                 href={`/${locale}/blog/${post.slug}`}
-                className="group bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all border border-gray-200 hover:border-blue-500 hover:-translate-y-2"
+                className="card card-hover overflow-hidden group"
               >
-                <div className="bg-gradient-to-r from-blue-600 to-blue-700 h-40 flex items-center justify-center p-6">
-                  <h3 className="text-lg font-bold text-white text-center line-clamp-2">
-                    {isEnglish ? post.titleEn : post.title}
-                  </h3>
-                </div>
+                <div className="h-48 bg-gradient-primary"></div>
                 <div className="p-6">
-                  <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold mb-3">
-                    {isEnglish ? post.categoryEn : post.category}
-                  </span>
-                  <p className="text-gray-600 text-sm line-clamp-3 mb-4">
-                    {isEnglish ? post.excerptEn : post.excerpt}
+                  <div className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-3">
+                    {post.category}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-2">
+                    {post.excerpt}
                   </p>
-                  <div className="text-blue-600 font-semibold text-sm group-hover:translate-x-2 transition-transform inline-flex items-center">
-                    {isEnglish ? 'Read more' : 'Czytaj więcej'} →
+                  <div className="flex items-center text-sm text-gray-500">
+                    <span>{post.date}</span>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
 
-          <div className="text-center">
-            <Link
-              href={`/${locale}/blog`}
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
-            >
-              {isEnglish ? 'View All Articles' : 'Zobacz Wszystkie Artykuły'} →
+          <div className="text-center mt-12">
+            <Link href={`/${locale}/blog`} className="btn btn-primary btn-lg">
+              {isEnglish ? 'View All Articles' : 'Zobacz Wszystkie Artykuły'}
             </Link>
           </div>
         </div>
       </section>
 
       {/* CONTACT FORM SECTION */}
-      <section id="contact" className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black mb-4 text-gray-900">
-                {isEnglish ? 'Get in Touch' : 'Skontaktuj Się'}
-              </h2>
-              <p className="text-xl text-gray-600">
-                {isEnglish ? 'We\'ll call you back within 24 hours' : 'Oddzwonimy w ciągu 24h'}
-              </p>
+      <section id="contact" className="section bg-white">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Left: Info */}
+            <div>
+              <div className="section-header text-left">
+                <h2 className="section-title">
+                  {isEnglish ? 'Start Saving Today!' : 'Zacznij Oszczędzać Już Dziś!'}
+                </h2>
+                <p className="section-subtitle">
+                  {isEnglish 
+                    ? 'Interested in professional plumbing solutions? Want to improve your home comfort and reduce costs? Contact us for a free quote.'
+                    : 'Jesteś zainteresowany profesjonalnymi rozwiązaniami hydraulicznymi? Chcesz poprawić komfort swojego domu i zmniejszyć koszty? Skontaktuj się z nami po darmową wycenę.'}
+                </p>
+              </div>
+
+              <div className="space-y-6 mt-8">
+                <div className="flex items-start gap-4">
+                  <div className="icon-box icon-box-primary">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">{isEnglish ? 'Phone' : 'Telefon'}</h3>
+                    <a href="tel:503691808" className="text-blue-600 hover:text-blue-700 font-semibold">503 691 808</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="icon-box icon-box-primary">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
+                    <a href="mailto:biuro@sanbud24.pl" className="text-blue-600 hover:text-blue-700 font-semibold">biuro@sanbud24.pl</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="icon-box icon-box-primary">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">{isEnglish ? 'Response Time' : 'Czas Odpowiedzi'}</h3>
+                    <p className="text-gray-600">{isEnglish ? 'Quote within 3-5 business days' : 'Wycena w ciągu 3-5 dni roboczych'}</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-100">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Right: Form */}
+            <div className="card p-8">
+              <h3 className="text-2xl font-bold mb-6">{isEnglish ? 'Request a Quote' : 'Zamów Wycenę'}</h3>
+              
+              {status === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
+                  {isEnglish ? 'Thank you! We will contact you within 24 hours.' : 'Dziękujemy! Skontaktujemy się w ciągu 24 godzin.'}
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+                  {isEnglish ? 'Error sending. Please try again or call us.' : 'Błąd wysyłania. Spróbuj ponownie lub zadzwoń.'}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                      {isEnglish ? 'Name' : 'Imię i nazwisko'}
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      {isEnglish ? 'Name' : 'Imię'} *
                     </label>
                     <input
                       type="text"
-                      id="name"
+                      required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      className="input"
                       placeholder={isEnglish ? 'Your name' : 'Twoje imię'}
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
-                      {isEnglish ? 'Phone' : 'Telefon'}
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      {isEnglish ? 'Phone' : 'Telefon'} *
                     </label>
                     <input
                       type="tel"
-                      id="phone"
+                      required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      className="input"
                       placeholder={isEnglish ? 'Your phone' : 'Twój telefon'}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email *
                   </label>
                   <input
                     type="email"
-                    id="email"
+                    required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="input"
                     placeholder={isEnglish ? 'your@email.com' : 'twoj@email.pl'}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="service" className="block text-sm font-semibold text-gray-700 mb-2">
-                    {isEnglish ? 'Service' : 'Usługa'}
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    {isEnglish ? 'Service Type' : 'Rodzaj Usługi'} *
                   </label>
                   <select
-                    id="service"
+                    required
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    required
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="select"
                   >
-                    <option value="">{isEnglish ? 'Choose service' : 'Wybierz usługę'}</option>
-                    <option value="heat-pump">{isEnglish ? 'Heat Pump Installation' : 'Montaż Pompy Ciepła'}</option>
-                    <option value="boiler">{isEnglish ? 'Condensing Boiler' : 'Kocioł Kondensacyjny'}</option>
-                    <option value="underfloor">{isEnglish ? 'Underfloor Heating' : 'Ogrzewanie Podłogowe'}</option>
-                    <option value="modernization">{isEnglish ? 'System Modernization' : 'Modernizacja CO'}</option>
-                    <option value="service">{isEnglish ? 'Service/Repair' : 'Serwis/Naprawa'}</option>
-                    <option value="other">{isEnglish ? 'Other' : 'Inne'}</option>
+                    <option>Instalacje wodno-kanalizacyjne</option>
+                    <option>Instalacje gazowe</option>
+                    <option>Ogrzewanie podłogowe</option>
+                    <option>Modernizacja kotłowni</option>
+                    <option>Montaż nowych kotłowni</option>
+                    <option>Serwis piecy gazowych</option>
+                    <option>Przegląd instalacji gazowych</option>
+                    <option>Montaż przydomowych oczyszczalni</option>
+                    <option>Usługi minikoparką</option>
+                    <option>{isEnglish ? 'Other' : 'Inne'}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     {isEnglish ? 'Message' : 'Wiadomość'}
                   </label>
                   <textarea
-                    id="message"
+                    rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    required
-                    rows={5}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
-                    placeholder={isEnglish ? 'Describe your needs...' : 'Opisz swoją potrzebę...'}
-                  ></textarea>
+                    className="textarea"
+                    placeholder={isEnglish ? 'Describe your needs...' : 'Opisz swoje potrzeby...'}
+                  />
                 </div>
 
-                {status === 'success' && (
-                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
-                    ✅ {isEnglish ? 'Thank you! We\'ll respond as soon as possible.' : 'Dziękujemy! Odpowiemy najszybciej jak to możliwe.'}
-                  </div>
-                )}
-
-                {status === 'error' && (
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
-                    ❌ {errorMessage}
-                  </div>
-                )}
-
-                <button 
+                <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="btn btn-accent w-full btn-lg"
                 >
-                  {status === 'sending' ? '⏳ '+(isEnglish ? 'Sending...' : 'Wysyłanie...') : '🚀 '+(isEnglish ? 'Send Request' : 'Wyślij Zapytanie')}
+                  {status === 'sending' 
+                    ? (isEnglish ? 'Sending...' : 'Wysyłanie...') 
+                    : (isEnglish ? 'Send Request' : 'Wyślij Zapytanie')}
                 </button>
               </form>
             </div>
@@ -613,6 +741,21 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* BOOKING CALENDAR SECTION */}
+      <section id="booking" className="section bg-gray-50">
+        <div className="container-custom">
+          <div className="section-header">
+            <h2 className="section-title">
+              {isEnglish ? 'Schedule Your Visit Online' : 'Umów Wizytę Online'}
+            </h2>
+            <p className="section-subtitle">
+              {isEnglish ? 'Choose a convenient date from the calendar' : 'Wybierz dogodny termin z kalendarza'}
+            </p>
+          </div>
+          
+          <BookingCalendar />
+        </div>
+      </section>
     </div>
   );
 }
