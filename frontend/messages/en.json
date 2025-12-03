@@ -264,7 +264,10 @@
   "partners": {
     "title": "Trusted Partners",
     "description": "We collaborate with leading manufacturers of heating and sanitary equipment, guaranteeing the highest quality products and services.",
-    "quality": "We use only proven products from renowned brands to ensure durability and reliability of our installations."
+    "quality": "We use only proven products from renowned brands to ensure durability and reliability of our installations.",
+    "authorized": "Authorized Products",
+    "certified": "Certified Installations",
+    "warranty": "Manufacturer Warranty"
   },
   "loading": "Loading...",
   "error": "Error",
