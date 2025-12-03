@@ -205,29 +205,38 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       
-      {/* HERO SECTION - Professional & Clean */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-gray-50 pt-32 pb-20 md:pt-40 md:pb-28">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(59, 130, 246) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
-          }}></div>
+      {/* HERO SECTION - Professional with Video Background */}
+      <section className="relative h-[600px] md:h-[700px] overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/images/IMG_6551.mov" type="video/mp4" />
+            <source src="/images/IMG_6551.mov" type="video/quicktime" />
+            Your browser does not support the video tag.
+          </video>
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/60"></div>
         </div>
         
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+        <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
+          <div className="max-w-4xl mx-auto text-center text-white">
             
             {/* Main Heading */}
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Profesjonalne Usługi Hydrauliczne
             </h1>
             
-            <p className="text-xl md:text-2xl mb-4 text-gray-700">
+            <p className="text-xl md:text-2xl mb-4">
               {businessData.tagline}
             </p>
             
-            <p className="text-lg mb-10 text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg mb-10 text-gray-100 max-w-2xl mx-auto">
               Kompleksowe rozwiązania hydrauliczne dla Twojego domu i firmy. 
               Działamy od 2018 roku z pełnym profesjonalizmem i zaangażowaniem.
             </p>
@@ -236,7 +245,7 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-4 justify-center mb-12">
               <a 
                 href="#contact" 
-                className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+                className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
               >
                 Bezpłatna Wycena
               </a>
@@ -253,17 +262,17 @@ export default function HomePage() {
 
             {/* Trust Badges */}
             <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
-                <div className="text-sm text-gray-600">Projektów</div>
+              <div className="text-center bg-white/10 backdrop-blur-md rounded-lg p-4">
+                <div className="text-3xl font-bold text-white mb-2">500+</div>
+                <div className="text-sm text-gray-200">Projektów</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">7 lat</div>
-                <div className="text-sm text-gray-600">Doświadczenia</div>
+              <div className="text-center bg-white/10 backdrop-blur-md rounded-lg p-4">
+                <div className="text-3xl font-bold text-white mb-2">7 lat</div>
+                <div className="text-sm text-gray-200">Doświadczenia</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">24/7</div>
-                <div className="text-sm text-gray-600">Pogotowie</div>
+              <div className="text-center bg-white/10 backdrop-blur-md rounded-lg p-4">
+                <div className="text-3xl font-bold text-white mb-2">24/7</div>
+                <div className="text-sm text-gray-200">Pogotowie</div>
               </div>
             </div>
           </div>
