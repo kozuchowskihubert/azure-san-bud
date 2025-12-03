@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { buildApiUrl } from '@/utils/api';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5002/admin/api/login', {
+      const response = await fetch(buildApiUrl('admin/api/login'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

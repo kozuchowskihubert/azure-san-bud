@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { buildApiUrl } from '@/utils/api';
 
 interface Service {
   id: number;
@@ -33,7 +34,7 @@ export default function ServicesPage() {
 
   const loadServices = async () => {
     try {
-      const response = await fetch('http://localhost:5002/admin/api/services', {
+      const response = await fetch(buildApiUrl('admin/api/services'), {
         credentials: 'include',
       });
 
@@ -69,8 +70,8 @@ export default function ServicesPage() {
   const handleSave = async () => {
     try {
       const url = createMode
-        ? 'http://localhost:5002/admin/api/services'
-        : `http://localhost:5002/admin/api/services/${selectedService?.id}`;
+        ? buildApiUrl('admin/api/services')
+        : buildApiUrl(`admin/api/services/${selectedService?.id}`);
 
       const method = createMode ? 'POST' : 'PUT';
 
@@ -102,7 +103,7 @@ export default function ServicesPage() {
     if (!confirm('Czy na pewno chcesz usunąć tę usługę?')) return;
 
     try {
-      const response = await fetch(`http://localhost:5002/admin/api/services/${serviceId}`, {
+      const response = await fetch(buildApiUrl(`admin/api/services/${serviceId}`), {
         method: 'DELETE',
         credentials: 'include',
       });

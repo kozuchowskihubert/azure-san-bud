@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { buildApiUrl } from '@/utils/api';
 
 interface Client {
   id: number;
@@ -31,7 +32,7 @@ export default function ClientsPage() {
 
   const loadClients = async () => {
     try {
-      const url = new URL('http://localhost:5002/admin/api/clients');
+      const url = new URL(buildApiUrl('admin/api/clients'));
       if (search) {
         url.searchParams.append('search', search);
       }
@@ -63,7 +64,7 @@ export default function ClientsPage() {
     if (!selectedClient) return;
 
     try {
-      const response = await fetch(`http://localhost:5002/admin/api/clients/${selectedClient.id}`, {
+      const response = await fetch(buildApiUrl(`admin/api/clients/${selectedClient.id}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ export default function ClientsPage() {
     if (!confirm('Czy na pewno chcesz usunąć tego klienta?')) return;
 
     try {
-      const response = await fetch(`http://localhost:5002/admin/api/clients/${clientId}`, {
+      const response = await fetch(buildApiUrl(`admin/api/clients/${clientId}`), {
         method: 'DELETE',
         credentials: 'include',
       });

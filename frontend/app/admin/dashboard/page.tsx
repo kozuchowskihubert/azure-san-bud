@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { buildApiUrl } from '@/utils/api';
 
 interface Admin {
   id: number;
@@ -36,7 +37,7 @@ export default function AdminDashboard() {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('http://localhost:5002/admin/api/me', {
+      const response = await fetch(buildApiUrl('admin/api/me'), {
         credentials: 'include',
       });
 
@@ -56,7 +57,7 @@ export default function AdminDashboard() {
 
   const loadStats = async () => {
     try {
-      const response = await fetch('http://localhost:5002/admin/api/stats', {
+      const response = await fetch(buildApiUrl('admin/api/stats'), {
         credentials: 'include',
       });
 
@@ -71,7 +72,7 @@ export default function AdminDashboard() {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5002/admin/api/logout', {
+      await fetch(buildApiUrl('admin/api/logout'), {
         method: 'POST',
         credentials: 'include',
       });
