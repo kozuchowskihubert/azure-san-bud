@@ -253,7 +253,7 @@ export default function AboutPage() {
                 </svg>
               </a>
               <a
-                href="tel:+48123456789"
+                href="tel:+48503691808"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors duration-300 shadow-lg"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

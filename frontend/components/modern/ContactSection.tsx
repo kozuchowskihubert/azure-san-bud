@@ -109,7 +109,7 @@ export default function ContactSection({ locale }: ContactSectionProps) {
               </a>
 
               <a 
-                href="mailto:biuro@sanbud24.pl"
+                href="mailto:sanbud.biuro@gmail.com"
                 className="flex items-center gap-4 p-6 bg-white rounded-xl border border-gray-200 hover:border-teal-300 hover:shadow-md transition-all duration-300 group"
               >
                 <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center group-hover:bg-orange-200 transition-colors">
@@ -117,7 +117,7 @@ export default function ContactSection({ locale }: ContactSectionProps) {
                 </div>
                 <div>
                   <div className="text-sm text-gray-500 mb-1">Email</div>
-                  <div className="text-lg font-semibold text-gray-900">biuro@sanbud24.pl</div>
+                  <div className="text-lg font-semibold text-gray-900">sanbud.biuro@gmail.com</div>
                 </div>
               </a>
 
@@ -139,8 +139,8 @@ export default function ContactSection({ locale }: ContactSectionProps) {
                 </div>
                 <div>
                   <div className="text-sm text-gray-500 mb-1">{isEnglish ? 'Working Hours' : 'Godziny Pracy'}</div>
-                  <div className="text-lg font-semibold text-gray-900">
-                    {isEnglish ? 'Mon-Fri: 7:00-18:00' : 'Pn-Pt: 7:00-18:00'}
+                  <div className="text-sm font-semibold text-gray-900">
+                    {isEnglish ? 'Mon-Fri: 8:00-18:00, Sat: 9:00-14:00' : 'Pon-Pt: 8:00-18:00, Sob: 9:00-14:00'}
                   </div>
                 </div>
               </div>
