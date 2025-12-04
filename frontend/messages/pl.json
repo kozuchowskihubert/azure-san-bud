@@ -1,13 +1,13 @@
 {
   "common": {
     "companyName": "SanBud",
-    "companyFullName": "SanBud Hydraulika",
-    "tagline": "Hydraulika naszą pasją",
+    "companyFullName": "SanBud - Instalacje Sanitarne",
+    "tagline": "Profesjonalne usługi hydrauliczne",
     "slogan": "Fachowość • Rzetelność • Terminowość",
     "established": "Założona 2018",
     "phone": "+48 503 691 808",
     "email": "sanbud.biuro@gmail.com",
-    "address": "Twoja lokalizacja",
+    "address": "Woj. Mazowieckie, Polska",
     "emergencyBadge": "Awarie 24/7",
     "languageSwitcher": {
       "polish": "Polski",

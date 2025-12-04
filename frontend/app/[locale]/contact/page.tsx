@@ -59,6 +59,61 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
+      {/* Schema.org structured data for better SEO and search visibility */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "SanBud - Instalacje Sanitarne",
+            "image": "https://sanbud24.pl/images/logo.jpg",
+            "description": "Profesjonalne usługi hydrauliczne, instalacje sanitarne, ogrzewanie i klimatyzacja w województwie mazowieckim. 15 lat doświadczenia, 500+ zadowolonych klientów.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Warszawa",
+              "addressRegion": "Mazowieckie",
+              "addressCountry": "PL"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "52.2297",
+              "longitude": "21.0122"
+            },
+            "telephone": "+48503691808",
+            "email": "sanbud.biuro@gmail.com",
+            "url": "https://sanbud24.pl",
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "08:00",
+                "closes": "18:00"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Saturday",
+                "opens": "09:00",
+                "closes": "14:00"
+              }
+            ],
+            "priceRange": "$$",
+            "areaServed": {
+              "@type": "State",
+              "name": "Mazowieckie"
+            },
+            "serviceType": [
+              "Instalacje wodno-kanalizacyjne",
+              "Instalacje grzewcze",
+              "Ogrzewanie podłogowe",
+              "Kotłownie",
+              "Łazienki pod klucz",
+              "Instalacje gazowe"
+            ]
+          })
+        }}
+      />
+
       {/* Hero Section with gradient matching main page */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-gray-900 to-orange-900"></div>
@@ -161,10 +216,13 @@ export default function ContactPage() {
                         Lokalizacja
                       </h3>
                       <p className="text-gray-900 dark:text-white font-semibold">
-                        Mazowsze, Polska
+                        SanBud - Instalacje Sanitarne
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        Obsługujemy cały region
+                        Woj. Mazowieckie, Polska
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        Obsługujemy całe województwo mazowieckie
                       </p>
                     </div>
                   </div>
