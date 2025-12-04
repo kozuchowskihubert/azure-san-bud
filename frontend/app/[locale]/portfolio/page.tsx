@@ -19,7 +19,7 @@ export default function PortfolioPage() {
   const [selectedImage, setSelectedImage] = useState<Project | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  // Portfolio projects with actual images
+  // Portfolio projects - 9 carefully selected images (3x3 grid)
   const projects: Project[] = [
     {
       id: 1,
@@ -30,136 +30,59 @@ export default function PortfolioPage() {
     },
     {
       id: 2,
-      image: '/images/IMG_6030.jpg',
-      title: 'System instalacyjny',
-      category: 'installation',
-      description: 'Kompleksowe instalacje sanitarne w budynku'
-    },
-    {
-      id: 3,
-      image: '/images/IMG_6033.jpg',
-      title: 'Montaż instalacji',
-      category: 'installation',
-      description: 'Zaawansowane rozwiązania instalacyjne'
-    },
-    {
-      id: 4,
-      image: '/images/IMG_6036.jpg',
-      title: 'Instalacje techniczne',
-      category: 'installation',
-      description: 'Profesjonalne wykonanie instalacji technicznych'
-    },
-    {
-      id: 5,
-      image: '/images/IMG_6064.jpg',
-      title: 'System grzewczy',
-      category: 'heating',
-      description: 'Montaż i konfiguracja systemu ogrzewania'
-    },
-    {
-      id: 6,
       image: '/images/IMG_6134.jpg',
       title: 'Instalacja CO',
       category: 'heating',
       description: 'Centralne ogrzewanie z nowoczesnym kotłem'
     },
     {
-      id: 7,
-      image: '/images/IMG_6150.jpg',
-      title: 'System ogrzewania',
-      category: 'heating',
-      description: 'Efektywne rozwiązania grzewcze'
-    },
-    {
-      id: 8,
-      image: '/images/IMG_6152.jpg',
-      title: 'Instalacja grzewcza',
-      category: 'heating',
-      description: 'Profesjonalny montaż systemu grzewczego'
-    },
-    {
-      id: 9,
+      id: 3,
       image: '/images/IMG_6241.jpg',
       title: 'Ogrzewanie podłogowe',
       category: 'heating',
       description: 'Montaż nowoczesnego ogrzewania podłogowego'
     },
     {
-      id: 10,
+      id: 4,
       image: '/images/IMG_6545.jpg',
       title: 'Montaż urządzeń',
       category: 'installation',
       description: 'Instalacja urządzeń technicznych'
     },
     {
-      id: 11,
-      image: '/images/IMG_6547.jpg',
-      title: 'System instalacyjny',
-      category: 'installation',
-      description: 'Kompleksowe rozwiązania instalacyjne'
-    },
-    {
-      id: 12,
-      image: '/images/IMG_6556.jpg',
-      title: 'Instalacje sanitarne',
-      category: 'installation',
-      description: 'Profesjonalne instalacje wodno-kanalizacyjne'
-    },
-    {
-      id: 13,
+      id: 5,
       image: '/images/IMG_6644.jpg',
       title: 'Urządzenia zewnętrzne',
       category: 'plumbing',
       description: 'Montaż urządzeń zewnętrznych'
     },
     {
-      id: 14,
-      image: '/images/IMG_6645.jpg',
-      title: 'Instalacje zewnętrzne',
-      category: 'plumbing',
-      description: 'Systemy instalacyjne na zewnątrz budynku'
-    },
-    {
-      id: 15,
+      id: 6,
       image: '/images/IMG_6826.jpg',
       title: 'Montaż techniczny',
       category: 'installation',
       description: 'Zaawansowany montaż systemów technicznych'
     },
     {
-      id: 16,
-      image: '/images/IMG_6827.jpg',
-      title: 'Instalacja sanitarna',
-      category: 'installation',
-      description: 'Profesjonalne instalacje sanitarne'
-    },
-    {
-      id: 17,
+      id: 7,
       image: '/images/IMG_6828.jpg',
       title: 'System wodny',
       category: 'installation',
       description: 'Kompleksowy system wodny i kanalizacyjny'
     },
     {
-      id: 18,
-      image: '/images/IMG_6829.jpg',
-      title: 'Montaż instalacji',
-      category: 'installation',
-      description: 'Instalacje wodno-kanalizacyjne w budynku'
+      id: 8,
+      image: '/images/IMG_6150.jpg',
+      title: 'System ogrzewania',
+      category: 'heating',
+      description: 'Efektywne rozwiązania grzewcze'
     },
     {
-      id: 19,
-      image: '/images/IMG_6830.jpg',
-      title: 'Instalacje techniczne',
-      category: 'installation',
-      description: 'Montaż zaawansowanych instalacji technicznych'
-    },
-    {
-      id: 20,
-      image: '/images/IMG_6831.jpg',
-      title: 'System instalacyjny',
-      category: 'installation',
-      description: 'Profesjonalne wykonanie systemów instalacyjnych'
+      id: 9,
+      image: '/images/IMG_6645.jpg',
+      title: 'Instalacje zewnętrzne',
+      category: 'plumbing',
+      description: 'Systemy instalacyjne na zewnątrz budynku'
     },
   ];
 
