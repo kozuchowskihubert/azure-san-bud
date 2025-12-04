@@ -17,6 +17,7 @@ export default function PortfolioPage() {
   const t = useTranslations();
   const locale = useLocale();
   const [selectedImage, setSelectedImage] = useState<Project | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   // Portfolio projects with actual images
   const projects: Project[] = [
@@ -162,6 +163,58 @@ export default function PortfolioPage() {
     },
   ];
 
+  // Google Reviews data
+  const reviews = [
+    {
+      id: 1,
+      name: 'Marek K.',
+      rating: 5,
+      date: 'Listopad 2024',
+      text: 'Profesjonalna ekipa, terminowe wykonanie. Instalacja CO działa bez zarzutu. Polecam!',
+      avatar: 'MK'
+    },
+    {
+      id: 2,
+      name: 'Anna W.',
+      rating: 5,
+      date: 'Październik 2024',
+      text: 'Bardzo dobra obsługa, szybka realizacja. Pan hydraulik doradził najlepsze rozwiązania.',
+      avatar: 'AW'
+    },
+    {
+      id: 3,
+      name: 'Tomasz S.',
+      rating: 5,
+      date: 'Wrzesień 2024',
+      text: 'Solidne wykonanie, uczciwe ceny. Montaż kotła przebiegł sprawnie i profesjonalnie.',
+      avatar: 'TS'
+    },
+    {
+      id: 4,
+      name: 'Ewa M.',
+      rating: 5,
+      date: 'Sierpień 2024',
+      text: 'Rewelacyjna firma! Wszystko zrobione na czas i zgodnie z umową. Gorąco polecam!',
+      avatar: 'EM'
+    },
+    {
+      id: 5,
+      name: 'Piotr D.',
+      rating: 5,
+      date: 'Lipiec 2024',
+      text: 'Fachowość na najwyższym poziomie. Kompleksowa obsługa od A do Z.',
+      avatar: 'PD'
+    },
+    {
+      id: 6,
+      name: 'Katarzyna L.',
+      rating: 5,
+      date: 'Czerwiec 2024',
+      text: 'Polecam z całego serca! Rzetelna firma, uczciwe podejście do klienta.',
+      avatar: 'KL'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -202,8 +255,54 @@ export default function PortfolioPage() {
 
       {/* Portfolio Grid */}
       <section className="container mx-auto px-4 py-12">
+        {/* Category Filters */}
+        <div className="flex flex-wrap gap-3 justify-center mb-10">
+          <button
+            onClick={() => setSelectedCategory('all')}
+            className={`px-6 py-3 rounded-xl font-bold transition-all ${
+              selectedCategory === 'all'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
+            }`}
+          >
+            Wszystkie ({projects.length})
+          </button>
+          <button
+            onClick={() => setSelectedCategory('installation')}
+            className={`px-6 py-3 rounded-xl font-bold transition-all ${
+              selectedCategory === 'installation'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
+            }`}
+          >
+            Instalacje ({projects.filter(p => p.category === 'installation').length})
+          </button>
+          <button
+            onClick={() => setSelectedCategory('heating')}
+            className={`px-6 py-3 rounded-xl font-bold transition-all ${
+              selectedCategory === 'heating'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
+            }`}
+          >
+            Ogrzewanie ({projects.filter(p => p.category === 'heating').length})
+          </button>
+          <button
+            onClick={() => setSelectedCategory('plumbing')}
+            className={`px-6 py-3 rounded-xl font-bold transition-all ${
+              selectedCategory === 'plumbing'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
+            }`}
+          >
+            Hydraulika ({projects.filter(p => p.category === 'plumbing').length})
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {projects.map((project) => (
+          {projects
+            .filter(project => selectedCategory === 'all' || project.category === selectedCategory)
+            .map((project) => (
             <div
               key={project.id}
               onClick={() => setSelectedImage(project)}
@@ -233,6 +332,90 @@ export default function PortfolioPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Google Reviews Section */}
+      <section className="bg-gradient-to-br from-gray-50 to-white py-20">
+        <div className="container mx-auto px-4">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-50 border border-yellow-200 rounded-full mb-4">
+              <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <span className="text-sm font-semibold text-yellow-800">Opinie Klientów</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
+              Co mówią nasi klienci?
+            </h2>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="text-2xl font-bold text-gray-900">5.0</span>
+            </div>
+            <p className="text-gray-600">Na podstawie 250+ opinii Google</p>
+          </div>
+
+          {/* Reviews Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {reviews.map((review) => (
+              <div key={review.id} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                {/* Header */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                      {review.avatar}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-900">{review.name}</h3>
+                      <p className="text-sm text-gray-500">{review.date}</p>
+                    </div>
+                  </div>
+                  <svg className="w-6 h-6 text-blue-600" viewBox="0 0 48 48" fill="currentColor">
+                    <path d="M44,24c0,11-9,20-20,20S4,35,4,24S13,4,24,4S44,13,44,24z"/>
+                    <path fill="#FFF" d="M34.7,25.9c0-0.7-0.6-1.3-1.3-1.3H26c-0.4,0-0.7-0.3-0.7-0.7V16c0-0.7-0.6-1.3-1.3-1.3s-1.3,0.6-1.3,1.3v7.9c0,0.4-0.3,0.7-0.7,0.7h-7.3c-0.7,0-1.3,0.6-1.3,1.3s0.6,1.3,1.3,1.3H22c0.4,0,0.7,0.3,0.7,0.7V35c0,0.7,0.6,1.3,1.3,1.3s1.3-0.6,1.3-1.3v-7.1c0-0.4,0.3-0.7,0.7-0.7h7.4C34.1,27.2,34.7,26.6,34.7,25.9z"/>
+                  </svg>
+                </div>
+
+                {/* Stars */}
+                <div className="flex gap-1 mb-3">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Review Text */}
+                <p className="text-gray-700 leading-relaxed">{review.text}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Google Reviews CTA */}
+          <div className="text-center mt-12">
+            <a
+              href="https://www.google.com/search?q=SAN-BUD+Hubert+Kozuchowski"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white border-2 border-gray-200 hover:border-blue-500 rounded-xl font-bold text-gray-900 hover:text-blue-600 transition-all hover:scale-105 shadow-lg"
+            >
+              <svg className="w-6 h-6" viewBox="0 0 48 48" fill="currentColor">
+                <path fill="#4285F4" d="M44,24c0,11-9,20-20,20S4,35,4,24S13,4,24,4S44,13,44,24z"/>
+                <path fill="#FFF" d="M34.7,25.9c0-0.7-0.6-1.3-1.3-1.3H26c-0.4,0-0.7-0.3-0.7-0.7V16c0-0.7-0.6-1.3-1.3-1.3s-1.3,0.6-1.3,1.3v7.9c0,0.4-0.3,0.7-0.7,0.7h-7.3c-0.7,0-1.3,0.6-1.3,1.3s0.6,1.3,1.3,1.3H22c0.4,0,0.7,0.3,0.7,0.7V35c0,0.7,0.6,1.3,1.3,1.3s1.3-0.6,1.3-1.3v-7.1c0-0.4,0.3-0.7,0.7-0.7h7.4C34.1,27.2,34.7,26.6,34.7,25.9z"/>
+              </svg>
+              Zobacz wszystkie opinie na Google
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -268,6 +451,62 @@ export default function PortfolioPage() {
           </div>
         </div>
       )}
+
+      {/* Trust Badges Section */}
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-black text-center text-gray-900 mb-12">
+              Twoje bezpieczeństwo i jakość na pierwszym miejscu
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Certyfikaty */}
+              <div className="text-center group hover:scale-105 transition-transform">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl transition-shadow">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg text-gray-900 mb-2">Certyfikowane Uprawnienia</h3>
+                <p className="text-gray-600 text-sm">Pełne uprawnienia gazowe, elektryczne i budowlane</p>
+              </div>
+
+              {/* Ubezpieczenie */}
+              <div className="text-center group hover:scale-105 transition-transform">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl transition-shadow">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg text-gray-900 mb-2">Pełne Ubezpieczenie</h3>
+                <p className="text-gray-600 text-sm">OC i NNW dla Twojego spokoju</p>
+              </div>
+
+              {/* Gwarancja */}
+              <div className="text-center group hover:scale-105 transition-transform">
+                <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl transition-shadow">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg text-gray-900 mb-2">Długoterminowa Gwarancja</h3>
+                <p className="text-gray-600 text-sm">Do 5 lat gwarancji na wykonane prace</p>
+              </div>
+
+              {/* Materiały */}
+              <div className="text-center group hover:scale-105 transition-transform">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl transition-shadow">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg text-gray-900 mb-2">Sprawdzone Materiały</h3>
+                <p className="text-gray-600 text-sm">Tylko renomowani producenci i certyfikaty</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
