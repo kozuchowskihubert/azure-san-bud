@@ -642,6 +642,11 @@ def get_appointments():
         from app.models.customer import Customer
         from app.models.service import Service
         
+        # Debug logging
+        current_app.logger.info("=== GET APPOINTMENTS DEBUG ===")
+        current_app.logger.info(f"Request args: {request.args}")
+        current_app.logger.info(f"Database URL (first 50 chars): {current_app.config.get('SQLALCHEMY_DATABASE_URI', 'NOT SET')[:50]}")
+        
         # Query parameters
         status = request.args.get('status')
         customer_id = request.args.get('customer_id', type=int)
@@ -674,41 +679,60 @@ def get_appointments():
             Appointment.scheduled_time.desc()
         ).all()
         
+        current_app.logger.info(f"Found {len(appointments)} appointments")
+        
         # Enrich with customer and service data
         appointments_data = []
         for appt in appointments:
-            appt_dict = appt.to_dict()
-            
-            # Add customer info
-            customer = Customer.query.get(appt.customer_id)
-            if customer:
-                appt_dict['customer'] = {
-                    'id': customer.id,
-                    'first_name': customer.first_name,
-                    'last_name': customer.last_name,
-                    'email': customer.email,
-                    'phone': customer.phone
-                }
-            
-            # Add service info
-            service = Service.query.get(appt.service_id)
-            if service:
-                appt_dict['service'] = {
-                    'id': service.id,
-                    'name': service.name,
-                    'duration': service.duration_minutes,
-                    'price': float(service.price) if service.price else 0
-                }
-            
-            appointments_data.append(appt_dict)
+            try:
+                appt_dict = appt.to_dict()
+                
+                # Add customer info
+                customer = Customer.query.get(appt.customer_id)
+                if customer:
+                    appt_dict['customer'] = {
+                        'id': customer.id,
+                        'first_name': customer.first_name,
+                        'last_name': customer.last_name,
+                        'email': customer.email,
+                        'phone': customer.phone
+                    }
+                
+                # Add service info
+                service = Service.query.get(appt.service_id)
+                if service:
+                    appt_dict['service'] = {
+                        'id': service.id,
+                        'name': service.name,
+                        'duration': service.duration_minutes,
+                        'price': float(service.price) if service.price else 0
+                    }
+                
+                appointments_data.append(appt_dict)
+            except Exception as appt_error:
+                current_app.logger.error(f"Error processing appointment {appt.id}: {str(appt_error)}")
+                continue
+        
+        current_app.logger.info(f"Returning {len(appointments_data)} appointments in response")
         
         return jsonify({
             'success': True,
-            'appointments': appointments_data
+            'appointments': appointments_data,
+            'total': len(appointments_data),
+            'debug': {
+                'filters_applied': {
+                    'status': status,
+                    'customer_id': customer_id,
+                    'service_id': service_id,
+                    'date_from': date_from,
+                    'date_to': date_to
+                }
+            }
         }), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        current_app.logger.error(f"Error in get_appointments: {str(e)}")
+        return jsonify({'error': str(e), 'success': False}), 500
 
 
 @admin_bp.route('/api/appointments/<int:appointment_id>', methods=['GET'])
@@ -810,6 +834,10 @@ def get_messages():
     try:
         from app.models.message import Message
         
+        # Debug logging
+        current_app.logger.info("=== GET MESSAGES DEBUG ===")
+        current_app.logger.info(f"Request args: {request.args}")
+        
         # Query parameters
         is_read = request.args.get('is_read')
         replied = request.args.get('replied')
@@ -836,13 +864,28 @@ def get_messages():
             Message.created_at.desc()
         ).all()
         
+        current_app.logger.info(f"Found {len(messages)} messages")
+        
+        messages_data = [msg.to_dict() for msg in messages]
+        current_app.logger.info(f"Returning {len(messages_data)} messages in response")
+        
         return jsonify({
             'success': True,
-            'messages': [msg.to_dict() for msg in messages]
+            'messages': messages_data,
+            'total': len(messages_data),
+            'debug': {
+                'filters_applied': {
+                    'is_read': is_read,
+                    'replied': replied,
+                    'message_type': message_type,
+                    'priority': priority
+                }
+            }
         }), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        current_app.logger.error(f"Error in get_messages: {str(e)}")
+        return jsonify({'error': str(e), 'success': False}), 500
 
 
 @admin_bp.route('/api/messages/<int:message_id>', methods=['GET'])
