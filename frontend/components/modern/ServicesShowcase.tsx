@@ -137,7 +137,7 @@ export default function ServicesShowcase({ locale }: ServicesShowcaseProps) {
         {/* CTA */}
         <div className="text-center mt-16">
           <Link
-            href="/services"
+            href={`/${locale}/services`}
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-600 to-teal-700 text-white font-semibold rounded-xl hover:from-teal-700 hover:to-teal-800 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             <span>{isEnglish ? 'View All Services' : 'Zobacz Wszystkie Usługi'}</span>
