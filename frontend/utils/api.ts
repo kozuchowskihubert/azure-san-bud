@@ -65,6 +65,6 @@ export const authFetch = async (path: string, options: RequestInit = {}): Promis
   return fetch(url, {
     ...options,
     headers,
-    credentials: 'include',
+    // No credentials needed - using JWT in Authorization header
   });
 };
