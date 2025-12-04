@@ -19,70 +19,73 @@ export default function PortfolioPage() {
   const [selectedImage, setSelectedImage] = useState<Project | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  // Portfolio projects - 9 carefully selected images (3x3 grid)
+  // Portfolio projects - 9 images organized by category (3x3 grid)
   const projects: Project[] = [
+    // Ogrzewanie (3 zdjęcia)
     {
       id: 1,
-      image: '/images/IMG_6028.jpg',
-      title: 'Instalacja wodna',
-      category: 'installation',
-      description: 'Profesjonalny montaż instalacji wodno-kanalizacyjnej'
-    },
-    {
-      id: 2,
       image: '/images/IMG_6134.jpg',
       title: 'Instalacja CO',
       category: 'heating',
       description: 'Centralne ogrzewanie z nowoczesnym kotłem'
     },
     {
-      id: 3,
+      id: 2,
       image: '/images/IMG_6241.jpg',
       title: 'Ogrzewanie podłogowe',
       category: 'heating',
       description: 'Montaż nowoczesnego ogrzewania podłogowego'
     },
     {
+      id: 3,
+      image: '/images/IMG_6150.jpg',
+      title: 'System ogrzewania',
+      category: 'heating',
+      description: 'Efektywne rozwiązania grzewcze'
+    },
+    // Instalacje (3 zdjęcia)
+    {
       id: 4,
-      image: '/images/IMG_6545.jpg',
-      title: 'Montaż urządzeń',
+      image: '/images/IMG_6028.jpg',
+      title: 'Instalacja wodna',
       category: 'installation',
-      description: 'Instalacja urządzeń technicznych'
+      description: 'Profesjonalny montaż instalacji wodno-kanalizacyjnej'
     },
     {
       id: 5,
-      image: '/images/IMG_6644.jpg',
-      title: 'Urządzenia zewnętrzne',
-      category: 'plumbing',
-      description: 'Montaż urządzeń zewnętrznych'
-    },
-    {
-      id: 6,
       image: '/images/IMG_6826.jpg',
       title: 'Montaż techniczny',
       category: 'installation',
       description: 'Zaawansowany montaż systemów technicznych'
     },
     {
-      id: 7,
+      id: 6,
       image: '/images/IMG_6828.jpg',
       title: 'System wodny',
       category: 'installation',
       description: 'Kompleksowy system wodny i kanalizacyjny'
     },
+    // Łazienki (3 zdjęcia - nowa kategoria!)
+    {
+      id: 7,
+      image: '/images/sanbud-google-1.jpg',
+      title: 'Nowoczesna łazienka',
+      category: 'bathroom',
+      description: 'Kompleksowa realizacja łazienki z designerskimi płytkami'
+    },
     {
       id: 8,
-      image: '/images/IMG_6150.jpg',
-      title: 'System ogrzewania',
-      category: 'heating',
-      description: 'Efektywne rozwiązania grzewcze'
+      image: '/images/sanbud-google-2.jpg',
+      title: 'Elegancka łazienka',
+      category: 'bathroom',
+      description: 'Stylowa aranżacja z wysokiej jakości armaturą'
     },
     {
       id: 9,
-      image: '/images/IMG_6645.jpg',
-      title: 'Instalacje zewnętrzne',
-      category: 'plumbing',
-      description: 'Systemy instalacyjne na zewnątrz budynku'
+      image: '/images/sanbud-google-3.jpg',
+      title: 'Funkcjonalna łazienka',
+      category: 'bathroom',
+      description: 'Praktyczne rozwiązania w nowoczesnym stylu'
     },
   ];
 
@@ -191,16 +194,6 @@ export default function PortfolioPage() {
             Wszystkie ({projects.length})
           </button>
           <button
-            onClick={() => setSelectedCategory('installation')}
-            className={`px-6 py-3 rounded-xl font-bold transition-all ${
-              selectedCategory === 'installation'
-                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
-                : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
-            }`}
-          >
-            Instalacje ({projects.filter(p => p.category === 'installation').length})
-          </button>
-          <button
             onClick={() => setSelectedCategory('heating')}
             className={`px-6 py-3 rounded-xl font-bold transition-all ${
               selectedCategory === 'heating'
@@ -211,14 +204,24 @@ export default function PortfolioPage() {
             Ogrzewanie ({projects.filter(p => p.category === 'heating').length})
           </button>
           <button
-            onClick={() => setSelectedCategory('plumbing')}
+            onClick={() => setSelectedCategory('installation')}
             className={`px-6 py-3 rounded-xl font-bold transition-all ${
-              selectedCategory === 'plumbing'
+              selectedCategory === 'installation'
                 ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
                 : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
             }`}
           >
-            Hydraulika ({projects.filter(p => p.category === 'plumbing').length})
+            Instalacje ({projects.filter(p => p.category === 'installation').length})
+          </button>
+          <button
+            onClick={() => setSelectedCategory('bathroom')}
+            className={`px-6 py-3 rounded-xl font-bold transition-all ${
+              selectedCategory === 'bathroom'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
+            }`}
+          >
+            Łazienki ({projects.filter(p => p.category === 'bathroom').length})
           </button>
         </div>
 
