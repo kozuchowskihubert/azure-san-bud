@@ -102,7 +102,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                 </svg>
               </div>
               <div>
-                <div className="text-2xl font-bold text-white">2500+</div>
+                <div className="text-2xl font-bold text-white">100+</div>
                 <div className="text-sm text-gray-400">{isEnglish ? 'Happy Clients' : 'Zadowolonych Klientów'}</div>
               </div>
             </div>

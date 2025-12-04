@@ -99,7 +99,7 @@ export default function WhyChooseUsSection({ locale }: WhyChooseUsSectionProps) 
             </div>
 
             <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-8 text-white">
-              <div className="text-5xl font-bold mb-2">2500+</div>
+              <div className="text-5xl font-bold mb-2">100+</div>
               <div className="text-orange-100 text-lg">
                 {isEnglish ? 'Projects Completed' : 'Zrealizowanych Projektów'}
               </div>
