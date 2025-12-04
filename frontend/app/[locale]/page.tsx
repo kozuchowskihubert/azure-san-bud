@@ -2,6 +2,7 @@
 
 import { useLocale } from 'next-intl';
 import HeroSection from '@/components/modern/HeroSection';
+import BenefitsBar from '@/components/modern/BenefitsBar';
 import ServicesShowcase from '@/components/modern/ServicesShowcase';
 import BookingCalendar from '@/components/BookingCalendar';
 import WhyChooseUsSection from '@/components/modern/WhyChooseUsSection';
@@ -69,6 +70,7 @@ export default function HomePage() {
       />
       
       <HeroSection locale={locale} />
+      <BenefitsBar locale={locale} />
       <ServicesShowcase locale={locale} />
       <BookingCalendar />
       <WhyChooseUsSection locale={locale} />

@@ -124,25 +124,9 @@ export default function ServicesShowcase({ locale }: ServicesShowcaseProps) {
                 {isEnglish ? service.titleEN : service.titlePL}
               </h3>
               
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-gray-600 leading-relaxed">
                 {isEnglish ? service.descriptionEN : service.descriptionPL}
               </p>
-
-              {/* Learn More Link */}
-              <Link
-                href="/services"
-                className={`inline-flex items-center gap-2 ${service.color} font-semibold text-sm group/link`}
-              >
-                <span>{isEnglish ? 'Learn more' : 'Dowiedz się więcej'}</span>
-                <svg 
-                  className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
 
               {/* Hover Effect Border */}
               <div className={`absolute inset-0 rounded-2xl border-2 ${service.borderColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
