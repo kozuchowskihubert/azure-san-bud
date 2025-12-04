@@ -206,22 +206,37 @@ export default function ContactPage() {
                 </div>
 
                 {/* Address Card */}
-                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-green-500/50">
+                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-blue-500/50">
                   <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <span className="text-2xl">📍</span>
                     </div>
                     <div className="flex-1">
                       <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-lg">
-                        Lokalizacja
+                        Adres
                       </h3>
                       <p className="text-gray-900 dark:text-white font-semibold">
                         SanBud - Instalacje Sanitarne
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        Woj. Mazowieckie, Polska
+                        ul. Dalii 8
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        09-100 Płońsk
+                      </p>
+                      <a
+                        href="https://maps.google.com/maps?hl=pl&gl=pl&um=1&ie=UTF-8&fb=1&sa=X&ftid=0x471c190083c3c4fd:0xbf6e32df66376788"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 text-sm font-semibold mt-2 transition-colors"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Zobacz na mapie
+                      </a>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                         Obsługujemy całe województwo mazowieckie
                       </p>
                     </div>
@@ -393,6 +408,115 @@ export default function ContactPage() {
                   {status === 'sending' ? 'Wysyłanie...' : 'Wyślij wiadomość'}
                 </button>
               </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Google Maps Section */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              Nasza Lokalizacja
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
+              Siedziba firmy w Płońsku. Obsługujemy całe województwo mazowieckie.
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700">
+              {/* Address Info Bar */}
+              <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-6 text-white">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg mb-1">SanBud - Instalacje Sanitarne</h3>
+                      <p className="text-white/90">ul. Dalii 8, 09-100 Płońsk</p>
+                      <p className="text-white/80 text-sm mt-1">Woj. Mazowieckie</p>
+                    </div>
+                  </div>
+                  <a
+                    href="https://maps.google.com/maps?hl=pl&gl=pl&um=1&ie=UTF-8&fb=1&sa=X&ftid=0x471c190083c3c4fd:0xbf6e32df66376788"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:scale-105"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Otwórz w Google Maps
+                  </a>
+                </div>
+              </div>
+
+              {/* Google Maps Embed */}
+              <div className="relative w-full h-[500px]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2407.7646524858!2d20.374732!3d52.6240566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471c190083c3c4fd%3A0xbf6e32df66376788!2sDalii%208%2C%2009-100%20P%C5%82o%C5%84sk!5e0!3m2!1spl!2spl!4v1733328000000!5m2!1spl!2spl"
+                  width="100%"
+                  height="500"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Mapa lokalizacji SanBud - Instalacje Sanitarne"
+                  className="w-full h-full"
+                />
+              </div>
+
+              {/* Quick Info Below Map */}
+              <div className="p-6 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-white mb-1">Telefon</h4>
+                      <a href="tel:+48503691808" className="text-green-600 dark:text-green-400 hover:text-green-700 font-semibold">
+                        +48 503 691 808
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-white mb-1">Godziny</h4>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">Pon-Pt: 8:00-18:00</p>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">Sob: 9:00-14:00</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-white mb-1">Email</h4>
+                      <a href="mailto:sanbud.biuro@gmail.com" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 font-semibold text-sm">
+                        sanbud.biuro@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

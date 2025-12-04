@@ -121,17 +121,24 @@ export default function ContactSection({ locale }: ContactSectionProps) {
                 </div>
               </a>
 
-              <div className="flex items-center gap-4 p-6 bg-white rounded-xl border border-gray-200">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+              <a 
+                href="https://maps.google.com/maps?hl=pl&gl=pl&um=1&ie=UTF-8&fb=1&sa=X&ftid=0x471c190083c3c4fd:0xbf6e32df66376788"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 p-6 bg-white rounded-xl border border-gray-200 hover:border-teal-300 hover:shadow-md transition-all duration-300 group"
+              >
+                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-200 transition-colors">
                   <MapPin className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500 mb-1">{isEnglish ? 'Service Area' : 'Obszar Działania'}</div>
-                  <div className="text-lg font-semibold text-gray-900">
-                    {isEnglish ? 'Mazowsze Region' : 'Woj. Mazowieckie'}
+                  <div className="text-sm text-gray-500 mb-1">{isEnglish ? 'Address' : 'Adres'}</div>
+                  <div className="text-base font-semibold text-gray-900">ul. Dalii 8</div>
+                  <div className="text-sm text-gray-600">09-100 Płońsk</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {isEnglish ? 'Service area: Mazovia' : 'Obsługa woj. mazowieckiego'}
                   </div>
                 </div>
-              </div>
+              </a>
 
               <div className="flex items-center gap-4 p-6 bg-white rounded-xl border border-gray-200">
                 <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">

@@ -25,7 +25,9 @@ export default function HomePage() {
             "description": "Profesjonalne usługi hydrauliczne, instalacje sanitarne, ogrzewanie i klimatyzacja w województwie mazowieckim. 15 lat doświadczenia, 500+ zadowolonych klientów.",
             "address": {
               "@type": "PostalAddress",
-              "addressLocality": "Warszawa",
+              "streetAddress": "ul. Dalii 8",
+              "addressLocality": "Płońsk",
+              "postalCode": "09-100",
               "addressRegion": "Mazowieckie",
               "addressCountry": "PL"
             },
