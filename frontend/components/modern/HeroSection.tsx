@@ -54,8 +54,8 @@ export default function HeroSection({ locale }: HeroSectionProps) {
           {/* Subheadline */}
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-12 max-w-2xl leading-relaxed font-light">
             {isEnglish
-              ? 'Professional installations, repairs, and maintenance for residential and commercial properties across Mazowsze region. Over 25 years of trusted expertise.'
-              : 'Profesjonalne instalacje, naprawy i konserwacje dla nieruchomości mieszkalnych i komercyjnych w województwie mazowieckim. Ponad 25 lat zaufanego doświadczenia.'}
+              ? 'Professional installations, repairs, and maintenance for residential and commercial properties across Mazowsze region. Over 7 years of trusted expertise.'
+              : 'Profesjonalne instalacje, naprawy i konserwacje dla nieruchomości mieszkalnych i komercyjnych w województwie mazowieckim. Ponad 7 lat zaufanego doświadczenia.'}
           </p>
 
           {/* CTA Buttons */}
@@ -90,7 +90,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                 </svg>
               </div>
               <div>
-                <div className="text-2xl font-bold text-white">25+</div>
+                <div className="text-2xl font-bold text-white">7+</div>
                 <div className="text-sm text-gray-400">{isEnglish ? 'Years Experience' : 'Lat Doświadczenia'}</div>
               </div>
             </div>

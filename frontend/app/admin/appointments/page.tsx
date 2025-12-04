@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { buildApiUrl } from '@/utils/api';
+import { authFetch } from '@/utils/api';
 
 interface Customer {
   id: number;
@@ -54,12 +54,10 @@ export default function AppointmentsPage() {
   const loadAppointments = async () => {
     try {
       const url = statusFilter 
-        ? `${buildApiUrl('admin/api/appointments')}?status=${statusFilter}`
-        : buildApiUrl('admin/api/appointments');
+        ? `admin/api/appointments?status=${statusFilter}`
+        : 'admin/api/appointments';
       
-      const response = await fetch(url, {
-        credentials: 'include',
-      });
+      const response = await authFetch(url);
 
       if (response.ok) {
         const data = await response.json();
@@ -89,12 +87,8 @@ export default function AppointmentsPage() {
     if (!selectedAppointment) return;
 
     try {
-      const response = await fetch(buildApiUrl(`admin/api/appointments/${selectedAppointment.id}`), {
+      const response = await authFetch(`admin/api/appointments/${selectedAppointment.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
         body: JSON.stringify(formData),
       });
 
@@ -112,9 +106,8 @@ export default function AppointmentsPage() {
     if (!confirm('Czy na pewno chcesz usunąć tę wizytę?')) return;
 
     try {
-      const response = await fetch(buildApiUrl(`admin/api/appointments/${appointmentId}`), {
+      const response = await authFetch(`admin/api/appointments/${appointmentId}`, {
         method: 'DELETE',
-        credentials: 'include',
       });
 
       if (response.ok) {

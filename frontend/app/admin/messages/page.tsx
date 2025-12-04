@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { buildApiUrl } from '@/utils/api';
+import { authFetch } from '@/utils/api';
 
 interface Message {
   id: number;
@@ -36,12 +36,10 @@ export default function MessagesPage() {
   const loadMessages = async () => {
     try {
       const url = filterRead 
-        ? `${buildApiUrl('admin/api/messages')}?is_read=${filterRead}`
-        : buildApiUrl('admin/api/messages');
+        ? `admin/api/messages?is_read=${filterRead}`
+        : 'admin/api/messages';
       
-      const response = await fetch(url, {
-        credentials: 'include',
-      });
+      const response = await authFetch(url);
 
       if (response.ok) {
         const data = await response.json();
@@ -58,9 +56,7 @@ export default function MessagesPage() {
 
   const handleView = async (message: Message) => {
     try {
-      const response = await fetch(buildApiUrl(`admin/api/messages/${message.id}`), {
-        credentials: 'include',
-      });
+      const response = await authFetch(`admin/api/messages/${message.id}`);
 
       if (response.ok) {
         const data = await response.json();
@@ -75,12 +71,8 @@ export default function MessagesPage() {
 
   const handleMarkAsReplied = async (messageId: number, replied: boolean) => {
     try {
-      const response = await fetch(buildApiUrl(`admin/api/messages/${messageId}`), {
+      const response = await authFetch(`admin/api/messages/${messageId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
         body: JSON.stringify({ replied }),
       });
 
@@ -99,9 +91,8 @@ export default function MessagesPage() {
     if (!confirm('Czy na pewno chcesz usunąć tę wiadomość?')) return;
 
     try {
-      const response = await fetch(buildApiUrl(`admin/api/messages/${messageId}`), {
+      const response = await authFetch(`admin/api/messages/${messageId}`, {
         method: 'DELETE',
-        credentials: 'include',
       });
 
       if (response.ok) {

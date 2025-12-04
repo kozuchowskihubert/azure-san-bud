@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { buildApiUrl } from '@/utils/api';
+import { authFetch, buildApiUrl } from '@/utils/api';
 
 interface Client {
   id: number;
@@ -37,9 +37,7 @@ export default function ClientsPage() {
         url.searchParams.append('search', search);
       }
 
-      const response = await fetch(url.toString(), {
-        credentials: 'include',
-      });
+      const response = await authFetch(url.pathname + url.search);
 
       if (response.ok) {
         const data = await response.json();
@@ -64,12 +62,8 @@ export default function ClientsPage() {
     if (!selectedClient) return;
 
     try {
-      const response = await fetch(buildApiUrl(`admin/api/clients/${selectedClient.id}`), {
+      const response = await authFetch(`admin/api/clients/${selectedClient.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
         body: JSON.stringify(formData),
       });
 
@@ -87,9 +81,8 @@ export default function ClientsPage() {
     if (!confirm('Czy na pewno chcesz usunąć tego klienta?')) return;
 
     try {
-      const response = await fetch(buildApiUrl(`admin/api/clients/${clientId}`), {
+      const response = await authFetch(`admin/api/clients/${clientId}`, {
         method: 'DELETE',
-        credentials: 'include',
       });
 
       if (response.ok) {

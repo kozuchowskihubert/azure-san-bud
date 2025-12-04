@@ -11,8 +11,8 @@ const benefits = [
     icon: CheckCircle2,
     titlePL: 'Doświadczenie i Wiedza',
     titleEN: 'Experience & Expertise',
-    descriptionPL: 'Ponad 25 lat praktyki w branży hydraulicznej. Realizujemy projekty od prostych napraw po kompleksowe instalacje.',
-    descriptionEN: 'Over 25 years of plumbing industry practice. We handle projects from simple repairs to complex installations.',
+    descriptionPL: '7 lat praktyki w branży hydraulicznej. Realizujemy projekty od prostych napraw po kompleksowe instalacje.',
+    descriptionEN: '7 years of plumbing industry practice. We handle projects from simple repairs to complex installations.',
   },
   {
     icon: Award,
@@ -92,7 +92,7 @@ export default function WhyChooseUsSection({ locale }: WhyChooseUsSectionProps) 
           {/* Right: Stats Grid */}
           <div className="grid grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl p-8 text-white">
-              <div className="text-5xl font-bold mb-2">25+</div>
+              <div className="text-5xl font-bold mb-2">7+</div>
               <div className="text-teal-100 text-lg">
                 {isEnglish ? 'Years Experience' : 'Lat Doświadczenia'}
               </div>

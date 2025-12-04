@@ -32,3 +32,39 @@ export const buildApiUrl = (path: string): string => {
   const cleanPath = path.startsWith('/') ? path.slice(1) : path;
   return `${baseUrl}/${cleanPath}`;
 };
+
+/**
+ * Get authentication headers with JWT token
+ */
+export const getAuthHeaders = (): HeadersInit => {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+  };
+  
+  // Add JWT token if available
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+  }
+  
+  return headers;
+};
+
+/**
+ * Authenticated fetch wrapper
+ */
+export const authFetch = async (path: string, options: RequestInit = {}): Promise<Response> => {
+  const url = buildApiUrl(path);
+  const headers = {
+    ...getAuthHeaders(),
+    ...options.headers,
+  };
+  
+  return fetch(url, {
+    ...options,
+    headers,
+    credentials: 'include',
+  });
+};

@@ -103,14 +103,18 @@ export default function AdminDashboard() {
 
   const handleLogout = async () => {
     try {
-      await fetch(buildApiUrl('admin/api/logout'), {
+      await authenticatedFetch('admin/api/logout', {
         method: 'POST',
-        credentials: 'include',
       });
       localStorage.removeItem('admin');
+      localStorage.removeItem('adminToken');
       router.push('/admin/login');
     } catch (error) {
       console.error('Logout failed:', error);
+      // Still clear local storage even if request fails
+      localStorage.removeItem('admin');
+      localStorage.removeItem('adminToken');
+      router.push('/admin/login');
     }
   };
 
