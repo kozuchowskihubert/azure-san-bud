@@ -34,6 +34,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     // Check if user is authenticated
     if (!isAuthenticated()) {
+      console.log('[Dashboard] No auth token found, redirecting to login');
       router.push('/admin/login');
       return;
     }
@@ -41,30 +42,46 @@ export default function AdminDashboard() {
     // Load admin from localStorage
     const currentAdmin = getCurrentAdmin();
     if (currentAdmin) {
+      console.log('[Dashboard] Loaded admin from localStorage:', currentAdmin.username);
       setAdmin(currentAdmin);
+      setLoading(false); // Set loading false immediately with cached data
     }
     
+    // Verify token with backend (async)
     checkAuth();
     loadStats();
   }, []);
 
   const checkAuth = async () => {
     try {
+      console.log('[Dashboard] Checking auth with backend...');
       const response = await authenticatedFetch('admin/api/me', {
         method: 'GET',
       });
 
       if (response.ok) {
         const data = await response.json();
+        console.log('[Dashboard] Auth check successful:', data.admin.username);
         setAdmin(data.admin);
+        // Update localStorage with fresh data
+        localStorage.setItem('admin', JSON.stringify(data.admin));
       } else {
-        router.push('/admin/login');
+        console.error('[Dashboard] Auth check failed, status:', response.status);
+        const errorData = await response.json().catch(() => ({}));
+        console.error('[Dashboard] Error details:', errorData);
+        
+        // Only redirect if it's a real auth error (not just network issue)
+        if (response.status === 401 || response.status === 403) {
+          console.log('[Dashboard] Unauthorized, redirecting to login');
+          localStorage.removeItem('adminToken');
+          localStorage.removeItem('admin');
+          router.push('/admin/login');
+        }
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
-      router.push('/admin/login');
-    } finally {
-      setLoading(false);
+      console.error('[Dashboard] Auth check exception:', error);
+      // Don't redirect on network errors - user might be offline temporarily
+      // Just log the error and keep using cached admin data
     }
   };
 

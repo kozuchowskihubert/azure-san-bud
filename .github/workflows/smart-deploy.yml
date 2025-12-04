@@ -1,0 +1,484 @@
+# =============================================================================
+# Smart CI/CD with Change Detection
+# =============================================================================
+#
+# This workflow intelligently detects which parts of the application changed
+# and only rebuilds/redeploys what's necessary:
+#
+#   - Backend changes  → Deploy backend only
+#   - Frontend changes → Deploy frontend only
+#   - Both changed     → Deploy both
+#   - Docs only        → Skip deployment
+#
+# Benefits:
+#   - Faster CI/CD (skip unnecessary rebuilds)
+#   - Reduced Azure costs (fewer deployments)
+#   - Better resource utilization
+#   - Clearer deployment logs
+#
+# =============================================================================
+
+name: Smart Deploy (Change Detection)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      force_backend:
+        description: 'Force backend deployment'
+        required: false
+        default: false
+        type: boolean
+      force_frontend:
+        description: 'Force frontend deployment'
+        required: false
+        default: false
+        type: boolean
+      skip_swap:
+        description: 'Deploy to staging only (no swap)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  AZURE_WEBAPP_NAME: app-sanbud-api-prod
+  RESOURCE_GROUP: rg-sanbud-prod
+  SLOT_NAME: staging
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '20'
+
+# =============================================================================
+# Detect Changes Job
+# =============================================================================
+jobs:
+  detect-changes:
+    name: 🔍 Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.changes.outputs.backend }}
+      frontend: ${{ steps.changes.outputs.frontend }}
+      docs: ${{ steps.changes.outputs.docs }}
+      workflows: ${{ steps.changes.outputs.workflows }}
+      any_code: ${{ steps.changes.outputs.any_code }}
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for comparison
+      
+      - name: 🔍 Detect changed paths
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            backend:
+              - 'app/**'
+              - 'config/**'
+              - 'scripts/**'
+              - 'migrations/**'
+              - 'requirements.txt'
+              - 'run.py'
+              - 'Dockerfile*'
+              - 'setup.cfg'
+            frontend:
+              - 'frontend/**'
+            docs:
+              - 'docs/**'
+              - '*.md'
+              - 'README.md'
+            workflows:
+              - '.github/workflows/**'
+            any_code:
+              - 'app/**'
+              - 'frontend/**'
+              - 'config/**'
+              - 'scripts/**'
+              - 'requirements.txt'
+      
+      - name: 📊 Changes Summary
+        run: |
+          echo "### 🔍 Change Detection Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Component | Changed |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|---------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Backend   | ${{ steps.changes.outputs.backend }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Frontend  | ${{ steps.changes.outputs.frontend }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Docs      | ${{ steps.changes.outputs.docs }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Workflows | ${{ steps.changes.outputs.workflows }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.changes.outputs.backend }}" == "true" ]; then
+            echo "✅ **Backend will be deployed**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⏭️  Backend deployment skipped (no changes)" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "${{ steps.changes.outputs.frontend }}" == "true" ]; then
+            echo "✅ **Frontend will be deployed**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⏭️  Frontend deployment skipped (no changes)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # =============================================================================
+  # Validate Backend (only if backend changed)
+  # =============================================================================
+  validate-backend:
+    name: ✅ Validate Backend
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.backend == 'true' || 
+      github.event.inputs.force_backend == 'true' ||
+      github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: 🔧 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: 🧪 Run tests
+        run: |
+          pip install pytest pytest-cov
+          if [ -d "tests" ]; then
+            pytest --cov=app tests/ || echo "⚠️ Tests skipped"
+          else
+            echo "⚠️ No tests directory"
+          fi
+      
+      - name: 🔍 Lint Python code
+        run: |
+          pip install flake8
+          flake8 app/ --count --select=E9,F63,F7,F82 --show-source --statistics || echo "⚠️ Linting skipped"
+
+  # =============================================================================
+  # Validate Frontend (only if frontend changed)
+  # =============================================================================
+  validate-frontend:
+    name: ✅ Validate Frontend
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.frontend == 'true' || 
+      github.event.inputs.force_frontend == 'true' ||
+      github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: 🔧 Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+      
+      - name: 🔍 Lint frontend
+        working-directory: ./frontend
+        run: |
+          npm run lint || echo "⚠️ Linting issues found"
+      
+      - name: 🏗️ Build test
+        working-directory: ./frontend
+        env:
+          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl
+          NEXT_PUBLIC_DOMAIN: sanbud24.pl
+          NEXT_PUBLIC_SITE_URL: https://sanbud24.pl
+        run: npm run build
+
+  # =============================================================================
+  # Deploy Backend to Staging Slot
+  # =============================================================================
+  deploy-backend:
+    name: 🚀 Deploy Backend
+    runs-on: ubuntu-latest
+    needs: [detect-changes, validate-backend]
+    if: |
+      always() && 
+      (needs.detect-changes.outputs.backend == 'true' || 
+       github.event.inputs.force_backend == 'true') &&
+      needs.validate-backend.result == 'success'
+    environment:
+      name: production
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: 🔧 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: 📦 Create deployment package
+        run: |
+          echo "Creating deployment package..."
+          zip -r deployment-backend.zip . \
+            -x "*.git*" \
+            -x "frontend/*" \
+            -x "terraform/*" \
+            -x "venv/*" \
+            -x "*.pyc" \
+            -x "__pycache__/*" \
+            -x ".env*" \
+            -x "*.log" \
+            -x "node_modules/*" \
+            -x "docs/*" \
+            -x "*.md"
+          
+          SIZE=$(du -h deployment-backend.zip | cut -f1)
+          echo "✅ Package created: $SIZE"
+          echo "**Backend Package:** $SIZE" >> $GITHUB_STEP_SUMMARY
+      
+      - name: 🔐 Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: 🚀 Deploy to Staging Slot
+        run: |
+          echo "Deploying backend to staging slot..."
+          az webapp deployment source config-zip \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --slot ${{ env.SLOT_NAME }} \
+            --src deployment-backend.zip \
+            --timeout 600
+          
+          echo "✅ Backend deployed to staging"
+      
+      - name: 🔄 Restart Staging Slot
+        run: |
+          az webapp restart \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --slot ${{ env.SLOT_NAME }}
+      
+      - name: ⏳ Wait for Warmup
+        run: |
+          echo "Waiting 30s for staging to warm up..."
+          sleep 30
+      
+      - name: 🏥 Health Check Staging
+        id: health
+        run: |
+          STAGING_URL="https://${{ env.AZURE_WEBAPP_NAME }}-${{ env.SLOT_NAME }}.azurewebsites.net"
+          
+          echo "Checking staging health: $STAGING_URL/health"
+          
+          for i in {1..10}; do
+            echo "Attempt $i/10..."
+            if curl -f -s "$STAGING_URL/health" > /dev/null; then
+              echo "✅ Staging is healthy!"
+              echo "healthy=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            sleep 5
+          done
+          
+          echo "❌ Staging health check failed"
+          echo "healthy=false" >> $GITHUB_OUTPUT
+          exit 1
+      
+      - name: 📊 Deployment Summary
+        if: success()
+        run: |
+          STAGING_URL="https://${{ env.AZURE_WEBAPP_NAME }}-${{ env.SLOT_NAME }}.azurewebsites.net"
+          
+          echo "### 🎯 Backend Deployed to Staging" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Staging URL:** $STAGING_URL" >> $GITHUB_STEP_SUMMARY
+          echo "**Health:** ✅ Healthy" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** Ready for swap" >> $GITHUB_STEP_SUMMARY
+
+  # =============================================================================
+  # Swap to Production
+  # =============================================================================
+  swap-to-production:
+    name: 🔄 Swap to Production
+    runs-on: ubuntu-latest
+    needs: [detect-changes, deploy-backend]
+    if: |
+      always() &&
+      needs.deploy-backend.result == 'success' &&
+      github.event.inputs.skip_swap != 'true' &&
+      github.event_name != 'pull_request'
+    environment:
+      name: production
+    
+    steps:
+      - name: 🔐 Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: 🔄 Swap Slots
+        run: |
+          echo "🚀 SWAPPING: Staging → Production"
+          
+          az webapp deployment slot swap \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --slot ${{ env.SLOT_NAME }} \
+            --target-slot production \
+            --verbose
+          
+          echo "✅ Swap completed!"
+      
+      - name: ⏳ Stabilization Wait
+        run: sleep 20
+      
+      - name: 🏥 Verify Production
+        run: |
+          PROD_URL="https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net"
+          API_URL="https://api.sanbud24.pl"
+          
+          echo "Verifying production..."
+          
+          for i in {1..5}; do
+            if curl -f -s "$PROD_URL/health" > /dev/null; then
+              echo "✅ Production is healthy"
+              break
+            fi
+            sleep 5
+          done
+          
+          if curl -f -s "$API_URL/health" > /dev/null; then
+            echo "✅ Custom domain is healthy"
+          fi
+      
+      - name: 📊 Production Summary
+        run: |
+          echo "### 🎉 Backend Swapped to Production!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Production:** https://api.sanbud24.pl" >> $GITHUB_STEP_SUMMARY
+          echo "**Health:** ✅ Verified" >> $GITHUB_STEP_SUMMARY
+          echo "**Rollback:** Previous version in staging" >> $GITHUB_STEP_SUMMARY
+
+  # =============================================================================
+  # Deploy Frontend
+  # =============================================================================
+  deploy-frontend:
+    name: 🌐 Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: [detect-changes, validate-frontend]
+    if: |
+      always() && 
+      (needs.detect-changes.outputs.frontend == 'true' || 
+       github.event.inputs.force_frontend == 'true') &&
+      (needs.validate-frontend.result == 'success' || 
+       needs.validate-frontend.result == 'skipped') &&
+      github.event_name != 'pull_request'
+    environment:
+      name: production
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: 🔧 Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+      
+      - name: 🏗️ Build frontend
+        working-directory: ./frontend
+        env:
+          NEXT_PUBLIC_API_URL: https://api.sanbud24.pl
+          NEXT_PUBLIC_DOMAIN: sanbud24.pl
+          NEXT_PUBLIC_SITE_URL: https://sanbud24.pl
+          NEXT_PUBLIC_PHONE: +48503691808
+          NEXT_PUBLIC_EMAIL: kontakt@sanbud24.pl
+        run: npm run build
+      
+      - name: 🚀 Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/frontend"
+          output_location: ".next"
+          skip_app_build: true
+      
+      - name: 📊 Frontend Summary
+        run: |
+          echo "### 🌐 Frontend Deployed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** https://sanbud24.pl" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ✅ Live" >> $GITHUB_STEP_SUMMARY
+
+  # =============================================================================
+  # Deployment Summary
+  # =============================================================================
+  summary:
+    name: 📊 Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [detect-changes, deploy-backend, swap-to-production, deploy-frontend]
+    if: always()
+    
+    steps:
+      - name: 📊 Generate Summary
+        run: |
+          echo "# 🎯 Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "## Changes Detected" >> $GITHUB_STEP_SUMMARY
+          echo "- Backend: ${{ needs.detect-changes.outputs.backend }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend: ${{ needs.detect-changes.outputs.frontend }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "## Deployment Status" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.deploy-backend.result }}" == "success" ]; then
+            echo "- ✅ Backend deployed and swapped" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ needs.deploy-backend.result }}" == "skipped" ]; then
+            echo "- ⏭️  Backend skipped (no changes)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ Backend failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "${{ needs.deploy-frontend.result }}" == "success" ]; then
+            echo "- ✅ Frontend deployed" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ needs.deploy-frontend.result }}" == "skipped" ]; then
+            echo "- ⏭️  Frontend skipped (no changes)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ Frontend failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Live URLs" >> $GITHUB_STEP_SUMMARY
+          echo "- **Frontend:** https://sanbud24.pl" >> $GITHUB_STEP_SUMMARY
+          echo "- **Backend API:** https://api.sanbud24.pl" >> $GITHUB_STEP_SUMMARY

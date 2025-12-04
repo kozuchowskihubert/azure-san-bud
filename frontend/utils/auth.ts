@@ -43,9 +43,12 @@ export async function authenticatedFetch(
 
   // If unauthorized, clear token and redirect to login
   if (response.status === 401 && typeof window !== 'undefined') {
+    console.error('[Auth] 401 Unauthorized - clearing tokens and redirecting');
     localStorage.removeItem('adminToken');
     localStorage.removeItem('admin');
-    window.location.href = '/admin/login';
+    // Don't redirect immediately - let the calling code handle it
+    // This prevents double redirects
+    // window.location.href = '/admin/login';
   }
 
   return response;

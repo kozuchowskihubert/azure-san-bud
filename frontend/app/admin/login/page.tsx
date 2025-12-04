@@ -20,6 +20,7 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
+      console.log('[Login] Attempting login to:', buildApiUrl('admin/api/login'));
       const response = await fetch(buildApiUrl('admin/api/login'), {
         method: 'POST',
         headers: {
@@ -29,23 +30,33 @@ export default function AdminLoginPage() {
         body: JSON.stringify(formData),
       });
 
+      console.log('[Login] Response status:', response.status);
       const data = await response.json();
+      console.log('[Login] Response data:', { success: data.success, hasToken: !!data.token, admin: data.admin?.username });
 
       if (response.ok && data.success) {
         // Store JWT token and admin info in localStorage
         if (data.token) {
           localStorage.setItem('adminToken', data.token);
+          console.log('[Login] Token stored in localStorage');
+        } else {
+          console.warn('[Login] No token in response!');
         }
         localStorage.setItem('admin', JSON.stringify(data.admin));
+        console.log('[Login] Admin data stored, redirecting to dashboard...');
+        
+        // Small delay to ensure localStorage is written
+        await new Promise(resolve => setTimeout(resolve, 100));
         
         // Redirect to admin dashboard
         router.push('/admin/dashboard');
       } else {
-        setError(data.error || 'Login failed');
+        console.error('[Login] Login failed:', data.error || data.message);
+        setError(data.error || data.message || 'Login failed');
       }
     } catch (err) {
+      console.error('[Login] Network error:', err);
       setError('Network error. Please try again.');
-      console.error('Login error:', err);
     } finally {
       setLoading(false);
     }
