@@ -165,7 +165,7 @@ def login():
 
 
 @admin_bp.route('/api/logout', methods=['POST'])
-@login_required
+@token_required
 def logout():
     """Admin logout endpoint."""
     session.clear()
@@ -205,7 +205,7 @@ def get_current_admin():
 # ==================== CLIENTS MANAGEMENT ====================
 
 @admin_bp.route('/api/clients', methods=['GET'])
-@login_required
+@token_required
 def get_clients():
     """Get list of all clients with optional filtering and pagination."""
     try:
@@ -257,7 +257,7 @@ def get_clients():
 
 
 @admin_bp.route('/api/clients/<int:client_id>', methods=['GET'])
-@login_required
+@token_required
 def get_client(client_id):
     """Get detailed information about a specific client."""
     try:
@@ -287,7 +287,7 @@ def get_client(client_id):
 
 
 @admin_bp.route('/api/clients/<int:client_id>', methods=['PUT'])
-@login_required
+@token_required
 def update_client(client_id):
     """Update client information."""
     try:
@@ -325,7 +325,7 @@ def update_client(client_id):
 
 
 @admin_bp.route('/api/clients/<int:client_id>', methods=['DELETE'])
-@login_required
+@token_required
 def delete_client(client_id):
     """Delete a client (soft delete recommended in production)."""
     try:
@@ -358,7 +358,7 @@ def delete_client(client_id):
 # ==================== SERVICES MANAGEMENT ====================
 
 @admin_bp.route('/api/services', methods=['GET'])
-@login_required
+@token_required
 def get_services():
     """Get list of all services."""
     try:
@@ -380,7 +380,7 @@ def get_services():
 
 
 @admin_bp.route('/api/services/<int:service_id>', methods=['GET'])
-@login_required
+@token_required
 def get_service(service_id):
     """Get detailed information about a specific service."""
     try:
@@ -410,7 +410,7 @@ def get_service(service_id):
 
 
 @admin_bp.route('/api/services', methods=['POST'])
-@login_required
+@token_required
 def create_service():
     """Create a new service."""
     try:
@@ -449,7 +449,7 @@ def create_service():
 
 
 @admin_bp.route('/api/services/<int:service_id>', methods=['PUT'])
-@login_required
+@token_required
 def update_service(service_id):
     """Update service information."""
     try:
@@ -491,7 +491,7 @@ def update_service(service_id):
 
 
 @admin_bp.route('/api/services/<int:service_id>', methods=['DELETE'])
-@login_required
+@token_required
 def delete_service(service_id):
     """Delete a service."""
     try:
@@ -524,7 +524,7 @@ def delete_service(service_id):
 # ==================== DASHBOARD STATS ====================
 
 @admin_bp.route('/api/stats', methods=['GET'])
-@login_required
+@token_required
 def get_stats():
     """Get dashboard statistics."""
     try:
@@ -634,7 +634,7 @@ def init_admin_secure():
 # ============================================================================
 
 @admin_bp.route('/api/appointments', methods=['GET'])
-@login_required
+@token_required
 def get_appointments():
     """Get all appointments with filters."""
     try:
@@ -712,7 +712,7 @@ def get_appointments():
 
 
 @admin_bp.route('/api/appointments/<int:appointment_id>', methods=['GET'])
-@login_required
+@token_required
 def get_appointment(appointment_id):
     """Get single appointment details."""
     try:
@@ -743,7 +743,7 @@ def get_appointment(appointment_id):
 
 
 @admin_bp.route('/api/appointments/<int:appointment_id>', methods=['PUT'])
-@login_required
+@token_required
 def update_appointment(appointment_id):
     """Update appointment status or details."""
     try:
@@ -779,7 +779,7 @@ def update_appointment(appointment_id):
 
 
 @admin_bp.route('/api/appointments/<int:appointment_id>', methods=['DELETE'])
-@login_required
+@token_required
 def delete_appointment(appointment_id):
     """Delete an appointment."""
     try:
@@ -804,7 +804,7 @@ def delete_appointment(appointment_id):
 # ============================================================================
 
 @admin_bp.route('/api/messages', methods=['GET'])
-@login_required
+@token_required
 def get_messages():
     """Get all contact messages with filters."""
     try:
@@ -846,7 +846,7 @@ def get_messages():
 
 
 @admin_bp.route('/api/messages/<int:message_id>', methods=['GET'])
-@login_required
+@token_required
 def get_message(message_id):
     """Get single message details."""
     try:
@@ -867,7 +867,7 @@ def get_message(message_id):
 
 
 @admin_bp.route('/api/messages/<int:message_id>', methods=['PUT'])
-@login_required
+@token_required
 def update_message(message_id):
     """Update message status or notes."""
     try:
@@ -902,7 +902,7 @@ def update_message(message_id):
 
 
 @admin_bp.route('/api/messages/<int:message_id>', methods=['DELETE'])
-@login_required
+@token_required
 def delete_message(message_id):
     """Delete a message."""
     try:
