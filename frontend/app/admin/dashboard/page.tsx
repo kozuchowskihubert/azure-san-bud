@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { buildApiUrl } from '@/utils/api';
 import { authenticatedFetch, getCurrentAdmin, isAuthenticated } from '@/utils/auth';
+import AdminDebugPanel from '@/components/AdminDebugPanel';
 
 interface Admin {
   id: number;
@@ -306,6 +307,9 @@ export default function AdminDashboard() {
           </Link>
         </div>
       </div>
+
+      {/* Debug Panel (only in development or when needed) */}
+      {process.env.NODE_ENV === 'development' && <AdminDebugPanel />}
     </div>
   );
 }
