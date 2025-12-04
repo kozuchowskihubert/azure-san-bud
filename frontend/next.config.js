@@ -117,6 +117,21 @@ const nextConfig = {
       },
     ];
   },
+
+  // Rewrites - Proxy API calls to Flask backend
+  async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002';
+    return [
+      {
+        source: '/appointments/:path*',
+        destination: `${apiUrl}/appointments/:path*`,
+      },
+      {
+        source: '/api/:path*',
+        destination: `${apiUrl}/api/:path*`,
+      },
+    ];
+  },
 }
 
 module.exports = withNextIntl(nextConfig);
