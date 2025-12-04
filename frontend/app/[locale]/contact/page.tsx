@@ -68,7 +68,7 @@ export default function ContactPage() {
             "@type": "LocalBusiness",
             "name": "SanBud - Instalacje Sanitarne",
             "image": "https://sanbud24.pl/images/logo.jpg",
-            "description": "Profesjonalne usługi hydrauliczne, instalacje sanitarne, ogrzewanie i klimatyzacja w województwie mazowieckim. 15 lat doświadczenia, 500+ zadowolonych klientów.",
+            "description": "Profesjonalne usługi hydrauliczne, instalacje sanitarne, ogrzewanie i klimatyzacja w województwie mazowieckim. 7 lat doświadczenia, 500+ zadowolonych klientów.",
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "Warszawa",
@@ -116,27 +116,34 @@ export default function ContactPage() {
 
       {/* Hero Section with gradient matching main page */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-gray-900 to-orange-900"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-blue-900"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
+        
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center text-white">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 border border-green-500/30 rounded-full backdrop-blur-sm mb-6">
-              <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600/20 border border-blue-400/30 rounded-full backdrop-blur-sm mb-8">
+              <svg className="w-5 h-5 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
               </svg>
-              <span className="text-sm font-semibold text-green-300">Skontaktuj się z nami</span>
+              <span className="text-sm font-bold text-blue-200 tracking-wide">Skontaktuj się z nami</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-                Jesteśmy do
+            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight">
+              <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">
+                Hydraulika
               </span>
-              <br />
-              <span className="text-green-400">Twojej Dyspozycji</span>
+              <span className="block text-white text-6xl md:text-8xl">
+                Naszą Pasją
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
-              Profesjonalna obsługa • Szybki czas reakcji • Doświadczony zespół
+            <p className="text-xl md:text-2xl text-gray-200 leading-relaxed max-w-2xl mx-auto">
+              Profesjonalna obsługa • Szybki czas reakcji • 7 lat doświadczenia
             </p>
           </div>
         </div>
@@ -157,12 +164,12 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              {/* Contact Cards with green/orange theme */}
+              {/* Contact Cards with blue/purple theme */}
               <div className="space-y-4">
                 {/* Phone Card */}
-                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-green-500/50">
+                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-blue-500/50">
                   <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <span className="text-2xl">📞</span>
                     </div>
                     <div className="flex-1">
@@ -171,7 +178,7 @@ export default function ContactPage() {
                       </h3>
                       <a
                         href="tel:+48503691808"
-                        className="text-green-600 dark:text-green-400 hover:text-green-700 font-semibold transition-colors text-xl"
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-700 font-semibold transition-colors text-xl"
                       >
                         +48 503 691 808
                       </a>
@@ -183,9 +190,9 @@ export default function ContactPage() {
                 </div>
 
                 {/* Email Card */}
-                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-orange-500/50">
+                <div className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-purple-500/50">
                   <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <span className="text-2xl">✉️</span>
                     </div>
                     <div className="flex-1">
@@ -194,7 +201,7 @@ export default function ContactPage() {
                       </h3>
                       <a
                         href="mailto:sanbud.biuro@gmail.com"
-                        className="text-orange-600 dark:text-orange-400 hover:text-orange-700 font-semibold transition-colors"
+                        className="text-purple-600 dark:text-purple-400 hover:text-purple-700 font-semibold transition-colors"
                       >
                         sanbud.biuro@gmail.com
                       </a>
@@ -428,7 +435,7 @@ export default function ContactPage() {
           <div className="max-w-5xl mx-auto">
             <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700">
               {/* Address Info Bar */}
-              <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-6 text-white">
+              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
