@@ -23,7 +23,7 @@ export default function HomePage() {
             "@type": "LocalBusiness",
             "name": "SanBud - Instalacje Sanitarne",
             "image": "https://sanbud24.pl/images/logo.jpg",
-            "description": "Profesjonalne usługi hydrauliczne, instalacje sanitarne, ogrzewanie i klimatyzacja w województwie mazowieckim. 15 lat doświadczenia, 500+ zadowolonych klientów.",
+            "description": "Profesjonalne usługi hydrauliczne, instalacje sanitarne, ogrzewanie i klimatyzacja w województwie mazowieckim. 7 lat doświadczenia, 500+ zadowolonych klientów.",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "ul. Dalii 8",

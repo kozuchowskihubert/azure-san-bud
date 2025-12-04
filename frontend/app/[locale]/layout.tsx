@@ -27,7 +27,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: 'SanBud - Instalacje Sanitarne | Profesjonalne Usługi Hydrauliczne Mazowsze',
-  description: 'Profesjonalne usługi hydrauliczne w województwie mazowieckim. 15 lat doświadczenia, 500+ zadowolonych klientów. Instalacje sanitarne, ogrzewanie, łazienki pod klucz. ☎️ 503 691 808',
+  description: 'Profesjonalne usługi hydrauliczne w województwie mazowieckim. 7 lat doświadczenia, 500+ zadowolonych klientów. Instalacje sanitarne, ogrzewanie, łazienki pod klucz. ☎️ 503 691 808',
   keywords: 'hydraulik warszawa, instalacje sanitarne mazowsze, ogrzewanie podłogowe, kotłownie, łazienki pod klucz, SanBud, hydraulik 24/7',
   authors: [{ name: 'SanBud - Instalacje Sanitarne' }],
   icons: {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'SanBud - Profesjonalne Instalacje Sanitarne',
-    description: '500+ zadowolonych klientów | 15 lat doświadczenia | Woj. Mazowieckie',
+    description: '500+ zadowolonych klientów | 7 lat doświadczenia | Woj. Mazowieckie',
     url: 'https://sanbud24.pl',
     siteName: 'SanBud',
     locale: 'pl_PL',
