@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { buildApiUrl } from '@/utils/api';
-import EmergencyContacts from '@/components/EmergencyContacts';
-import EmergencyServiceCards from '@/components/EmergencyServiceCards';
 
 export default function ContactPage() {
   const t = useTranslations();
@@ -83,26 +81,8 @@ export default function ContactPage() {
               <span className="text-green-400">Twojej Dyspozycji</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
-              Odpowiadamy 24/7 • Szybka pomoc • Profesjonalna obsługa
+              Profesjonalna obsługa • Szybki czas reakcji • Doświadczony zespół
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Emergency Contacts Section - Most Prominent */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <EmergencyContacts />
-          </div>
-        </div>
-      </section>
-
-      {/* Emergency Service Categories */}
-      <section className="py-16 bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <div className="max-w-7xl mx-auto">
-            <EmergencyServiceCards />
           </div>
         </div>
       </section>
@@ -141,7 +121,7 @@ export default function ContactPage() {
                         +48 503 691 808
                       </a>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        Pon-Pt: 8:00-18:00, Awarie: 24/7
+                        Pon-Pt: 8:00-18:00, Sob: 9:00-14:00
                       </p>
                     </div>
                   </div>
@@ -325,9 +305,9 @@ export default function ContactPage() {
                     <option value="plumbing">Montaż instalacji wodnych</option>
                     <option value="bathroom">Łazienki pod klucz</option>
                     <option value="heating">Instalacje grzewcze</option>
-                    <option value="emergency">Awarie 24/7</option>
                     <option value="repair">Naprawy i konserwacja</option>
                     <option value="sanitary">Instalacje sanitarne</option>
+                    <option value="other">Inna usługa</option>
                   </select>
                 </div>
 

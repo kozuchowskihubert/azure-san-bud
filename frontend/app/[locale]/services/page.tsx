@@ -34,11 +34,11 @@ export default function ServicesPage() {
     },
     {
       id: 4,
-      title: 'Serwis 24/7',
-      description: 'Całodobowe pogotowie hydrauliczne. Szybka reakcja i profesjonalna pomoc w każdej sytuacji awaryjnej.',
+      title: 'Serwis i Naprawy',
+      description: 'Profesjonalny serwis hydrauliczny. Szybka diagnostyka i skuteczne naprawy instalacji sanitarnych oraz grzewczych.',
       image: '/images/sanbud-google-4.jpg',
-      features: ['Wycieki', 'Przecieki', 'Awarie instalacji', 'Natychmiastowa pomoc'],
-      icon: '⚡',
+      features: ['Naprawa wycieku', 'Usuwanie awarii', 'Konserwacja instalacji', 'Diagnostyka'],
+      icon: '🔧',
       color: 'orange',
     },
     {

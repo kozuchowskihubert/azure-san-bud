@@ -70,7 +70,7 @@ export default function AboutPage() {
               </p>
               <p className="text-gray-700 leading-relaxed text-lg">
                 Specjalizujemy się w kompleksowych usługach hydraulicznych - od montażu nowoczesnych instalacji wodnych, 
-                przez realizację luksusowych łazienek, aż po systemy grzewcze i awaryjne naprawy dostępne 24/7.
+                przez realizację luksusowych łazienek, aż po systemy grzewcze i profesjonalne naprawy oraz konserwację.
               </p>
               
               {/* Key highlights */}
@@ -198,11 +198,11 @@ export default function AboutPage() {
                 ),
               },
               { 
-                number: '24/7', 
-                label: 'Wsparcie Awaryjne',
+                number: '15+', 
+                label: 'Lat Doświadczenia',
                 icon: (
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 ),
               },
