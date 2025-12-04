@@ -163,55 +163,55 @@ export default function PortfolioPage() {
     },
   ];
 
-  // Google Reviews data
+  // Google Reviews data - prawdziwe opinie z Google
   const reviews = [
     {
       id: 1,
-      name: 'Marek K.',
+      name: 'Celina Dziedzic',
       rating: 5,
       date: 'Listopad 2024',
-      text: 'Profesjonalna ekipa, terminowe wykonanie. Instalacja CO działa bez zarzutu. Polecam!',
-      avatar: 'MK'
+      text: 'Bardzo profesjonalna i słowna ekipa. Montaż ogrzewania podłogowego i hydrauliki wykonany czysto, terminowo i w rozsądnej cenie. Polecam! Świetną robotę robicie chłopaki!',
+      avatar: 'CD'
     },
     {
       id: 2,
-      name: 'Anna W.',
+      name: 'Dominik Czarnecki',
       rating: 5,
       date: 'Październik 2024',
-      text: 'Bardzo dobra obsługa, szybka realizacja. Pan hydraulik doradził najlepsze rozwiązania.',
-      avatar: 'AW'
+      text: 'Zdecydowanie polecam firmę San-bud! Profesjonalizm, rzetelność i szybka realizacja zleceń to ich mocne strony. Ekipa bardzo dobrze przygotowana, a komunikacja bez zarzutów.',
+      avatar: 'DC'
     },
     {
       id: 3,
-      name: 'Tomasz S.',
+      name: 'Arkadiusz Nowicki',
       rating: 5,
       date: 'Wrzesień 2024',
-      text: 'Solidne wykonanie, uczciwe ceny. Montaż kotła przebiegł sprawnie i profesjonalnie.',
-      avatar: 'TS'
+      text: 'Pełen profesjonalizm – szybki kontakt, terminowa realizacja i świetna jakość pracy. Hydraulicy z San-Bud znają się na rzeczy, doradzili najlepsze rozwiązania i wszystko działa bez zarzutu.',
+      avatar: 'AN'
     },
     {
       id: 4,
-      name: 'Ewa M.',
+      name: 'Beata Najechalska',
       rating: 5,
-      date: 'Sierpień 2024',
-      text: 'Rewelacyjna firma! Wszystko zrobione na czas i zgodnie z umową. Gorąco polecam!',
-      avatar: 'EM'
+      date: 'Październik 2024',
+      text: 'Bardzo szybka i sprawna obsługa klienta, usterka namierzona i usunięta, do tego pan Kamil doradził rozwiązanie problemu związanego z piecem. Polecam w 100%!',
+      avatar: 'BN'
     },
     {
       id: 5,
-      name: 'Piotr D.',
+      name: 'Kinga Winczewska',
       rating: 5,
-      date: 'Lipiec 2024',
-      text: 'Fachowość na najwyższym poziomie. Kompleksowa obsługa od A do Z.',
-      avatar: 'PD'
+      date: 'Sierpień 2024',
+      text: 'Pełen profesjonalizm widać, że Pan Kamil zna się na rzeczy. Młoda i zgrana ekipa. Polecam z całego serca :)',
+      avatar: 'KW'
     },
     {
       id: 6,
-      name: 'Katarzyna L.',
+      name: 'Bartek Salamucha',
       rating: 5,
       date: 'Czerwiec 2024',
-      text: 'Polecam z całego serca! Rzetelna firma, uczciwe podejście do klienta.',
-      avatar: 'KL'
+      text: 'Bardzo profesjonalna firma, młoda zgrana ekipa, przyjechała zamontowała Nam piec na pellet firmy Pereko, czas montażu 3 dni razem z wkładem kominowym. Polecam firmę!',
+      avatar: 'BS'
     }
   ];
 
@@ -357,9 +357,9 @@ export default function PortfolioPage() {
                   </svg>
                 ))}
               </div>
-              <span className="text-2xl font-bold text-gray-900">5.0</span>
+              <span className="text-2xl font-bold text-gray-900">4.9</span>
             </div>
-            <p className="text-gray-600">Na podstawie 250+ opinii Google</p>
+            <p className="text-gray-600">Na podstawie 69 opinii Google</p>
           </div>
 
           {/* Reviews Grid */}
@@ -401,7 +401,7 @@ export default function PortfolioPage() {
           {/* Google Reviews CTA */}
           <div className="text-center mt-12">
             <a
-              href="https://www.google.com/search?q=SAN-BUD+Hubert+Kozuchowski"
+              href="https://www.google.com/search?q=SAN+BUD+Hydraulika+Naszą+Pasją"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-white border-2 border-gray-200 hover:border-blue-500 rounded-xl font-bold text-gray-900 hover:text-blue-600 transition-all hover:scale-105 shadow-lg"
