@@ -4,6 +4,7 @@ import { useLocale } from 'next-intl';
 import HeroSection from '@/components/modern/HeroSection';
 import ServicesShowcase from '@/components/modern/ServicesShowcase';
 import WhyChooseUsSection from '@/components/modern/WhyChooseUsSection';
+import GoogleReviewsSection from '@/components/modern/GoogleReviewsSection';
 import PartnersSlider from '@/components/PartnersSlider';
 import ContactSection from '@/components/modern/ContactSection';
 
@@ -15,6 +16,7 @@ export default function HomePage() {
       <HeroSection locale={locale} />
       <ServicesShowcase locale={locale} />
       <WhyChooseUsSection locale={locale} />
+      <GoogleReviewsSection maxReviews={6} />
       <PartnersSlider />
       <ContactSection locale={locale} />
     </div>

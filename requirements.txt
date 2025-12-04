@@ -26,3 +26,4 @@ Werkzeug==3.0.1
 
 # Email
 Flask-Mail==0.9.1
+requests
