@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import AddToCalendarButton from './AddToCalendarButton';
+import { buildApiUrl } from '@/utils/api';
 
 interface TimeSlot {
   time: string;
@@ -132,7 +133,7 @@ export default function BookingCalendar({ onBookingComplete }: BookingCalendarPr
     
     try {
       // Send to backend API
-      const response = await fetch('/appointments/api/book', {
+      const response = await fetch(buildApiUrl('appointments/api/book'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
