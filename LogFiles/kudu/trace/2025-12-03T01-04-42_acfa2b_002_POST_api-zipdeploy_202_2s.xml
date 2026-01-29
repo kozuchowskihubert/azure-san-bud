@@ -1,0 +1,17 @@
+<step title="Incoming Request" date="2025-12-03T01:04:42.482" instance="acfa2b" url="/api/zipdeploy?isAsync=true" method="POST" type="request" pid="775,1,3" Accept="*/*" Host="app-sanbud-api-prod.scm.azurewebsites.net" User-Agent="AZURECLI/2.79.0 (DEB)" Accept-Encoding="gzip, deflate" Authorization="Bea..." Cache-Control="no-cache" Content-Type="application/octet-stream" Content-Length="363434" x-ms-client-request-id="08b5fc94-cfe4-11f0-a059-7ced8d62f52e" x-ms-artifact-checksum="12c208e8b8edff6fc7853f41ab6313662ede1110e926cee903dc4e82b11b7fc5" X-ARR-LOG-ID="08b5fc94-cfe4-11f0-a059-7ced8d62f52e" CLIENT-IP="172.215.209.69:22528" X-SITE-DEPLOYMENT-ID="app-sanbud-api-prod" WAS-DEFAULT-HOSTNAME="app-sanbud-api-prod.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/zipdeploy?isAsync=true" X-Client-IP="172.215.209.69" X-Client-Port="22528" >
+  <step title="ZipPushDeploy" date="2025-12-03T01:04:43.511" >
+    <step title="ZipDeploy. Extract zip. Remote build." date="2025-12-03T01:04:43.525" /><!-- duration: 5ms -->
+    <step title="None repository commit" date="2025-12-03T01:04:43.560" >
+      <step title="Commit id: db757ead-fe1f-41a5-817e-42d94b96e6ca" date="2025-12-03T01:04:43.564" Message="N/A" AuthorName="N/A" AuthorEmail="N/A" /><!-- duration: 5ms -->
+    </step><!-- duration: 12ms -->
+    <step title="Starting PushDeployAsync" date="2025-12-03T01:04:43.576" /><!-- duration: 4ms -->
+    <step title="Writing artifact to /tmp/zipdeploy/f445e6c2-3b86-4232-a30e-ed4d889e3c48.zip" date="2025-12-03T01:04:43.615" >
+      <step title="Writing multipart request body to /tmp/zipdeploy/f445e6c2-3b86-4232-a30e-ed4d889e3c48.zip" date="2025-12-03T01:04:43.622" /><!-- duration: 4ms -->
+    </step><!-- duration: 142ms -->
+    <step title="Start deployment in the background" date="2025-12-03T01:04:43.781" >
+      <step title="Acquiring Deployment Lock" date="2025-12-03T01:04:43.809" /><!-- duration: 10ms -->
+      <step title="Acquired Deployment Lock" date="2025-12-03T01:04:43.875" /><!-- duration: 3ms -->
+    </step><!-- duration: 199ms -->
+  </step><!-- duration: 480ms -->
+  <step title="Outgoing response" date="2025-12-03T01:04:44.020" type="response" statusCode="202" statusText="Accepted" /><!-- duration: 3ms -->
+</step><!-- duration: 1547ms -->

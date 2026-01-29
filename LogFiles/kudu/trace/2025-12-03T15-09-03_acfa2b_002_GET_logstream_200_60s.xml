@@ -1,0 +1,5 @@
+<step title="Incoming Request" date="2025-12-03T15:09:03.245" instance="acfa2b" url="/logstream" method="GET" type="request" pid="774,1,16" Host="app-sanbud-api-prod.scm.azurewebsites.net" User-Agent="AZURECLI/2.79.0 (HOMEBREW)" Accept-Encoding="identity" Authorization="Bea..." x-ms-client-request-id="fd39bd80-d059-11f0-9752-4673d4928b51" X-ARR-LOG-ID="fd39bd80-d059-11f0-9752-4673d4928b51" CLIENT-IP="109.243.146.157:8729" X-SITE-DEPLOYMENT-ID="app-sanbud-api-prod" WAS-DEFAULT-HOSTNAME="app-sanbud-api-prod.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/logstream" X-Client-IP="109.243.146.157" X-Client-Port="8729" >
+  <step title="LogStreamHandlerMiddleware.Invoke" date="2025-12-03T15:09:03.388" /><!-- duration: 82ms -->
+  <step title="Error occurred" date="2025-12-03T15:10:03.480" type="error" text="LogStreamManager: ProcessRequest end" /><!-- duration: 19ms -->
+  <step title="Outgoing response" date="2025-12-03T15:10:03.576" type="response" statusCode="200" statusText="OK" /><!-- duration: 10ms -->
+</step><!-- duration: 60355ms -->

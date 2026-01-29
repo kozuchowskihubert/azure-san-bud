@@ -1,0 +1,9 @@
+<step title="Incoming Request" date="2025-12-03T08:41:50.607" instance="acfa2b" url="/api/deployments/latest" method="GET" type="request" pid="772,1,69" Accept="*/*" Host="app-sanbud-api-prod.scm.azurewebsites.net" User-Agent="AZURECLI/2.80.0 (DEB)" Accept-Encoding="gzip, deflate" Authorization="Bea..." x-ms-client-request-id="df67ab7c-d023-11f0-ae2b-7c1e52f93b04" X-ARR-LOG-ID="df67ab7c-d023-11f0-ae2b-7c1e52f93b04" CLIENT-IP="145.132.100.84:63489" X-SITE-DEPLOYMENT-ID="app-sanbud-api-prod" WAS-DEFAULT-HOSTNAME="app-sanbud-api-prod.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/deployments/latest" X-Client-IP="145.132.100.84" X-Client-Port="63489" >
+  <step title="Cleanup Xml Logs" date="2025-12-03T08:41:50.616" /><!-- duration: 31ms -->
+  <step title="DeploymentService.GetResult" date="2025-12-03T08:41:50.774" >
+    <step title="DeploymentService.GetLatestDeployment" date="2025-12-03T08:41:50.779" >
+      <step title="DeploymentManager.GetResults" date="2025-12-03T08:41:50.789" /><!-- duration: 2901ms -->
+    </step><!-- duration: 2941ms -->
+  </step><!-- duration: 2958ms -->
+  <step title="Outgoing response" date="2025-12-03T08:41:53.979" type="response" statusCode="202" statusText="Accepted" /><!-- duration: 25ms -->
+</step><!-- duration: 3406ms -->

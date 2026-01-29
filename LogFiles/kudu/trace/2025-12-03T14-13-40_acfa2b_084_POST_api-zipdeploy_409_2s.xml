@@ -1,0 +1,18 @@
+<step title="Incoming Request" date="2025-12-03T14:13:40.922" instance="acfa2b" url="/api/zipdeploy?isAsync=true" method="POST" type="request" pid="771,1,17" Accept="*/*" Host="app-sanbud-api-prod.scm.azurewebsites.net" User-Agent="AZURECLI/2.79.0 (DEB)" Accept-Encoding="gzip, deflate" Authorization="Bea..." Cache-Control="no-cache" Content-Type="application/octet-stream" Content-Length="383161" x-ms-client-request-id="3eeb7cc6-d052-11f0-a059-002248900f12" x-ms-artifact-checksum="b06e72adff559a1449ce3148c3bbcc53ac965ed00e78765f019e14f3e63f4841" X-ARR-LOG-ID="3eeb7cc6-d052-11f0-a059-002248900f12" CLIENT-IP="20.102.223.151:53304" X-SITE-DEPLOYMENT-ID="app-sanbud-api-prod" WAS-DEFAULT-HOSTNAME="app-sanbud-api-prod.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/zipdeploy?isAsync=true" X-Client-IP="20.102.223.151" X-Client-Port="53304" >
+  <step title="Cleanup Xml Logs" date="2025-12-03T14:13:40.931" >
+    <step title="Cleanup Infos" date="2025-12-03T14:13:41.109" totalFiles="346" totalCleanup="186" /><!-- duration: 45ms -->
+  </step><!-- duration: 231ms -->
+  <step title="ZipPushDeploy" date="2025-12-03T14:13:41.232" >
+    <step title="ZipDeploy. Extract zip. Remote build." date="2025-12-03T14:13:41.259" /><!-- duration: 9ms -->
+    <step title="Starting PushDeployAsync" date="2025-12-03T14:13:41.287" /><!-- duration: 2ms -->
+    <step title="Writing artifact to /tmp/zipdeploy/1e26595a-06c5-4bff-9141-488657db0669.zip" date="2025-12-03T14:13:41.324" >
+      <step title="Writing multipart request body to /tmp/zipdeploy/1e26595a-06c5-4bff-9141-488657db0669.zip" date="2025-12-03T14:13:41.336" /><!-- duration: 7ms -->
+    </step><!-- duration: 763ms -->
+    <step title="Start deployment in the background" date="2025-12-03T14:13:42.125" >
+      <step title="Acquiring Deployment Lock" date="2025-12-03T14:13:42.163" /><!-- duration: 16ms -->
+      <step title="Cannot Acquire Deployment Lock already held" date="2025-12-03T14:13:42.230" /><!-- duration: 9ms -->
+    </step><!-- duration: 311ms -->
+    <step title="There is a deployment currently in progress. Please try again when it completes." date="2025-12-03T14:13:42.463" /><!-- duration: 4ms -->
+  </step><!-- duration: 1253ms -->
+  <step title="Outgoing response" date="2025-12-03T14:13:42.551" type="response" statusCode="409" statusText="Conflict" /><!-- duration: 35ms -->
+</step><!-- duration: 1691ms -->

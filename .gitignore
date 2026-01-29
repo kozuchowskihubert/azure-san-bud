@@ -1,310 +1,57 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Virtual Environment
-venv/
-env/
-ENV/
-.venv
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# testing
+/coverage
 
-# Environment variables
-.env
-.env.*
-!.env.example
-.env.local
-.env.development
-.env.production
-.env.test
+# next.js
+/.next/
+/out/
 
-# Database
-*.db
-*.sqlite
-*.sqlite3
-instance/
+# production
+/build
 
-# Logs
-*.log
-logs/
-LogFiles/
-app-logs.zip
-backend.log
-
-# Archive and old files
-archive/
-
-# Scripts with secrets (specific files)
-scripts/*credentials*
-scripts/*secrets*
-scripts/*password*
-scripts/.env*
-scripts/azure-init-admin.sh
-scripts/init-admin-production.sh
-scripts/init-admin-azure.sh
-
-# Admin initialization scripts with hardcoded credentials
-setup_admin_azure.py
-init_admin_production.py
-ADMIN_SETUP_GUIDE.md
-
-# Deployment artifacts
-deployment.zip
-deployments/
-*.xml
-deployment-credentials.local.sh
-
-# OS
+# misc
 .DS_Store
-Thumbs.db
-
-# Azure
-.azure/
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Migrations (uncomment if you want to ignore)
-# migrations/versions/
-
-# ========================
-# SENSITIVE FILES
-# ========================
-
-# Azure credentials and secrets
-publish-profile.xml
-*.publishsettings
-*.azurePubxml
-
-# Terraform sensitive files
-terraform/environments/*/secrets.tfvars
-terraform/environments/*/*.tfstate
-terraform/environments/*/*.tfstate.backup
-terraform/*.tfstate
-terraform/*.tfstate.backup
-terraform/.terraform/
-terraform/.terraform.lock.hcl
-terraform/tfplan
-terraform/outputs.json
-terraform/*.auto.tfvars
-
-# SSH keys and certificates
 *.pem
-*.key
-*.cert
-*.crt
-*.pfx
-id_rsa*
-id_dsa*
-id_ecdsa*
-id_ed25519*
 
-# API keys and tokens
-secrets.txt
-api-keys.txt
-tokens.txt
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# ========================
-# DOCUMENTATION (MARKDOWN)
-# ========================
+# local env files
+# local env files
+.env
+.env*.local
 
-# Ignore all markdown files
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+/app/generated/prisma
+
+# documentation to ignore
+README.md
 *.md
 
-# Exception: Keep essential project documentation
-!README.md
-!CONTRIBUTING.md
-!LICENSE.md
-
-# Deployment documentation with sensitive info
-docs/deployment/AZURE_DEPLOYMENT_SUMMARY.md
-docs/deployment/DNS_SETUP_INSTRUCTIONS.md
-docs/deployment/DOMAIN_SETUP_HITME.md
-docs/deployment/GITHUB_SECRETS_SETUP.md
-docs/guides/GO_LIVE_CHECKLIST.txt
-
-# ========================
-# FRONTEND (Next.js)
-# ========================
-
-# Next.js
-frontend/.next/
-frontend/out/
-frontend/build/
-frontend/dist/
-
-# Node modules
-frontend/node_modules/
-node_modules/
-
-# npm/yarn
-frontend/package-lock.json
-frontend/yarn.lock
-frontend/.pnp
-frontend/.pnp.js
-
-# Testing
-frontend/coverage/
-
-# Misc
-frontend/.DS_Store
-frontend/*.log
-frontend/.turbo
-
-# ========================
-# BACKUP FILES
-# ========================
-
-*.bak
-*.backup
-*.old
-*.orig
-*~
-.*.swp
-
-# ========================
-# SENSITIVE DEPLOYMENT FILES
-# ========================
-
-# Deployment scripts and credentials
-deployment-credentials.local.sh
-*-credentials.local.sh
-*.local.sh
-*-secrets.txt
-*-credentials.txt
-azure-backend-publish-profile.xml
-publish-profile.xml
-
-# Deployment scripts (keep in scripts/ folder, not in root)
-/deploy-azure-live.sh
-/deploy-production.sh
-/add-custom-domains.sh
-/dns-records-to-add.sh
-/configure-dns-automated.sh
-/check-domain.sh
-
-# Local environment files
-.env.local
-.env.production.local
-.env.*.local
-
-
-# Azure deployment outputs
-terraform/outputs.json
-terraform/tfplan
-terraform/.terraform/
-terraform/*.tfstate
-terraform/*.tfstate.backup
-
-# Instance database files
-instance/*.db
-instance/*.sqlite
-instance/*.sqlite3
-
-# ========================
-# DEPLOYMENT SCRIPTS
-# ========================
-
-# All deployment scripts (keep in scripts/ for organization)
-scripts/deploy-azure-live.sh
-scripts/deploy-production.sh
-scripts/add-custom-domains.sh
-scripts/dns-records-to-add.sh
-scripts/configure-dns-automated.sh
-scripts/check-domain.sh
-scripts/setup.sh
-scripts/configure-dns-*.sh
-
-# Deployment files in root (if accidentally created there)
-deployment-credentials.local.sh
-startup.txt
-
-# ========================
-# DOCUMENTATION WITH SECRETS
-# ========================
-
-# Deployment guides with potential secrets
-docs/deployment/AZURE_DEPLOYMENT_SUMMARY.md
-docs/deployment/DNS_SETUP_INSTRUCTIONS.md
-docs/deployment/DOMAIN_SETUP_HITME.md
-docs/deployment/GITHUB_SECRETS_SETUP.md
-docs/deployment/HOSTING_DEPLOYMENT.md
-docs/guides/GO_LIVE_CHECKLIST.txt
-docs/guides/SANBUD_PROJECT_SUMMARY.md
-
-# Keep only README in root
-!README.md
-
-# ========================
-# EMAIL TEST FILES
-# ========================
-
-# Email testing and configuration files
-*email_test.py
-*email_api_test.py
-emailjs_test.py
-resend_email_test.py
-serverless_email_test.py
-telegram_notification_test.py
-direct_logging_test.py
-production_email_test.py
-real_email_test.py
-send_test_email.py
-test_email.py
-test_logging_system.py
-
-# Email configuration documentation (keep selective ones)
-EMAIL_SETUP.md
-EMAIL_CONFIGURATION.md
-EMAIL_TROUBLESHOOTING.md
-GMAIL_SMTP_SETUP.md
-AZURE_EMAIL_SMTP_SETUP.md
-ALTERNATIVE_EMAIL_PROVIDERS.md
-
-# Log files
-logs/
+# sensitive/binary
+cookies.txt
+*.zip
 *.log
-backend.log
 
-# ========================
-# SENSITIVE FILES WITH CREDENTIALS
-# ========================
+# deployment docs
+docs/deployment/
 
-# Go-live checklist with credentials
-GO_LIVE_CHECKLIST.txt
-go_live_checklist.txt
-*go_live*
-*GO_LIVE*
+# python
+venv/
+__pycache__/
+*.pyc
 
-# Other sensitive files
-deployment-credentials.local.sh
-*.credentials
-*.secrets
-*publish-profile*.xml
-.vercel

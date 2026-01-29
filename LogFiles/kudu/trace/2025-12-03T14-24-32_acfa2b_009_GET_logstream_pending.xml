@@ -1,0 +1,5 @@
+<step title="Incoming Request" date="2025-12-03T14:24:32.450" instance="acfa2b" url="/logstream" method="GET" type="request" pid="770,1,20" Host="app-sanbud-api-prod.scm.azurewebsites.net" User-Agent="AZURECLI/2.79.0 (HOMEBREW)" Accept-Encoding="identity" Authorization="Bea..." x-ms-client-request-id="c6959728-d053-11f0-b924-4673d4928b51" X-ARR-LOG-ID="c6959728-d053-11f0-b924-4673d4928b51" CLIENT-IP="109.243.146.157:8945" X-SITE-DEPLOYMENT-ID="app-sanbud-api-prod" WAS-DEFAULT-HOSTNAME="app-sanbud-api-prod.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/logstream" X-Client-IP="109.243.146.157" X-Client-Port="8945" >
+  <step title="Cleanup Xml Logs" date="2025-12-03T14:24:32.509" >
+    <step title="Cleanup Infos" date="2025-12-03T14:24:32.740" totalFiles="381" totalCleanup="221" /><!-- duration: 153ms -->
+  </step><!-- duration: 508ms -->
+  <step title="LogStreamHandlerMiddleware.Invoke" date="2025-12-03T14:24:33.094" /><!-- duration: 807ms -->

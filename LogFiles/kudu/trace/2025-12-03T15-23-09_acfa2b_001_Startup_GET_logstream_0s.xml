@@ -1,0 +1,5 @@
+<step title="Startup Request" date="2025-12-03T15:23:09.046" instance="acfa2b" url="/logstream" method="GET" type="request" pid="772,1,5" SCM_DO_BUILD_DURING_DEPLOYMENT="true" ScmType="None" >
+  <step title="Cleanup Xml Logs" date="2025-12-03T15:23:09.086" >
+    <step title="Cleanup Infos" date="2025-12-03T15:23:09.240" totalFiles="425" totalCleanup="265" /><!-- duration: 47ms -->
+  </step><!-- duration: 237ms -->
+</step><!-- duration: 313ms -->

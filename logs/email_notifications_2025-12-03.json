@@ -1,0 +1,60 @@
+[
+  {
+    "timestamp": "2025-12-03T12:22:05.049489",
+    "type": "contact_form",
+    "recipient": "hubertkozuchowski@gmail.com",
+    "subject": "Test Contact Form - SanBud",
+    "content": "<h1>Test HTML Email Content</h1><p>This is a test contact form submission.</p>",
+    "data": {
+      "name": "Hubert Kozuchowski",
+      "email": "hubertkozuchowski@gmail.com",
+      "phone": "+48 123 456 789",
+      "message": "Test message from contact form"
+    },
+    "status": "logged_for_manual_processing"
+  },
+  {
+    "timestamp": "2025-12-03T12:22:05.049848",
+    "type": "booking_confirmation",
+    "recipient": "admin@sanbud.pl",
+    "subject": "Test Booking Confirmation - SanBud",
+    "content": "<h1>Test Booking Email</h1><p>This is a test booking confirmation.</p>",
+    "data": {
+      "name": "Hubert Kozuchowski",
+      "email": "hubertkozuchowski@gmail.com",
+      "date": "04.12.2025",
+      "time": "10:00",
+      "service": "Naprawa pieca"
+    },
+    "status": "logged_for_manual_processing"
+  },
+  {
+    "timestamp": "2025-12-03T12:22:34.497138",
+    "type": "contact_form",
+    "recipient": "hubertkozuchowski@gmail.com",
+    "subject": "Test Contact Form - SanBud",
+    "content": "<h1>Test HTML Email Content</h1><p>This is a test contact form submission.</p>",
+    "data": {
+      "name": "Hubert Kozuchowski",
+      "email": "hubertkozuchowski@gmail.com",
+      "phone": "+48 123 456 789",
+      "message": "Test message from contact form"
+    },
+    "status": "logged_for_manual_processing"
+  },
+  {
+    "timestamp": "2025-12-03T12:22:34.497500",
+    "type": "booking_confirmation",
+    "recipient": "admin@sanbud.pl",
+    "subject": "Test Booking Confirmation - SanBud",
+    "content": "<h1>Test Booking Email</h1><p>This is a test booking confirmation.</p>",
+    "data": {
+      "name": "Hubert Kozuchowski",
+      "email": "hubertkozuchowski@gmail.com",
+      "date": "04.12.2025",
+      "time": "10:00",
+      "service": "Naprawa pieca"
+    },
+    "status": "logged_for_manual_processing"
+  }
+]
