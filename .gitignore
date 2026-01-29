@@ -307,3 +307,4 @@ deployment-credentials.local.sh
 *.credentials
 *.secrets
 *publish-profile*.xml
+.vercel

@@ -1,0 +1,13 @@
+.venv
+venv
+frontend
+node_modules
+deployment.zip
+*.log
+LogFiles
+terraform
+migrations
+docs
+archive
+scripts
+
