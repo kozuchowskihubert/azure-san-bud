@@ -6,19 +6,19 @@ const withNextIntl = require('next-intl/plugin')(
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  
+
   // Output configuration for hosting
   output: 'standalone', // Optimized for production hosting
-  
+
   // Trailing slash configuration
   trailingSlash: false,
-  
+
   // Environment variables
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002',
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001',
   },
-  
+
   // Image optimization configuration
   images: {
     remotePatterns: [
@@ -64,13 +64,13 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-  
+
   // Compression
   compress: true,
-  
+
   // Production optimization
   swcMinify: true,
-  
+
   // Headers configuration for security
   async headers() {
     return [
@@ -105,7 +105,7 @@ const nextConfig = {
       },
     ];
   },
-  
+
   // Redirects configuration
   async redirects() {
     return [
@@ -117,20 +117,7 @@ const nextConfig = {
     ];
   },
 
-  // Rewrites - Proxy API calls to Flask backend
-  async rewrites() {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002';
-    return [
-      {
-        source: '/appointments/:path*',
-        destination: `${apiUrl}/appointments/:path*`,
-      },
-      {
-        source: '/api/:path*',
-        destination: `${apiUrl}/api/:path*`,
-      },
-    ];
-  },
+
 }
 
 module.exports = withNextIntl(nextConfig);

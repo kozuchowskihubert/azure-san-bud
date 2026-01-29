@@ -53,15 +53,16 @@ export default function AppointmentsPage() {
 
   const loadAppointments = async () => {
     try {
-      const url = statusFilter 
-        ? `admin/api/appointments?status=${statusFilter}`
-        : 'admin/api/appointments';
-      
+      const url = statusFilter
+        ? `/api/appointments?status=${statusFilter}`
+        : '/api/appointments';
+
       const response = await authFetch(url);
 
       if (response.ok) {
         const data = await response.json();
-        setAppointments(data.appointments);
+        // New API returns array directly
+        setAppointments(Array.isArray(data) ? data : data.appointments || []);
       } else if (response.status === 401) {
         router.push('/admin/login');
       }
@@ -87,7 +88,7 @@ export default function AppointmentsPage() {
     if (!selectedAppointment) return;
 
     try {
-      const response = await authFetch(`admin/api/appointments/${selectedAppointment.id}`, {
+      const response = await authFetch(`/api/appointments/${selectedAppointment.id}`, {
         method: 'PUT',
         body: JSON.stringify(formData),
       });
@@ -106,7 +107,7 @@ export default function AppointmentsPage() {
     if (!confirm('Czy na pewno chcesz usunąć tę wizytę?')) return;
 
     try {
-      const response = await authFetch(`admin/api/appointments/${appointmentId}`, {
+      const response = await authFetch(`/api/appointments/${appointmentId}`, {
         method: 'DELETE',
       });
 
@@ -269,7 +270,7 @@ export default function AppointmentsPage() {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full p-8">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Edytuj wizytę</h2>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Status</label>

@@ -6,21 +6,9 @@
  * Get the API base URL from environment variables
  */
 export const getApiUrl = (): string => {
-  // In production, if NEXT_PUBLIC_API_URL is not set, use the production backend URL
-  const envUrl = process.env.NEXT_PUBLIC_API_URL;
-  
-  // If we're in production (deployed) and no env var is set, use production URL
-  if (!envUrl && typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    if (hostname === 'sanbud24.pl' || hostname === 'www.sanbud24.pl') {
-      return 'https://app-sanbud-api-prod.azurewebsites.net';
-    }
-    if (hostname.includes('azurestaticapps.net')) {
-      return 'https://app-sanbud-api-prod.azurewebsites.net';
-    }
-  }
-  
-  return envUrl || 'http://localhost:5002';
+  // For Next.js API routes, we want to use relative paths (same origin)
+  // regardless of environment (dev or prod)
+  return '';
 };
 
 /**
@@ -40,7 +28,7 @@ export const getAuthHeaders = (): HeadersInit => {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };
-  
+
   // Add JWT token if available
   if (typeof window !== 'undefined') {
     const token = localStorage.getItem('adminToken');
@@ -48,7 +36,7 @@ export const getAuthHeaders = (): HeadersInit => {
       headers['Authorization'] = `Bearer ${token}`;
     }
   }
-  
+
   return headers;
 };
 
@@ -61,7 +49,7 @@ export const authFetch = async (path: string, options: RequestInit = {}): Promis
     ...getAuthHeaders(),
     ...options.headers,
   };
-  
+
   return fetch(url, {
     ...options,
     headers,
